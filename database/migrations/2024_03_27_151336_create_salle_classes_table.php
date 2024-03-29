@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('salle_classes', function (Blueprint $table) {
             $table->id();
+            $table->string('nomRessource')->nullable();
+            $table->string('Description')->nullable();
+            $table->string('Etat')->nullable();
             $table->integer('capacite');
             $table->integer('numero_salle');
             $table->timestamps();

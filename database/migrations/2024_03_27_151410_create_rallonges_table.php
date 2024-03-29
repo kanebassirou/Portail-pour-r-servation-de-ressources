@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('rallonges', function (Blueprint $table) {
             $table->id();
+            $table->string('nomRessource')->nullable();
+            $table->string('Description')->nullable();
+            $table->string('Etat')->nullable();
             $table->string('typeDePrise');
             $table->integer('longueur');
             $table->integer('nombreDePrise');        

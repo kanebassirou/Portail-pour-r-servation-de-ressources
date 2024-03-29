@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('cables', function (Blueprint $table) {
             $table->id();
+            $table->string('nomRessource')->nullable();
+            $table->string('Description')->nullable();
+            $table->string('Etat')->nullable();
             $table->string('typeDeCable');
             $table->integer('longueur');
             $table->timestamps();

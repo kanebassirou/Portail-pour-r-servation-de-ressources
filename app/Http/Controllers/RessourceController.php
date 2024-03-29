@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rallonge;
 use App\Models\Ressource;
+use App\Models\SalleClasse;
+use App\Models\VideoProjecteur;
 use Illuminate\Http\Request;
 
 class RessourceController extends Controller
@@ -12,7 +15,12 @@ class RessourceController extends Controller
      */
     public function index()
     {
-        //
+        $salleClasses = SalleClasse::all();
+        $rallonges = Rallonge::all();
+        $videoProjecteurs = VideoProjecteur::all();
+        return view('ressources.index', compact('salleClasses', 'rallonges', 'videoProjecteurs'));
+        
+        return view('ressources.index', compact('ressources', 'salleClasses'));
     }
 
     /**

@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('laboratoires', function (Blueprint $table) {
             $table->id();
+            $table->string('nomRessource')->nullable();
+            $table->string('Description')->nullable();
+            $table->string('Etat')->nullable();
             $table->string('nomLaboratoire');
             $table->integer('capacite');
             
