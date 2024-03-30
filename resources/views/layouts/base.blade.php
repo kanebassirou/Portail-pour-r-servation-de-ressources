@@ -24,6 +24,8 @@
       
     </head>
     <body>
+      {{-- <div class="back-to-top"></div> --}}
+
         @include('layouts.nav')
         <main>
             @yield('content')
