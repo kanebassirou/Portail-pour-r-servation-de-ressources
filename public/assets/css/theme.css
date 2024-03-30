@@ -1637,13 +1637,13 @@ a.fg-light:hover, a.fg-light:focus {
 }
 
 .owl-carousel .owl-stage-outer {
-  height: 100%;
+  height: auto;
 }
 
 .hero-carousel-item {
   position: relative;
   width: 100%;
-  height: 100%;
+  height:auto;
 }
 
 .hero-carousel-item::before {

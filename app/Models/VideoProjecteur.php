@@ -10,6 +10,4 @@ class VideoProjecteur extends Ressource
 
     // protected $fillable = ['nomRessource', 'etatRessource', 'description','marque', 'resolution' ];
     protected $guarded = ['id'];
-
-
 }

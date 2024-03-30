@@ -19,7 +19,7 @@ class RessourceController extends Controller
         $rallonges = Rallonge::all();
         $videoProjecteurs = VideoProjecteur::all();
         return view('ressources.index', compact('salleClasses', 'rallonges', 'videoProjecteurs'));
-        
+
         return view('ressources.index', compact('ressources', 'salleClasses'));
     }
 
