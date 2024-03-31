@@ -10,17 +10,17 @@
 
         <title>Portail de resservation de ressource</title>
 
-        <link rel="stylesheet" href="../assets/css/bootstrap.css">
+        <link rel="stylesheet" href="{{asset('../assets/css/bootstrap.css')}}">
 
-        <link rel="stylesheet" href="../assets/css/maicons.css">
+        <link rel="stylesheet" href="{{asset('../assets/css/maicons.css')}}">
 
-        <link rel="stylesheet" href="../assets/vendor/animate/animate.css">
+        <link rel="stylesheet" href="{{asset('../assets/vendor/animate/animate.css')}}">
 
-        <link rel="stylesheet" href="../assets/vendor/owl-carousel/css/owl.carousel.css">
+        <link rel="stylesheet" href="{{asset('../assets/vendor/owl-carousel/css/owl.carousel.css')}}">
 
-        <link rel="stylesheet" href="../assets/vendor/fancybox/css/jquery.fancybox.css">
+        <link rel="stylesheet" href="{{asset('../assets/vendor/fancybox/css/jquery.fancybox.css')}}">
 
-        <link rel="stylesheet" href="../assets/css/theme.css">
+        <link rel="stylesheet" href="{{asset('../assets/css/theme.css')}}">
 
     </head>
     <body>
@@ -52,7 +52,7 @@
                       </ul>
                     </div>
                     <div class="col-lg-3 py-3">
-                      <h5>Newsletter</h5>
+                      <h5>Donner votre Avis</h5>
                       <form action="#">
                         <input type="text" class="form-control" placeholder="Enter your email">
                         <button type="submit" class="btn btn-primary btn-sm mt-2">Submit</button>

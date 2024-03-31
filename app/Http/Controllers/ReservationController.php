@@ -20,6 +20,7 @@ class ReservationController extends Controller
      */
     public function create()
     {
+        return view('reservation.create');
         //
     }
 
@@ -29,6 +30,18 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
         //
+        $validated = $request->validate([
+            'date_de_réservation' => 'required',
+            'heure_de_début' => 'required',
+            'heure_de_fin' => 'required',
+            'Ressource_ID_Ressource' => 'required',
+            'Utilisateur_ID_Utilisateur' => 'required'
+        ]);
+        // dd($validated);
+
+        Reservation::create($validated);
+
+        return redirect()->route('ressources.index')->with('success', 'Réservation créée avec succès .');
     }
 
     /**

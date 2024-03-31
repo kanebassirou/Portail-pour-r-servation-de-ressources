@@ -1,7 +1,12 @@
 @extends('layouts.base')
 
+
 @section('content')
   <!-- Your content here -->
+      @if (Session::has('success'))
+    <div class="alert alert-success">
+        {{ Session::get('success') }}
+    </div>
 
     <div class="row justify-content-center">
       <div class="col-md-6">
@@ -23,15 +28,17 @@
             <label for="resource">Ressource:</label>
             <select id="resource" name="resource" class="form-control">
               <option value="">Sélectionner une ressource</option>
-              <option value="Salle classe">Salle de classe</option>
-              <option value="Rallonge">Rallonge</option>
-              <option value="VideoProjecteur">VideoProjecteur</option>
+              <option value="1">Salle de classe</option>
+              <option value="2">Rallonge</option>
+              <option value="3">VideoProjecteur</option>
             </select>
           </div>
           <button type="submit" class="btn btn-primary">Rechercher</button>
         </form>
       </div>
     </div>
+
+@endif
 
     <div class="page-section">
       <div class="container">
@@ -60,6 +67,9 @@
                       <div class="author-info">{{ $salleClasse->numero_salle }}</div>
                     </div>
                   </div>
+                  <div class="reservation-button">
+                    <a href="{{ route('reservation.create')}}" class="btn btn-primary">Réserver</a>
+                  </div>
                 </div>
                 @endforeach
 
@@ -81,6 +91,9 @@
                       <div class="author-info">{{ $rallonge->typeDePrise }}</div>
                     </div>
                   </div>
+                  <div class="reservation-button">
+                    <a href="{{ route('reservation.create')}}" class="btn btn-primary">Réserver</a>
+                  </div>
                 </div>
                 @endforeach
 
@@ -101,6 +114,9 @@
                       <div class="author-info">{{ $cable->type }}</div>
                     </div>
                   </div>
+                  <div class="reservation-button">
+                    <a href="{{ route('reservation.create')}}" class="btn btn-primary">Réserver</a>
+                  </div>
                 </div>
                 @endforeach
 
@@ -120,6 +136,9 @@
                       <div class="author-name">Vidéoprojecteur</div>
                       <div class="author-info">{{ $videoProjecteur->nomVideoProjecteur }}</div>
                     </div>
+                  </div>
+                  <div class="reservation-button">
+                    <a href="{{ route('reservation.create')}}" class="btn btn-primary">Réserver</a>
                   </div>
                 </div>
                 @endforeach

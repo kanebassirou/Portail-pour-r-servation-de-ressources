@@ -14,18 +14,18 @@ return new class extends Migration
         if (!Schema::hasTable('reservations')) {
             Schema::create('reservations', function (Blueprint $table) {
                 $table->id();
-                $table->string('Date_de_début', 45)->nullable();
-                $table->string('Date_de_fin', 45)->nullable();
-                $table->string('Statut', 45)->nullable();
-                
+                $table->date('date_de_réservation')->nullable();
+                $table->time('heure_de_début')->nullable();
+                $table->time('heure_de_fin')->nullable();
+
                 // Assurez-vous que le type de ces colonnes correspond au type de la colonne `id` dans les tables référencées
                 $table->unsignedBigInteger('Ressource_ID_Ressource');
                 $table->unsignedBigInteger('Utilisateur_ID_Utilisateur');
-                
+
                 // Définition des contraintes de clé étrangère après avoir déclaré les colonnes
                 $table->foreign('Ressource_ID_Ressource')->references('id')->on('ressources')->onDelete('cascade');
                 $table->foreign('Utilisateur_ID_Utilisateur')->references('id')->on('utilisateurs')->onDelete('cascade');
-            
+
                 $table->timestamps();
             });
         }

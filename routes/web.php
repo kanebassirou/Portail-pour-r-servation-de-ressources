@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RessourceController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,8 @@ Route::middleware([
     })->name('dashboard');
 
     // Route pour afficher les ressources disponibles
-    Route::get('/ressources', [RessourceController::class, 'index'])->name('ressources');
+    Route::resource('/ressources', RessourceController::class)->names('ressources');
+    Route::resource('ressources/reservation', ReservationController::class)->names('reservation');
+
 
 });
