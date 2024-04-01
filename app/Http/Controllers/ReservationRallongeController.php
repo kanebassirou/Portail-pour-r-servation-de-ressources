@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cable;
 use App\Models\Rallonge;
-use App\Models\Reservation;
-use App\Models\SalleClasse;
-use App\Models\VideoProjecteur;
+use App\Models\Reservations_rallonge;
 use Illuminate\Http\Request;
 
-class ReservationController extends Controller
+class ReservationRallongeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,8 +21,8 @@ class ReservationController extends Controller
      */
     public function create($nomRessource)
     {
-        $salleClasse = SalleClasse::where('nomRessource', $nomRessource)->first();
-        return view('reservation.create', compact('nomRessource', 'salleClasse'));
+        $rallonge = Rallonge::where('nomRessource', $nomRessource)->first();
+        return view('reservation.createRallonge', compact('nomRessource', 'rallonge'));
     }
 
 
@@ -37,16 +34,16 @@ class ReservationController extends Controller
     {
         //
         $validated = $request->validate([
-            'date_de_réservation' => 'required',
-            'heure_de_début' => 'required',
+            'date_de_reservation' => 'required',
+            'heure_de_debut' => 'required',
             'heure_de_fin' => 'required',
-            'Ressource_ID_Ressource' => 'required',
-            'Utilisateur_ID_Utilisateur' => 'required'
+            'Rallonge_ID' => 'required',
+            'Utilisateur_ID' => 'required'
         ]);
         // dd($validated);
 
         $validated['nomRessource'] = $nomRessource;
-        Reservation::create($validated);
+        Reservations_rallonge::create($validated);
 
         return redirect()->route('ressources.index')->with('success', 'Réservation créée avec succès .');
     }
@@ -54,7 +51,7 @@ class ReservationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Reservation $reservation)
+    public function show(Reservations_rallonge $Reservations_rallonge)
     {
         //
     }
@@ -62,7 +59,7 @@ class ReservationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Reservation $reservation)
+    public function edit(Reservations_rallonge $Reservations_rallonge)
     {
         //
     }
@@ -70,7 +67,7 @@ class ReservationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Reservation $reservation)
+    public function update(Request $request, Reservations_rallonge $Reservations_rallonge)
     {
         //
     }
@@ -78,7 +75,7 @@ class ReservationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Reservation $reservation)
+    public function destroy(Reservations_rallonge $reservation)
     {
         //
     }

@@ -4,38 +4,38 @@
 
   <div class="row justify-content-center mt-5">
     <div class="col-md-6">
-        <form action="{{ route('reservation.store', ['nomRessource' => $salleClasse->nomRessource]) }}" method="POST">
+        <form action="{{ route('reservationSalleClasse.store', ['nomRessource' => $salleClasse->nomRessource]) }}" method="POST">
             @csrf
 
             <div class="form-group">
                 <label for="user_id">User ID</label>
-                <input type="text" name="Utilisateur_ID_Utilisateur" id="Utilisateur_ID_Utilisateur" class="form-control" value="{{ auth()->id() }}" readonly>
+                <input type="text" name="Utilisateur_ID" id="Utilisateur_ID" class="form-control" value="{{ auth()->id() }}" readonly>
             </div>
 
 
 
             <div class="form-group">
                 <label for="start_date">Date</label>
-                <input type="date" name="date_de_réservation" id="date_de_réservation" class="form-control">
+                <input type="date" name="date_de_reservation" id="date_de_reservation" class="form-control">
             </div>
 
             <div class="form-group">
                 <label for="heure_debut">Heure début:</label>
-                <input type="time" id="heure_de_début" name="heure_de_début" class="form-control">
+                <input type="time" id="heure_de_debut" name="heure_de_debut" class="form-control">
 
                 <label for="heure_fin">Heure Fin:</label>
                 <input type="time" id="heure_de_fin" name="heure_de_fin" class="form-control">
             </div>
-            {{-- <input type="text" name="Ressource_ID_Ressource" value="{{ $salleClasse->id }}"> --}}
+            <input type="text" name="SalleClasse_ID" value="{{ $salleClasse->id }}">
 
 
             <div class="form-group">
                 <label for="resource">Ressource</label>
-                 <select name="Ressource_ID_Ressource" id="Ressource_ID_Ressource" class="form-control">
+                 <select name="SalleClasse_ID" id="SalleClasse_ID" class="form-control">
                     <option value="{{ $salleClasse->id }}">{{ $salleClasse->nomRessource }}</option>
                     {{-- <option value="{{ $rallonge->id }}">{{ $rallonge->nomRessource }}</option> --}}
                 </select>
-                <input type="text" name="Ressource_ID_Ressource" value="{{ $salleClasse->id }}">
+                <input type="text" name="SalleClasse_ID" value="{{ $salleClasse->id }}">
             </div>
 
             <button type="submit" class="btn btn-primary mt-5">Valider votre Réservation</button>

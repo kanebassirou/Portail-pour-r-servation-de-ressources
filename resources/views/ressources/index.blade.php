@@ -69,7 +69,7 @@
                     </div>
                   </div>
                   <div class="reservation-button">
-                    <a href="{{ route('reservation.create', ['nomRessource' => $salleClasse->nomRessource]) }}" class="btn btn-primary">Réserver</a>
+                    <a href="{{ route('reservationSalleClasse.create', ['nomRessource' => $salleClasse->nomRessource]) }}" class="btn btn-primary">Réserver</a>
                  </div>
                 </div>
                 @endforeach
@@ -93,7 +93,7 @@
                     </div>
                   </div>
                   <div class="reservation-button">
-                    <a href="{{ route('reservation.create', ['nomRessource' => $salleClasse->nomRessource]) }}" class="btn btn-primary">Réserver</a>
+                    <a href="{{ route('reservationRallonge.create', ['nomRessource' => $rallonge->nomRessource]) }}" class="btn btn-primary">Réserver</a>
                  </div>
                 </div>
                 @endforeach

@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Cable;
 use App\Models\Rallonge;
-use App\Models\Reservation;
+use App\Models\Reservations_salles_classes;
 use App\Models\SalleClasse;
 use App\Models\VideoProjecteur;
 use Illuminate\Http\Request;
 
-class ReservationController extends Controller
+class ReservationSalleClasseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,7 +25,7 @@ class ReservationController extends Controller
     public function create($nomRessource)
     {
         $salleClasse = SalleClasse::where('nomRessource', $nomRessource)->first();
-        return view('reservation.create', compact('nomRessource', 'salleClasse'));
+        return view('reservation.createSalleClasse', compact('nomRessource', 'salleClasse'));
     }
 
 
@@ -37,16 +37,16 @@ class ReservationController extends Controller
     {
         //
         $validated = $request->validate([
-            'date_de_réservation' => 'required',
-            'heure_de_début' => 'required',
+            'date_de_reservation' => 'required',
+            'heure_de_debut' => 'required',
             'heure_de_fin' => 'required',
-            'Ressource_ID_Ressource' => 'required',
-            'Utilisateur_ID_Utilisateur' => 'required'
+            'SalleClasse_ID' => 'required',
+            'Utilisateur_ID' => 'required'
         ]);
         // dd($validated);
 
         $validated['nomRessource'] = $nomRessource;
-        Reservation::create($validated);
+        Reservations_salles_classes::create($validated);
 
         return redirect()->route('ressources.index')->with('success', 'Réservation créée avec succès .');
     }
@@ -54,7 +54,7 @@ class ReservationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Reservation $reservation)
+    public function show(Reservations_salles_classes $Reservations_salles_classes)
     {
         //
     }
@@ -62,7 +62,7 @@ class ReservationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Reservation $reservation)
+    public function edit(Reservations_salles_classes $Reservations_salles_classes)
     {
         //
     }
@@ -70,7 +70,7 @@ class ReservationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Reservation $reservation)
+    public function update(Request $request, Reservations_salles_classes $Reservations_salles_classes)
     {
         //
     }
@@ -78,7 +78,7 @@ class ReservationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Reservation $reservation)
+    public function destroy(Reservations_salles_classes $reservation)
     {
         //
     }
