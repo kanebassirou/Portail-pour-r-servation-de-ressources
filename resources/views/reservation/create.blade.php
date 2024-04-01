@@ -4,7 +4,7 @@
 
   <div class="row justify-content-center mt-5">
     <div class="col-md-6">
-        <form action="{{ route('reservation.store') }}" method="POST">
+        <form action="{{ route('reservation.store', ['nomRessource' => $salleClasse->nomRessource]) }}" method="POST">
             @csrf
 
             <div class="form-group">
@@ -26,15 +26,17 @@
                 <label for="heure_fin">Heure Fin:</label>
                 <input type="time" id="heure_de_fin" name="heure_de_fin" class="form-control">
             </div>
+            <input type="hidden" name="Ressource_ID_Ressource" value="{{ $salleClasse->id }}">
 
-            <div class="form-group">
+
+            {{-- <div class="form-group">
                 <label for="resource">Ressource</label>
                 <select name="Ressource_ID_Ressource" id="Ressource_ID_Ressource" class="form-control">
                     <option value="1">Ressource 1</option>
                     <option value="2">Ressource 2</option>
                     <option value="3">Ressource 3</option>
                 </select>
-            </div>
+            </div> --}}
 
             <button type="submit" class="btn btn-primary mt-5">Valider votre Réservation</button>
         </form>

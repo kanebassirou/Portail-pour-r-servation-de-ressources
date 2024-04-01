@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cable;
+use App\Models\Rallonge;
 use App\Models\Reservation;
+use App\Models\SalleClasse;
+use App\Models\VideoProjecteur;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
@@ -18,16 +22,22 @@ class ReservationController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($nomRessource)
     {
-        return view('reservation.create');
-        //
+        $salleClasse = SalleClasse::where('nomRessource', $nomRessource)->first();
+        $rallonge = Rallonge::where('nomRessource', $nomRessource)->first();
+        // $videoprojecteur = VideoProjecteur::where('nomRessource', $nomRessource)->first();
+        // $cablage = Cable::where('nomRessource', $nomRessource)->first();
+
+        return view('reservation.create', compact('nomRessource', 'salleClasse'));
     }
+
+
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request , $nomRessource)
     {
         //
         $validated = $request->validate([
@@ -39,6 +49,7 @@ class ReservationController extends Controller
         ]);
         // dd($validated);
 
+        $validated['nomRessource'] = $nomRessource;
         Reservation::create($validated);
 
         return redirect()->route('ressources.index')->with('success', 'Réservation créée avec succès .');

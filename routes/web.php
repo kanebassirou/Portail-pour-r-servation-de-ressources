@@ -19,7 +19,11 @@ Route::middleware([
 
     // Route pour afficher les ressources disponibles
     Route::resource('/ressources', RessourceController::class)->names('ressources');
-    Route::resource('ressources/reservation', ReservationController::class)->names('reservation');
 
+
+    Route::get('/ressources/reservation/create/{nomRessource}', [ReservationController::class, 'create'])->name('reservation.create');
+    Route::post('/ressources/reservation/{nomRessource} ', [ReservationController::class, 'store'])->name('reservation.store');
+
+    Route::resource('ressources/reservation', ReservationController::class)->except(['create', 'store'])->names('reservation');
 
 });

@@ -8,6 +8,8 @@
         {{ Session::get('success') }}
     </div>
 
+@endif
+
     <div class="row justify-content-center">
       <div class="col-md-6">
         <form action="/search" method="GET">
@@ -38,7 +40,6 @@
       </div>
     </div>
 
-@endif
 
     <div class="page-section">
       <div class="container">
@@ -68,8 +69,8 @@
                     </div>
                   </div>
                   <div class="reservation-button">
-                    <a href="{{ route('reservation.create')}}" class="btn btn-primary">Réserver</a>
-                  </div>
+                    <a href="{{ route('reservation.create', ['nomRessource' => $salleClasse->nomRessource]) }}" class="btn btn-primary">Réserver</a>
+                 </div>
                 </div>
                 @endforeach
 
@@ -92,8 +93,8 @@
                     </div>
                   </div>
                   <div class="reservation-button">
-                    <a href="{{ route('reservation.create')}}" class="btn btn-primary">Réserver</a>
-                  </div>
+                    <a href="{{ route('reservation.create', ['nomRessource' => $salleClasse->nomRessource]) }}" class="btn btn-primary">Réserver</a>
+                 </div>
                 </div>
                 @endforeach
 
@@ -115,8 +116,8 @@
                     </div>
                   </div>
                   <div class="reservation-button">
-                    <a href="{{ route('reservation.create')}}" class="btn btn-primary">Réserver</a>
-                  </div>
+                    <a href="{{ route('reservation.create', ['nomRessource' => $salleClasse->nomRessource]) }}" class="btn btn-primary">Réserver</a>
+                 </div>
                 </div>
                 @endforeach
 
@@ -138,8 +139,8 @@
                     </div>
                   </div>
                   <div class="reservation-button">
-                    <a href="{{ route('reservation.create')}}" class="btn btn-primary">Réserver</a>
-                  </div>
+                    <a href="{{ route('reservation.create', ['nomRessource' => $salleClasse->nomRessource]) }}" class="btn btn-primary">Réserver</a>
+                 </div>
                 </div>
                 @endforeach
               </div>
