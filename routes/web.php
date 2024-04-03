@@ -35,6 +35,6 @@ Route::middleware([
     Route::post('/ressources/reservationRallonge/{nomRessource} ', [ReservationRallongeController::class, 'store'])->name('reservationRallonge.store');
     Route::resource('ressources/reservationRallonge', ReservationRallongeController::class)->except(['create', 'store'])->names('reservationRallonge');
 
-    Route::get('/search', [RessourceController::class, 'search'])->name('search');
+    Route::get('reservation/recherche', [RessourceController::class, 'search'])->name('search');
 
 });
