@@ -1,6 +1,12 @@
 @extends('layouts.base')
 
 @section('content')
+   {{-- Message d'erreur --}}
+   @if (session('error'))
+   <div class="alert alert-danger">
+       {{ session('error') }}
+   </div>
+@endif
 
   <div class="row justify-content-center mt-5">
     <div class="col-md-6">
@@ -29,14 +35,14 @@
             <input type="text" name="SalleClasse_ID" value="{{ $salleClasse->id }}">
 
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="resource">Ressource</label>
                  <select name="SalleClasse_ID" id="SalleClasse_ID" class="form-control">
                     <option value="{{ $salleClasse->id }}">{{ $salleClasse->nomRessource }}</option>
                     {{-- <option value="{{ $rallonge->id }}">{{ $rallonge->nomRessource }}</option> --}}
-                </select>
+                {{-- </select>
                 <input type="text" name="SalleClasse_ID" value="{{ $salleClasse->id }}">
-            </div>
+            </div>  --}}
 
             <button type="submit" class="btn btn-primary mt-5">Valider votre Réservation</button>
         </form>

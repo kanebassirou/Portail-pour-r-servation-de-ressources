@@ -6,38 +6,51 @@
       @if (Session::has('success'))
     <div class="alert alert-success">
         {{ Session::get('success') }}
+           {{-- Message d'erreur --}}
+           @if (session('error'))
+           <div class="alert alert-danger">
+               {{ session('error') }}
+           </div>
+       @endif
     </div>
 
 @endif
 
+<div class="container">
     <div class="row justify-content-center">
-      <div class="col-md-6">
-        <form action="/search" method="GET">
-          <div class="form-group">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Recherche de Ressources</div>
+                <div class="card-body">
+                    <form action="{{ route('search') }}" method="GET">
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input type="date" id="date" name="date" class="form-control" required>
+                        </div>
 
-            <label for="date">Date</label>
-            <input type="date" id="date" name="date" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="heure_debut">Heure début:</label>
-            <input type="time" id="heure_debut" name="heure_debut" class="form-control">
+                        <div class="form-group">
+                            <label for="heure_debut">Heure de début</label>
+                            <input type="time" id="heure_debut" name="heure_debut" class="form-control" required>
 
-            <label for="heure_fin">Heure Fin:</label>
-            <input type="time" id="heure_fin" name="heure_fin" class="form-control">
+                            <label for="heure_fin">Heure de fin</label>
+                            <input type="time" id="heure_fin" name="heure_fin" class="form-control" required>
+                        </div>
 
-          </div>
-          <div class="form-group">
-            <label for="resource">Ressource:</label>
-            <select id="resource" name="resource" class="form-control">
-              <option value="">Sélectionner une ressource</option>
-              <option value="1">Salle de classe</option>
-              <option value="2">Rallonge</option>
-              <option value="3">VideoProjecteur</option>
-            </select>
-          </div>
-          <button type="submit" class="btn btn-primary">Rechercher</button>
-        </form>
-      </div>
+                        <div class="form-group">
+                            <label for="resource">Type de ressource</label>
+                            <select id="resource" name="resource" class="form-control" required>
+                                <option value="">Sélectionnez une ressource</option>
+                                <option value="1">Salle de classe</option>
+                                <option value="2">Rallonge</option>
+                                <option value="3">Vidéoprojecteur</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Rechercher</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
 

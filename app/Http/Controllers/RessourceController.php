@@ -10,6 +10,45 @@ use Illuminate\Http\Request;
 
 class RessourceController extends Controller
 {
+
+    public function search(Request $request)
+    {
+        $date = $request->date;
+        $heure_debut = $request->heure_debut;
+        $heure_fin = $request->heure_fin;
+        $resource = $request->resource;
+
+        // Ici, vous devez construire votre logique de recherche en fonction du type de ressource
+        // et d'autres critères comme la date et l'heure.
+        // Ceci est un exemple simplifié pour démarrer.
+
+        switch ($resource) {
+            case '1': // Salle de classe
+                $results = SalleClasse::whereDoesntHave('reservations_salles_classes', function ($query) use ($date, $heure_debut, $heure_fin) {
+                    $query->where('date_de_reservation', $date)
+                          ->where(function ($query) use ($heure_debut, $heure_fin) {
+                              $query->whereBetween('heure_de_debut', [$heure_debut, $heure_fin])
+                                    ->orWhereBetween('heure_de_fin', [$heure_debut, $heure_fin]);
+                          });
+                })->get();
+                break;
+            case '2': // Rallonge
+                $results = Rallonge::where('disponible', true)
+                                ->get();
+                break;
+            case '3': // VideoProjecteur
+                $results = VideoProjecteur::where('disponible', true)
+                                ->get();
+                break;
+            default:
+                $results = collect();
+                break;
+        }
+
+        // Retourner une vue avec les résultats. Assurez-vous d'avoir une vue appropriée pour afficher les résultats.
+        return view('search.results', compact('results'));
+    }
+
     /**
      * Display a listing of the resource.
      */

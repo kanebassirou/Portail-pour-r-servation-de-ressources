@@ -43,6 +43,18 @@ class ReservationSalleClasseController extends Controller
             'SalleClasse_ID' => 'required',
             'Utilisateur_ID' => 'required'
         ]);
+        $conflict = Reservations_salles_classes::where('SalleClasse_ID', $validated['SalleClasse_ID'])
+            ->where('date_de_reservation', $validated['date_de_reservation'])
+            ->where(function ($query) use ($validated) {
+                $query->whereBetween('heure_de_debut', [$validated['heure_de_debut'], $validated['heure_de_fin']])
+                      ->orWhereBetween('heure_de_fin', [$validated['heure_de_debut'], $validated['heure_de_fin']]);
+            })->exists();
+
+        if ($conflict) {
+            // Gérer le conflit de réservation
+
+            return redirect()->back()->with('error', 'Le salle de classe  est déjà réservée pour cet horaire.');
+        }
         // dd($validated);
 
         $validated['nomRessource'] = $nomRessource;
@@ -50,6 +62,7 @@ class ReservationSalleClasseController extends Controller
 
         return redirect()->route('ressources.index')->with('success', 'Réservation créée avec succès .');
     }
+
 
     /**
      * Display the specified resource.
