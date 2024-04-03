@@ -54,7 +54,10 @@ class RessourceController extends Controller
         }
 
         // Retourner une vue avec les résultats. Assurez-vous d'avoir une vue appropriée pour afficher les résultats.
-        return view('reservation.results', compact('results'));
+        return view('reservation.results', [
+            'results' => $results,
+            'searchParams' => $request->only(['date', 'heure_debut', 'heure_fin']),
+        ]);
     }
 
     /**
