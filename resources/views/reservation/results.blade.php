@@ -1,8 +1,8 @@
 @extends('layouts.base')
 
 @section('content')
-    <div class="container">
-        <h2>Résultats de la recherche</h2>
+    <div class="container mt-5">
+        <h2>Ressources Disponible </h2>
         @if($results->isEmpty())
             <p>Aucune ressource trouvée.</p>
         @else
@@ -29,4 +29,5 @@
             </div>
         @endif
     </div>
+    <div class="mt-5"></div>
 @endsection

@@ -33,7 +33,7 @@
         <div class="navbar-collapse collapse" id="navbarContent">
           <ul class="navbar-nav ml-auto pt-3 pt-lg-0">
             <li class="nav-item">
-              <a href="#" class="nav-link">Acceuil</a>
+              <a href="{{route('ressources.index')}}" class="nav-link">Acceuil</a>
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">Mes Resservation</a>
@@ -65,7 +65,7 @@
                 <li class="breadcrumb-item active" aria-current="page">Dans notre Portail</li>
               </ol>
             </nav>
-            <h1 class="fg-white text-center">Faite vos Resservation</h1>
+            <h1 class="fg-white text-center">Faite vos réservation de ressources</h1>
           </div>
         </div>
       </div>

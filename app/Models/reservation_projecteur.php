@@ -3,18 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Cable extends Ressource
+class reservation_projecteur extends Reservation
 {
     use HasFactory;
     protected $guarded = ['id'];
 
 
     // protected $fillable = ['nomRessource', 'etatRessource', 'description','typeDecable', 'longueur'];
-    public function reservations_cables():HasMany
+    public function projecteurs() : BelongsTo
     {
-        return $this->hasMany(Reservations_cable::class, 'Rallonge_ID');
+        return $this->belongsTo(VideoProjecteur::class);
     }
-
 }

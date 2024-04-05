@@ -10,7 +10,7 @@
 
   <div class="row justify-content-center mt-5">
     <div class="col-md-6">
-        <form action="{{ route('reservationSalleClasse.store', ['id' => $salleClasse->id]) }}" method="POST">
+        <form action="{{ route('reservationCable.store', ['id' =>  $cable->id]) }}" method="POST">
             @csrf
 
             <div class="form-group">
@@ -32,17 +32,19 @@
                 <label for="heure_fin">Heure Fin:</label>
                 <input type="time" id="heure_de_fin" name="heure_de_fin" class="form-control">
             </div>
-            <input type="text" name="SalleClasse_ID" value="{{ $salleClasse->id }}">
+            <input type="text" name="Cable_ID" value="{{ $cable->id }}">
+
 
 
             {{-- <div class="form-group">
                 <label for="resource">Ressource</label>
-                 <select name="SalleClasse_ID" id="SalleClasse_ID" class="form-control">
-                    <option value="{{ $salleClasse->id }}">{{ $salleClasse->nomRessource }}</option>
+                 <select name="Rallonge_ID" id="Rallonge_ID" class="form-control">
+                    <option value="{{ $rallonge->id }}">{{ $rallonge->nomRessource }}</option>
                     {{-- <option value="{{ $rallonge->id }}">{{ $rallonge->nomRessource }}</option> --}}
                 {{-- </select>
-                <input type="text" name="SalleClasse_ID" value="{{ $salleClasse->id }}">
-            </div>  --}}
+            </div>
+            <input type="text" name="Rallonge_ID" value="{{ $rallonge->id }}"> --}}
+
 
             <button type="submit" class="btn btn-primary mt-5">Valider votre Réservation</button>
         </form>

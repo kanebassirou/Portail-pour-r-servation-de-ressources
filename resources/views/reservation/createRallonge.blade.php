@@ -10,15 +10,14 @@
 
   <div class="row justify-content-center mt-5">
     <div class="col-md-6">
-        <form action="{{ route('reservationRallonge.store', ['nomRessource' => $rallonge->nomRessource]) }}" method="POST">
+
+        <form action="{{ route('reservationRallonge.store', ['id' => $rallonge->id]) }}" method="POST">
             @csrf
 
             <div class="form-group">
                 <label for="user_id">User ID</label>
                 <input type="text" name="Utilisateur_ID" id="Utilisateur_ID" class="form-control" value="{{ auth()->id() }}" readonly>
             </div>
-
-
 
             <div class="form-group">
                 <label for="start_date">Date</label>
@@ -35,15 +34,6 @@
             <input type="text" name="Rallonge_ID" value="{{ $rallonge->id }}">
 
 
-
-            {{-- <div class="form-group">
-                <label for="resource">Ressource</label>
-                 <select name="Rallonge_ID" id="Rallonge_ID" class="form-control">
-                    <option value="{{ $rallonge->id }}">{{ $rallonge->nomRessource }}</option>
-                    {{-- <option value="{{ $rallonge->id }}">{{ $rallonge->nomRessource }}</option> --}}
-                {{-- </select>
-            </div>
-            <input type="text" name="Rallonge_ID" value="{{ $rallonge->id }}"> --}}
 
 
             <button type="submit" class="btn btn-primary mt-5">Valider votre Réservation</button>

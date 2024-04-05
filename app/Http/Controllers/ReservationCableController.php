@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cable;
 use App\Models\Rallonge;
+use App\Models\Reservations_cable;
 use App\Models\Reservations_rallonge;
 use Illuminate\Http\Request;
 
-class ReservationRallongeController extends Controller
+class ReservationCableController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,8 +23,8 @@ class ReservationRallongeController extends Controller
      */
     public function create($id)
     {
-        $rallonge = Rallonge::where('id', $id)->first();
-        return view('reservation.createRallonge', compact('id', 'rallonge' ));
+        $cable = Cable::where('id', $id)->first();
+        return view('reservation.createCable', compact('id', 'cable', ));
     }
 
 
@@ -36,12 +38,12 @@ class ReservationRallongeController extends Controller
             'date_de_reservation' => 'required|date',
             'heure_de_debut' => 'required|date_format:H:i',
             'heure_de_fin' => 'required|date_format:H:i|after:heure_de_debut',
-            'Rallonge_ID' => 'required|exists:rallonges,id',
+            'Cable_ID' => 'required|exists:rallonges,id',
             'Utilisateur_ID' => 'required|exists:users,id' // Assurez-vous que 'users' est le nom correct de votre table des utilisateurs
         ]);
 
         // Vérifier si la ressource est déjà réservée pour la plage horaire demandée
-        $conflict = Reservations_rallonge::where('Rallonge_ID', $validated['Rallonge_ID'])
+        $conflict = Reservations_cable::where('Cable_ID', $validated['Cable_ID'])
             ->where('date_de_reservation', $validated['date_de_reservation'])
             ->where(function ($query) use ($validated) {
                 $query->whereBetween('heure_de_debut', [$validated['heure_de_debut'], $validated['heure_de_fin']])
@@ -55,7 +57,7 @@ class ReservationRallongeController extends Controller
         }
 
         $validated['id'] = $id;
-        Reservations_rallonge::create($validated);
+        Reservations_cable::create($validated);
 
         return redirect()->route('ressources.index')->with('success', 'Réservation créée avec succès.');
     }

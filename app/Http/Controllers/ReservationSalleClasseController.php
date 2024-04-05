@@ -22,10 +22,10 @@ class ReservationSalleClasseController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create($nomRessource)
+    public function create($id)
     {
-        $salleClasse = SalleClasse::where('nomRessource', $nomRessource)->first();
-        return view('reservation.createSalleClasse', compact('nomRessource', 'salleClasse'));
+        $salleClasse = SalleClasse::where('id', $id)->first();
+        return view('reservation.createSalleClasse', compact('id', 'salleClasse'));
     }
 
 
@@ -33,7 +33,7 @@ class ReservationSalleClasseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request , $nomRessource)
+    public function store(Request $request , $id)
     {
         //
         $validated = $request->validate([
@@ -57,7 +57,7 @@ class ReservationSalleClasseController extends Controller
         }
         // dd($validated);
 
-        $validated['nomRessource'] = $nomRessource;
+        $validated['id'] = $id;
         Reservations_salles_classes::create($validated);
 
         return redirect()->route('ressources.index')->with('success', 'Réservation créée avec succès .');

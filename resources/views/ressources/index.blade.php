@@ -16,7 +16,7 @@
 
 @endif
 
-<div class="container">
+<div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -42,7 +42,8 @@
                                 <option value="">Sélectionnez une ressource</option>
                                 <option value="1">Salle de classe</option>
                                 <option value="2">Rallonge</option>
-                                <option value="3">Vidéoprojecteur</option>
+                                <option value="3">Cable</option>
+                                <option value="4">Vidéoprojecteur</option>
                             </select>
                         </div>
 
@@ -82,7 +83,7 @@
                     </div>
                   </div>
                   <div class="reservation-button">
-                    <a href="{{ route('reservationSalleClasse.create', ['nomRessource' => $salleClasse->nomRessource]) }}" class="btn btn-primary">Réserver</a>
+                    <a href="{{ route('reservationSalleClasse.create', ['id' => $salleClasse->id]) }}" class="btn btn-primary">Réserver</a>
                  </div>
                 </div>
                 @endforeach
@@ -106,30 +107,29 @@
                     </div>
                   </div>
                   <div class="reservation-button">
-                    <a href="{{ route('reservationRallonge.create', ['nomRessource' => $rallonge->nomRessource]) }}" class="btn btn-primary">Réserver</a>
+                    <a href="{{ route('reservationRallonge.create', ['id' => $rallonge->id]) }}" class="btn btn-primary">Réserver</a>
                  </div>
                 </div>
                 @endforeach
 
                 <!-- Câbles -->
-                @foreach($rallonges as $cable)
+                @foreach($cables as $cable)
                 <div class="card-testimonial">
                   <div class="content">
-                    Type : {{ $cable->type }}<br>
                     Longueur : {{ $cable->longueur }}<br>
-                    Connecteur : {{ $cable->connecteur }}
+                    Connecteur : {{ $cable->Description }}
                   </div>
                   <div class="author">
                     <div class="avatar">
                       <img src="../assets/img/icons/cable.png" alt=""> <!-- Assurez-vous que l'icône est correctement référencée -->
                     </div>
                     <div class="d-inline-block ml-2">
-                      <div class="author-name">Câble</div>
-                      <div class="author-info">{{ $cable->type }}</div>
+                      <div class="author-name">Câblelate</div>
+                      <div class="author-info">{{ $cable->nomRessource }}</div>
                     </div>
                   </div>
                   <div class="reservation-button">
-                    <a href="{{ route('reservation.create', ['nomRessource' => $salleClasse->nomRessource]) }}" class="btn btn-primary">Réserver</a>
+                    <a href="{{ route('reservationCable.create', ['id' =>$cable->id]) }}" class="btn btn-primary">Réserver</a>
                  </div>
                 </div>
                 @endforeach
@@ -148,11 +148,11 @@
                     </div>
                     <div class="d-inline-block ml-2">
                       <div class="author-name">Vidéoprojecteur</div>
-                      <div class="author-info">{{ $videoProjecteur->nomVideoProjecteur }}</div>
+                      <div class="author-info">{{ $videoProjecteur->nomRessource }}</div>
                     </div>
                   </div>
                   <div class="reservation-button">
-                    <a href="{{ route('reservation.create', ['nomRessource' => $salleClasse->nomRessource]) }}" class="btn btn-primary">Réserver</a>
+                    <a href="{{ route('reservationProjecteur.create', ['id' =>  $videoProjecteur->id]) }}" class="btn btn-primary">Réserver</a>
                  </div>
                 </div>
                 @endforeach

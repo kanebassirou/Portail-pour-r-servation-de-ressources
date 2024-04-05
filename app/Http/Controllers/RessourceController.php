@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cable;
 use App\Models\Rallonge;
 use App\Models\Ressource;
 use App\Models\SalleClasse;
@@ -24,25 +25,36 @@ class RessourceController extends Controller
 
         switch ($resource) {
             case '1': // Salle de classe
-                // $sql = SalleClasse::whereDoesntHave('reservations_salles_classes', function ($query) use ($heure_debut, $heure_fin) {
-                //     $query->where(function ($q) use ($heure_debut, $heure_fin) {
-                //         $q->whereBetween('heure_de_debut', [$heure_debut, $heure_fin])
-                //           ->orWhereBetween('heure_de_fin', [$heure_debut, $heure_fin]);
-                //     });
-                // })->toSql();
-
-                $results = SalleClasse::whereDoesntHave('reservations_salles_classes', function ($query) use ($heure_debut, $heure_fin) {
-                    $query->where(function ($q) use ($heure_debut, $heure_fin) {
-                        $q->whereBetween('heure_de_debut', [$heure_debut, $heure_fin])
-                          ->orWhereBetween('heure_de_fin', [$heure_debut, $heure_fin]);
-                    });
+                $results = SalleClasse::whereDoesntHave('reservations_salles_classes', function ($query) use ($date, $heure_debut, $heure_fin) {
+                    $query->where('date_de_reservation', $date)
+                          ->where(function ($query) use ($heure_debut, $heure_fin) {
+                              // Réservations qui commencent ou finissent dans la plage horaire
+                              $query->whereBetween('heure_de_debut', [$heure_debut, $heure_fin])
+                                    ->orWhereBetween('heure_de_fin', [$heure_debut, $heure_fin])
+                                    // Réservations qui commencent avant et finissent après la plage horaire
+                                    ->orWhere(function ($q) use ($heure_debut, $heure_fin) {
+                                        $q->where('heure_de_debut', '<', $heure_debut)
+                                          ->where('heure_de_fin', '>', $heure_fin);
+                                    });
+                          });
                 })->get();
-
                 break;
 
+
             case '2': // Rallonge
-                $results = Rallonge::where('disponible', true)
-                                ->get();
+                $results = Rallonge::whereDoesntHave('reservations_rallonges', function ($query) use ($date, $heure_debut, $heure_fin) {
+                    $query->where('date_de_reservation', $date)
+                          ->where(function ($query) use ($heure_debut, $heure_fin) {
+                              // Réservations qui commencent ou finissent dans la plage horaire
+                              $query->whereBetween('heure_de_debut', [$heure_debut, $heure_fin])
+                                    ->orWhereBetween('heure_de_fin', [$heure_debut, $heure_fin])
+                                    // Réservations qui commencent avant et finissent après la plage horaire
+                                    ->orWhere(function ($q) use ($heure_debut, $heure_fin) {
+                                        $q->where('heure_de_debut', '<', $heure_debut)
+                                          ->where('heure_de_fin', '>', $heure_fin);
+                                    });
+                          });
+                })->get();
                 break;
             case '3': // VideoProjecteur
                 $results = VideoProjecteur::where('disponible', true)
@@ -66,10 +78,10 @@ class RessourceController extends Controller
     public function index()
     {
         $salleClasses = SalleClasse::all();
+        $cables = Cable::all();
         $rallonges = Rallonge::all();
         $videoProjecteurs = VideoProjecteur::all();
-        return view('ressources.index', compact('salleClasses', 'rallonges', 'videoProjecteurs'));
-        return view('ressources.index', compact('ressources', 'salleClasses'));
+        return view('ressources.index', compact('salleClasses', 'rallonges', 'videoProjecteurs','cables'));
     }
 
     /**
