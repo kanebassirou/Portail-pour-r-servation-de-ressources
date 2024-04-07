@@ -53,14 +53,14 @@ class ReservationSalleClasseController extends Controller
         if ($conflict) {
             // Gérer le conflit de réservation
 
-            return redirect()->back()->with('error', 'Le salle de classe  est déjà réservée pour cet horaire.');
+            return redirect()->back()->with('error', 'cette salle de classe  est déjà réservée pour cet horaire.');
         }
         // dd($validated);
 
         $validated['id'] = $id;
         Reservations_salles_classes::create($validated);
 
-        return redirect()->route('ressources.index')->with('success', 'Réservation créée avec succès .');
+        return redirect()->route('ressources.index')->with('success', 'Réservation de cette salle de classe est  créée avec succès .');
     }
 
 

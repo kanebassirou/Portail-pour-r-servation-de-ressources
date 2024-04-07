@@ -57,7 +57,7 @@ class ReservationRallongeController extends Controller
         $validated['id'] = $id;
         Reservations_rallonge::create($validated);
 
-        return redirect()->route('ressources.index')->with('success', 'Réservation créée avec succès.');
+        return redirect()->route('ressources.index')->with('success', 'Réservation de cette rallonge est créée avec succès.');
     }
 
 

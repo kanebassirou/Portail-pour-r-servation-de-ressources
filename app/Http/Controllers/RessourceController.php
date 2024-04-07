@@ -18,6 +18,8 @@ class RessourceController extends Controller
         $heure_debut = $request->heure_debut;
         $heure_fin = $request->heure_fin;
         $resource = $request->resource;
+        $nomRessource = ''; // Initialiser comme une chaîne vide
+
 
         // Ici, vous devez construire votre logique de recherche en fonction du type de ressource
         // et d'autres critères comme la date et l'heure.
@@ -57,8 +59,34 @@ class RessourceController extends Controller
                 })->get();
                 break;
             case '3': // VideoProjecteur
-                $results = VideoProjecteur::where('disponible', true)
-                                ->get();
+                $results = VideoProjecteur::whereDoesntHave('reservations_projecteurs', function ($query) use ($date, $heure_debut, $heure_fin) {
+                    $query->where('date_de_reservation', $date)
+                          ->where(function ($query) use ($heure_debut, $heure_fin) {
+                              // Réservations qui commencent ou finissent dans la plage horaire
+                              $query->whereBetween('heure_de_debut', [$heure_debut, $heure_fin])
+                                    ->orWhereBetween('heure_de_fin', [$heure_debut, $heure_fin])
+                                    // Réservations qui commencent avant et finissent après la plage horaire
+                                    ->orWhere(function ($q) use ($heure_debut, $heure_fin) {
+                                        $q->where('heure_de_debut', '<', $heure_debut)
+                                          ->where('heure_de_fin', '>', $heure_fin);
+                                    });
+                          });
+                })->get();
+                break;
+            case '4': // Cable
+                $results = Cable::whereDoesntHave('reservations_cables', function ($query) use ($date, $heure_debut, $heure_fin) {
+                    $query->where('date_de_reservation', $date)
+                          ->where(function ($query) use ($heure_debut, $heure_fin) {
+                              // Réservations qui commencent ou finissent dans la plage horaire
+                              $query->whereBetween('heure_de_debut', [$heure_debut, $heure_fin])
+                                    ->orWhereBetween('heure_de_fin', [$heure_debut, $heure_fin])
+                                    // Réservations qui commencent avant et finissent après la plage horaire
+                                    ->orWhere(function ($q) use ($heure_debut, $heure_fin) {
+                                        $q->where('heure_de_debut', '<', $heure_debut)
+                                          ->where('heure_de_fin', '>', $heure_fin);
+                                    });
+                          });
+                })->get();
                 break;
             default:
                 $results = collect();
@@ -69,6 +97,7 @@ class RessourceController extends Controller
         return view('reservation.results', [
             'results' => $results,
             'searchParams' => $request->only(['date', 'heure_debut', 'heure_fin']),
+            'nomRessource' => $nomRessource
         ]);
     }
 

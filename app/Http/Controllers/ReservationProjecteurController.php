@@ -55,13 +55,13 @@ class ReservationProjecteurController extends Controller
         if ($conflict) {
             // Gérer le conflit de réservation
 
-            return redirect()->back()->with('error', 'La rallonge est déjà réservée pour cet horaire.');
+            return redirect()->back()->with('error', 'cette video-projecteur  est déjà réservée pour cet horaire.');
         }
 
         $validated['id'] = $id;
         reservation_projecteur::create($validated);
 
-        return redirect()->route('ressources.index')->with('success', 'Réservation créée avec succès.');
+        return redirect()->route('ressources.index')->with('success', 'Réservation du video-projecteur est  créée avec succès.');
     }
 
 

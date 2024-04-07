@@ -14,7 +14,7 @@ class Cable extends Ressource
     // protected $fillable = ['nomRessource', 'etatRessource', 'description','typeDecable', 'longueur'];
     public function reservations_cables():HasMany
     {
-        return $this->hasMany(Reservations_cable::class, 'Rallonge_ID');
+        return $this->hasMany(Reservations_cable::class, 'Cable_ID');
     }
 
 }

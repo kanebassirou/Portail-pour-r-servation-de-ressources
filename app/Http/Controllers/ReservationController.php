@@ -24,8 +24,8 @@ class ReservationController extends Controller
      */
     public function create($nomRessource)
     {
-        $salleClasse = SalleClasse::where('nomRessource', $nomRessource)->first();
-        return view('reservation.create', compact('nomRessource', 'salleClasse'));
+        // $salleClasse = SalleClasse::where('nomRessource', $nomRessource)->first();
+        // return view('reservation.create', compact('nomRessource', 'salleClasse'));
     }
 
 
@@ -36,19 +36,19 @@ class ReservationController extends Controller
     public function store(Request $request , $nomRessource)
     {
         //
-        $validated = $request->validate([
-            'date_de_réservation' => 'required',
-            'heure_de_début' => 'required',
-            'heure_de_fin' => 'required',
-            'Ressource_ID_Ressource' => 'required',
-            'Utilisateur_ID_Utilisateur' => 'required'
-        ]);
-        // dd($validated);
+        // $validated = $request->validate([
+        //     'date_de_réservation' => 'required',
+        //     'heure_de_début' => 'required',
+        //     'heure_de_fin' => 'required',
+        //     'Ressource_ID_Ressource' => 'required',
+        //     'Utilisateur_ID_Utilisateur' => 'required'
+        // ]);
+        // // dd($validated);
 
-        $validated['nomRessource'] = $nomRessource;
-        Reservation::create($validated);
+        // $validated['nomRessource'] = $nomRessource;
+        // Reservation::create($validated);
 
-        return redirect()->route('ressources.index')->with('success', 'Réservation créée avec succès .');
+        // return redirect()->route('ressources.index')->with('success', 'Réservation créée avec succès .');
     }
 
     /**

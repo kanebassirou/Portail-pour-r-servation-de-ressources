@@ -53,13 +53,13 @@ class ReservationCableController extends Controller
         if ($conflict) {
             // Gérer le conflit de réservation
 
-            return redirect()->back()->with('error', 'La rallonge est déjà réservée pour cet horaire.');
+            return redirect()->back()->with('error', 'cette cable est déjà réservée pour cet horaire.');
         }
 
         $validated['id'] = $id;
         Reservations_cable::create($validated);
 
-        return redirect()->route('ressources.index')->with('success', 'Réservation créée avec succès.');
+        return redirect()->route('ressources.index')->with('success', 'Réservation du cable est  créée avec succès.');
     }
 
 

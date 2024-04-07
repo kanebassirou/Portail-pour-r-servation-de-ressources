@@ -42,8 +42,8 @@
                                 <option value="">Sélectionnez une ressource</option>
                                 <option value="1">Salle de classe</option>
                                 <option value="2">Rallonge</option>
-                                <option value="3">Cable</option>
-                                <option value="4">Vidéoprojecteur</option>
+                                <option value="3">Vidéoprojecteur</option>
+                                <option value="4">Cable</option>
                             </select>
                         </div>
 
