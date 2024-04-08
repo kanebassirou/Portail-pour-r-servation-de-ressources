@@ -59,13 +59,14 @@
       <div class="container h-100">
         <div class="row justify-content-center align-items-center h-100">
           <div class="col-lg-8">
-            <nav aria-label="breadcrumb">
+            {{-- <nav aria-label="breadcrumb">
               <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0">
                 <li class="breadcrumb-item"><a href="index.html">Bienvenue</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Dans notre Portail</li>
               </ol>
-            </nav>
-            <h1 class="fg-white text-center">Faite vos réservation de ressources</h1>
+            </nav> --}}
+             @yield('breadcrumb')
+            {{-- <h1 class="fg-white text-center">Faite vos réservation de ressources</h1> --}}
           </div>
         </div>
       </div>

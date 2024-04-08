@@ -1,4 +1,13 @@
 @extends('layouts.base')
+@section('breadcrumb')
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0">
+            <li class="breadcrumb-item"><a href="{{ route('reservations.all') }}">Disponible</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Recherche</li>
+        </ol>
+    </nav>
+    <h1 class="fg-white text-center">les ressources qui sont pas encore reservés</h1>
+@endsection
 @section('content')
     <div class="container mt-5">
         <div class="card">
