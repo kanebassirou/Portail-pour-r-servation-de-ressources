@@ -14,6 +14,6 @@ class Reservations_rallonge extends Reservation
     // protected $fillable = ['nomRessource', 'etatRessource', 'description','typeDecable', 'longueur'];
     public function rallonges() : BelongsTo
     {
-        return $this->belongsTo(Rallonge::class);
+        return $this->belongsTo(Rallonge::class, 'Rallonge_ID');
     }
 }

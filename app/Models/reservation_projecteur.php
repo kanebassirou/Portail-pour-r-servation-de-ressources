@@ -14,6 +14,6 @@ class reservation_projecteur extends Reservation
     // protected $fillable = ['nomRessource', 'etatRessource', 'description','typeDecable', 'longueur'];
     public function projecteurs() : BelongsTo
     {
-        return $this->belongsTo(VideoProjecteur::class);
+        return $this->belongsTo(VideoProjecteur::class, 'Projecteur_ID');
     }
 }

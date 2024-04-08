@@ -14,7 +14,7 @@ class Reservations_salles_classes extends Reservation
     // protected $fillable = ['nomRessource', 'etatRessource', 'description','typeDecable', 'longueur'];
     public function salleClasse() : BelongsTo
     {
-        return $this->belongsTo(SalleClasse::class);
+        return $this->belongsTo(SalleClasse::class, 'SalleClasse_ID');
     }
 
 

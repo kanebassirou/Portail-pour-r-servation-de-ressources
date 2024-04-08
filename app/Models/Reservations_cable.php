@@ -14,6 +14,6 @@ class Reservations_cable extends Reservation
     // protected $fillable = ['nomRessource', 'etatRessource', 'description','typeDecable', 'longueur'];
     public function cables() : BelongsTo
     {
-        return $this->belongsTo(Cable::class);
+        return $this->belongsTo(Cable::class, 'Cable_ID');
     }
 }

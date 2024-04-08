@@ -36,7 +36,7 @@
               <a href="{{route('ressources.index')}}" class="nav-link">Acceuil</a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">Mes Resservation</a>
+              <a href="{{ route('reservations.all') }}" class="nav-link">Mes Resservation</a>
             </li>
             <li class="nav-item active">
               <a href="#" class="nav-link">Catologue</a>

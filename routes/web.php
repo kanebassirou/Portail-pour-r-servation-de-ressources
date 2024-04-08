@@ -57,4 +57,17 @@ Route::middleware([
 
     Route::get('reservation/recherche', [RessourceController::class, 'search'])->name('search');
 
+
+
+
+// Route::get('/reservations-salle-classe', [ReservationController::class, 'indexReservationsSalleClasse']);
+// Route::get('/reservations-cable', [ReservationController::class, 'indexReservationsCable']);
+// Route::get('/reservations-rallonge', [ReservationController::class, 'indexReservationsRallonge']);
+// Route::get('/reservations-projecteur', [ReservationController::class, 'indexReservationsProjecteur']);
+// routes/web.php
+
+Route::get('/reservations', [ReservationController::class, 'indexAllReservations'])->name('reservations.all');
+
+
+
 });
