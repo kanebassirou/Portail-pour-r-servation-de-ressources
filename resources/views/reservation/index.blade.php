@@ -3,12 +3,13 @@
 @extends('layouts.base')
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0">
-            <li class="breadcrumb-item"><a href="{{ route('reservations.all') }}">Voir Mes</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Réservations</li>
+        <ol class="breadcrumb justify-content-center py-2">
+            <li class="breadcrumb-item"><a href="index.html" style="color: #007bff;">Réservation</a></li>
+            <li class="breadcrumb-item active" aria-current="page" style="color: #6c757d;">Voir mes réservation </li>
         </ol>
     </nav>
-    <h1 class="fg-white text-center">Voir les reservation que vous avez faite </h1>
+        <h1 class="fg-white text-center">Tout vos réservation pour les differente ressource</h1>
+
 @endsection
 
 
