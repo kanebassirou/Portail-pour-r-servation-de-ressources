@@ -1,11 +1,15 @@
 <?php
 
+use App\Http\Controllers\CableController;
+use App\Http\Controllers\RallongeController;
 use App\Http\Controllers\ReservationCableController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReservationProjecteurController;
 use App\Http\Controllers\ReservationSalleClasseController;
 use App\Http\Controllers\ReservationRallongeController;
 use App\Http\Controllers\RessourceController;
+use App\Http\Controllers\SalleClasseController;
+use App\Http\Controllers\VideoProjecteurController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
@@ -18,6 +22,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
         // Route pour afficher les ressources disponibles
         Route::resource('/', RessourceController::class)->names('ressources');
+        Route::resource('resources', RessourceController::class)->names('ressources');
+
 
         Route::get('/ressources/reservation/create/{id}', [ReservationController::class, 'create'])->name('reservation.create');
         Route::post('/ressources/reservation/{id} ', [ReservationController::class, 'store'])->name('reservation.store');
@@ -61,6 +67,14 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::get('/admin/dashboard/gestion/ressources', function () {
             return view('admin.ressources');
         })->name('admin.ressources');
+        // Route::resource('resources', RessourceController::class)->names('ressources');
+
+        Route::resource('/admin/ressources/salleClasse', SalleClasseController::class)->names('salleClasse');
+        Route::resource('/admin/ressources/rallonge', RallongeController::class)->names('rallonge');
+        Route::resource('/admin/ressources/cable', CableController::class)->names('cable');
+        Route::resource('/admin/ressources/projecteur', VideoProjecteurController::class)->names('projecteur');
+
+
 
     });
 });

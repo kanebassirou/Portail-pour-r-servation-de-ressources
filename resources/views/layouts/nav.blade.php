@@ -43,19 +43,22 @@
                     <li class="nav-item active">
                         <a href="#" class="nav-link">Catologue</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="{{ route('dashboard') }}" class="nav-link">Compte</a>
-                    </li>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Contact</a>
-                    </li>
+                    @if (auth()->user()->hasRole('user'))
 
-                    @if (auth()->user()->hasRole('admin'))
                         <li class="nav-item">
-                            <a href="{{ route('admin.dashboard') }}" class="nav-link">Espace Admin</a>
+                            <a href="{{ route('dashboard') }}" class="nav-link">Compte</a>
                         </li>
-                    @endif
+                         @endif
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Contact</a>
+                        </li>
+
+                        @if (auth()->user()->hasRole('admin'))
+                            <li class="nav-item">
+                                <a href="{{ route('admin.dashboard') }}" class="nav-link">Espace Admin</a>
+                            </li>
+                        @endif
 
                 </ul>
             </div>

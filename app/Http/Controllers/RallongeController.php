@@ -11,8 +11,11 @@ class RallongeController extends Controller
      * Display a listing of the resource.
      */
     public function index()
+
     {
         //
+        $rallonges = Rallonge::all();
+        return view('rallonge.index', compact('rallonges'));
     }
 
     /**
@@ -21,6 +24,7 @@ class RallongeController extends Controller
     public function create()
     {
         //
+        return view('rallonge.create');
     }
 
     /**
@@ -28,8 +32,20 @@ class RallongeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nomRessource' => 'required',
+            'nombreDePrise' => 'required',
+            'Description' => 'required',
+            'longueur' => 'required',
+            'typeDePrise' => 'required',
+            'Etat' => 'required',
+        ]);
+        $rallonge = Rallonge::create($validatedData);
+
+
+        return redirect()->route('rallonge.index')->with('success', 'La rallonge a été ajoutée avec succès.');
     }
+
 
     /**
      * Display the specified resource.
@@ -37,6 +53,8 @@ class RallongeController extends Controller
     public function show(Rallonge $rallonge)
     {
         //
+        return view('rallonge.show', compact('rallonge'));
+
     }
 
     /**
@@ -45,6 +63,7 @@ class RallongeController extends Controller
     public function edit(Rallonge $rallonge)
     {
         //
+        return view('rallonge.edit', compact('rallonge'));
     }
 
     /**
@@ -53,6 +72,16 @@ class RallongeController extends Controller
     public function update(Request $request, Rallonge $rallonge)
     {
         //
+        $validatedData = $request->validate([
+            'nomRessource' => 'required',
+            'nombreDePrise' => 'required',
+            'Description' => 'required',
+            'longueur' => 'required',
+            'typeDePrise' => 'required',
+            'Etat' => 'required',
+        ]);
+        $rallonge->update($validatedData);
+        return redirect()->route('rallonge.index')->with('success', 'La rallonge a été modifiée avec succès.');
     }
 
     /**
@@ -61,5 +90,9 @@ class RallongeController extends Controller
     public function destroy(Rallonge $rallonge)
     {
         //
+        $rallonge->delete();
+
+        return redirect()->route('rallonge.index')->with('success', 'Rallonge supprimée avec succès');
+
     }
 }
