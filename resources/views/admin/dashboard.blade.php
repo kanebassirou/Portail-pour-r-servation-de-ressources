@@ -24,10 +24,10 @@
                             <div class="px-4 py-5 sm:p-6">
                                 <h3 class="text-lg leading-6 font-medium text-gray-900">Reservation</h3>
                                 <div class="mt-2 max-w-xl text-sm text-white-500 btn btn-info">
-                                    <p>Nombre total de commandes :#</p>
+                                    <p>Nombre total de reservation :#</p>
                                 </div>
                                 <div class="mt-5">
-                                    <a href="#" class="text-white-500 btn btn-success">Voir les
+                                    <a href="{{ route('admin.reservationRessource') }}" class="text-white-500 btn btn-success">Voir les
                                         reservations</a>
                                 </div>
                             </div>

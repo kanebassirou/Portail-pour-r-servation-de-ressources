@@ -16,6 +16,12 @@ class Reservations_salles_classes extends Reservation
     {
         return $this->belongsTo(SalleClasse::class, 'SalleClasse_ID');
     }
+    public function utilisateur()
+    {
+        return $this->belongsTo(User::class, 'Utilisateur_ID');
+    }
+
+
 
 
 }

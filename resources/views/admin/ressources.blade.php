@@ -48,6 +48,28 @@
                                 </div>
                             </div>
                         </div>
+                         {{-- // d'autre ressource --}}
+
+                        <div class="bg-white overflow-hidden shadow rounded-lg">
+                            <div class="px-4 py-5 sm:p-6">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900">Gestion des câbles</h3>
+                                <p>Vous pouvez ajouter, modifier et supprimer des informations sur les câbles.</p>
+                                <div class="mt-5">
+                                    <a href="{{ route('cable.index') }}" class="btn btn-success">Accéder aux câbles</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white overflow-hidden shadow rounded-lg">
+                            <div class="px-4 py-5 sm:p-6">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900">Gestion de salle de reunion</h3>
+                                <p>Vous pouvez ajouter, modifier et supprimer des informations sur les salles de reunion.</p>
+                                <div class="mt-5">
+                                    <a href="#{{ route('cable.index') }}" class="btn btn-success">Accéder aux câbles</a>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

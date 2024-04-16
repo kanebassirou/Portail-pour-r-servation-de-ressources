@@ -10,6 +10,8 @@ use App\Http\Controllers\ReservationRallongeController;
 use App\Http\Controllers\RessourceController;
 use App\Http\Controllers\SalleClasseController;
 use App\Http\Controllers\VideoProjecteurController;
+use App\Models\Reservations_cable;
+use App\Models\Reservations_salles_classes;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
@@ -73,6 +75,25 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::resource('/admin/ressources/rallonge', RallongeController::class)->names('rallonge');
         Route::resource('/admin/ressources/cable', CableController::class)->names('cable');
         Route::resource('/admin/ressources/projecteur', VideoProjecteurController::class)->names('projecteur');
+
+        Route::get('admin/ressources/reservation', function () {
+            return view('admin.reservation.ressource');
+            })->name('admin.reservationRessource');
+
+        Route::get('admin/reservation/salle', [ReservationController::class, 'indexSalle'])->name('admin.reservationsSalle');
+        Route::get('admin/reservation/cable', [ReservationController::class, 'indexCable'])->name('admin.reservationsCable');
+        Route::get('admin/reservation/rallonge', [ReservationController::class, 'indexRallonge'])->name('admin.reservationsRallonge');
+        Route::get('admin/reservation/projecteur', [ReservationController::class, 'indexProjecteur'])->name('admin.reservationsProjecteur');
+
+        Route::resource('admin/reservationCable',ReservationCableController::class,)->names('admin.reservationCable');
+        Route::resource('admin/reservationSalle',ReservationSalleClasseController::class,)->names('admin.reservationSalle');
+        Route::resource('admin/reservationRallonge',ReservationRallongeController::class,)->names('admin.reservationRallonge');
+        Route::resource('admin/reservationProjecteur',ReservationProjecteurController::class,)->names('admin.reservationProjecteur');
+
+
+
+
+
 
 
 

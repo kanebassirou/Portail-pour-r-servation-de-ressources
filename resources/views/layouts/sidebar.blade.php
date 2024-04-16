@@ -31,6 +31,8 @@
                     les Utilisateurs</a>
                 <a href="{{ route('admin.ressources') }}"
                     class="block py-3 px-4 rounded transition duration-200 hover:bg-gray-700 my-2">Gérer Ressources</a>
+                <a href="{{ route('admin.reservationRessource') }}"
+                    class="block py-3 px-4 rounded transition duration-200 hover:bg-gray-700 my-2">Gérer les reservations</a>
             @else
                 <a href="#"
                     class="block py-3 px-4 rounded transition duration-200 hover:bg-gray-700 my-2">Profile</a>

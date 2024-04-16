@@ -38,7 +38,7 @@ class ReservationCableController extends Controller
             'date_de_reservation' => 'required|date',
             'heure_de_debut' => 'required|date_format:H:i',
             'heure_de_fin' => 'required|date_format:H:i|after:heure_de_debut',
-            'Cable_ID' => 'required|exists:rallonges,id',
+            'Cable_ID' => 'required|exists:cables,id',
             'Utilisateur_ID' => 'required|exists:users,id' // Assurez-vous que 'users' est le nom correct de votre table des utilisateurs
         ]);
 
@@ -74,24 +74,65 @@ class ReservationCableController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Reservations_rallonge $Reservations_rallonge)
-    {
-        //
+    public function edit($id) {
+        $Reservations_cable = Reservations_cable::find($id);
+
+        if (!$Reservations_cable) {
+            // Gérer l'erreur, par exemple, rediriger vers une page d'erreur ou afficher un message.
+            return redirect()->back()->withErrors('Réservation non trouvée.');
+        }
+
+        return view('admin.reservation.editCable', compact('Reservations_cable'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Reservations_rallonge $Reservations_rallonge)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Reservations_cable $Reservations_cable)
     {
-        //
+        $validated = $request->validate([
+            'date_de_reservation' => 'required',
+            'heure_de_debut' => 'required',
+            'heure_de_fin' => 'required',
+            'Cable_ID' => 'required',
+            'Utilisateur_ID' => 'required' // Assurez-vous que 'users' est le nom correct de votre table des utilisateurs
+        ]);
+        // dd($validated);
+
+        // Vérifier si la ressource est déjà réservée pour la plage horaire demandée
+        $conflict = Reservations_cable::where('Cable_ID', $validated['Cable_ID'])
+            ->where('date_de_reservation', $validated['date_de_reservation'])
+            ->where(function ($query) use ($validated) {
+                $query->whereBetween('heure_de_debut', [$validated['heure_de_debut'], $validated['heure_de_fin']])
+                      ->orWhereBetween('heure_de_fin', [$validated['heure_de_debut'], $validated['heure_de_fin']]);
+            })->where('id', '!=', $Reservations_cable->id)->exists();
+            // dd($conflict);
+
+        if ($conflict) {
+            // Gérer le conflit de réservation
+            // dd("ok");
+            return redirect()->back()->with('error', 'cette cable est déjà réservée pour cet horaire.');
+        }
+
+        $Reservations_cable->update($validated);
+
+        return redirect()->route('admin.reservationsCable')->with('success', 'Réservation du cable est modifiée avec succès.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Reservations_rallonge $reservation)
+    public function destroy($id)
     {
-        //
+        $Reservations_cable = Reservations_cable::findOrFail($id);
+        $Reservations_cable->delete();
+        return redirect()->route('admin.reservationsCable')->with('success', 'Réservation du câble supprimée avec succès.');
     }
+
+
+
+
 }

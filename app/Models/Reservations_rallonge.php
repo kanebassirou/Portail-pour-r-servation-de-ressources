@@ -16,4 +16,8 @@ class Reservations_rallonge extends Reservation
     {
         return $this->belongsTo(Rallonge::class, 'Rallonge_ID');
     }
+    public function utilisateur()
+    {
+        return $this->belongsTo(User::class, 'Utilisateur_ID');
+    }
 }
