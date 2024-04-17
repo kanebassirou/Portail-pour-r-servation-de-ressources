@@ -26,7 +26,7 @@ class ReservationProjecteurController extends Controller
     public function create($id)
     {
         $projecteur = VideoProjecteur::where('id', $id)->first();
-        return view('admin.reservation.editProjecteur', compact('id', 'projecteur'));
+        return view('reservation.createProjecteur', compact('id', 'projecteur'));
     }
 
 

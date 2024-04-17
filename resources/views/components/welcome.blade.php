@@ -5,7 +5,7 @@
 
 @section('content')
     <div class="flex justify-center items-center min-h-screen bg-gray-100">
-        @if (auth()->user()->hasRole('user'))
+        {{-- @if (auth()->user()->hasRole('user')) --}}
             {{-- Contenu spécifique au client --}}
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-2 ">
                 <div class="flex items-center">
@@ -77,11 +77,11 @@
                 </div>
             </div>
     </div>
-@else
+{{-- @else
     {{-- Contenu pour les autres rôles ou utilisateurs sans rôle spécifique --}}
     <div>
         <p class="text-gray-500 text-sm">Vous n'avez pas les permissions nécessaires pour voir cette page.</p>
     </div>
-    @endif
+    {{-- @endif --}}
     </div>
 @endsection

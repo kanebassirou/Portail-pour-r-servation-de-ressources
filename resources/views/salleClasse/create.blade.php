@@ -12,8 +12,8 @@
                     @csrf
                     <div class="mb-4">
                         <label for="nom" class="block text-gray-700 text-sm font-bold mb-2">Nom de la salle:</label>
-                        <input type="text" name="nomRessource" id="nom"
-                            class="form-input rounded-md shadow-sm w-full" required>
+                        <input type="text" name="nomRessource" id="nom" value="salle de classe"
+                           >
                     </div>
                     <div class="mb-4">
                         <label for="numero_salle" class="block text-gray-700 text-sm font-bold mb-2">Numero de salle

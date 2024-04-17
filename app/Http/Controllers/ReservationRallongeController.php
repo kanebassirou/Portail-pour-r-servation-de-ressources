@@ -39,6 +39,7 @@ class ReservationRallongeController extends Controller
             'Rallonge_ID' => 'required|exists:rallonges,id',
             'Utilisateur_ID' => 'required|exists:users,id' // Assurez-vous que 'users' est le nom correct de votre table des utilisateurs
         ]);
+        // dd($validated);
 
         // Vérifier si la ressource est déjà réservée pour la plage horaire demandée
         $conflict = Reservations_rallonge::where('Rallonge_ID', $validated['Rallonge_ID'])

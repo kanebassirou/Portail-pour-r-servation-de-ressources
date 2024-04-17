@@ -1,11 +1,6 @@
 
 
 
-
-
-
-
-
 @extends('layouts.admin')
 
 @section('title', 'gerer les reservations')
@@ -17,7 +12,9 @@
    </div>
 @endif
 
-    <form action="{{ route('admin.reservationProjecteur.update', $Reservations_projecteur->id) }}" method="POST">
+    {{-- <form action="{{ route('admin.reservationProjecteur.update', $Reservations_projecteur->id) }}" method="POST"> --}}
+        <form action="{{ route('admin.reservationProjecteur.update', $Reservations_projecteur->id) }}" method="POST">
+
         @csrf
         @method('PUT')
 

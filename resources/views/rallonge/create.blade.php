@@ -12,7 +12,7 @@
                     @csrf
                     <div class="mb-4">
                         {{-- <label for="nom" class="block text-gray-700 text-sm font-bold mb-2">Nom de la salle:</label> --}}
-                        <input type="hidden" name="nomRessource" id="nom" value="rallonge"
+                        <input type="hidden" name="nomRessource" id="nom" value="Rallonge"
                             class="form-input rounded-md shadow-sm w-full" required>
                     </div>
                     <div class="mb-4">

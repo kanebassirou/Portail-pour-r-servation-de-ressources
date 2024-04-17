@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('video_projecteurs', function (Blueprint $table) {
             $table->id();
-            $table->string('nomVideoProjecteur');
+            $table->string('nomRessource');
             $table->integer('modele');
             $table->integer('resolution');
             $table->timestamps();
