@@ -13,7 +13,7 @@ class VideoProjecteurController extends Controller
     public function index()
     {
         //
-        $projecteurs = VideoProjecteur::all();
+        $projecteurs = VideoProjecteur::paginate(10);
         return view('projecteur.index', compact('projecteurs'));
     }
 

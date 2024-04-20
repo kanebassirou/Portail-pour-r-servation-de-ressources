@@ -10,7 +10,14 @@
     @endif
 
     <div class="py-8">
+        <div class="row">
+        <div class="col-md-10">
         <a href="{{ route('projecteur.create') }}" class="btn btn-primary mb-2">Ajouter une nouvelle projecteur</a>
+        </div>
+        <div class="col-md-2">
+            <a href="{{ route('admin.ressources') }}" class="btn btn-primary">Retour</a>
+        </div>
+        </div>
 
         <table class="table">
             <thead>
@@ -73,5 +80,8 @@
                 @endforeach
             </tbody>
         </table>
+           <div class="mt-5">
+        {{ $projecteurs->links() }}
+            </div>
     </div>
 @endsection

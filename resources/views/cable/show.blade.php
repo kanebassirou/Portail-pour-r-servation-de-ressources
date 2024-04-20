@@ -20,8 +20,8 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6 mt-3">
-                                                         <img src="https://th.bing.com/th/id/OIP.0F1dCCaCYDkuGnWRpWDc1gHaFT?rs=1&pid=ImgDetMain"
-                                        alt="">
+                        <img src="https://th.bing.com/th/id/OIP.0F1dCCaCYDkuGnWRpWDc1gHaFT?rs=1&pid=ImgDetMain"
+                            alt="">
                     </div>
 
                     <div class="col-md-6 mt-5">

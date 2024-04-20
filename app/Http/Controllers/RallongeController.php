@@ -14,7 +14,7 @@ class RallongeController extends Controller
 
     {
         //
-        $rallonges = Rallonge::all();
+        $rallonges = Rallonge::paginate(5);
         return view('rallonge.index', compact('rallonges'));
     }
 

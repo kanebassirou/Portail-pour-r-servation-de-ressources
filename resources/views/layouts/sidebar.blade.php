@@ -27,7 +27,7 @@
             @if (auth()->user()->hasRole('admin'))
                 <a href="{{ route('profile.show') }}"
                     class="block py-3 px-4 rounded transition duration-200 hover:bg-gray-700 my-2">User Profile</a>
-                <a href="#" class="block py-3 px-4 rounded transition duration-200 hover:bg-gray-700 my-2">Gérer
+                <a href="{{ route('admin.users.index') }}" class="block py-3 px-4 rounded transition duration-200 hover:bg-gray-700 my-2">Gérer
                     les Utilisateurs</a>
                 <a href="{{ route('admin.ressources') }}"
                     class="block py-3 px-4 rounded transition duration-200 hover:bg-gray-700 my-2">Gérer Ressources</a>

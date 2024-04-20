@@ -13,7 +13,7 @@ class CableController extends Controller
     public function index()
     {
         //
-        $cables = Cable::all();
+        $cables = Cable::paginate(5);
         return view('cable.index', compact('cables'));
 
 

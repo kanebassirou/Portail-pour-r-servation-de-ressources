@@ -9,7 +9,17 @@
         </div>
     @endif
     <div class="py-8">
-        <a href="{{ route('cable.create') }}" class="btn btn-primary mb-2">Ajouter une nouvelle cable</a>
+<div class="row">
+        <div class="col-md-10">
+            <a href="{{ route('cable.create') }}" class="btn btn-primary mb-2">Ajouter une nouvelle cable</a>
+        </div>
+        <div class="col-md-2">
+            <a href="{{ route('admin.ressources') }}" class="btn btn-primary">Retour</a>
+        </div>
+        </div>
+
+
+        </div>
 
         <table class="table">
             <thead>
@@ -71,5 +81,8 @@
                 @endforeach
             </tbody>
         </table>
+           <div class="mt-5">
+           {{ $cables->links() }}
+            </div>
     </div>
 @endsection

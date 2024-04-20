@@ -14,7 +14,7 @@ class SalleClasseController extends Controller
 
     {
         //
-        $salleClasses = SalleClasse::all();
+        $salleClasses = SalleClasse::paginate(10);
         return view('salleClasse.index', compact('salleClasses'));
     }
 

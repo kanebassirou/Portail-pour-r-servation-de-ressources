@@ -9,9 +9,13 @@ use App\Http\Controllers\ReservationSalleClasseController;
 use App\Http\Controllers\ReservationRallongeController;
 use App\Http\Controllers\RessourceController;
 use App\Http\Controllers\SalleClasseController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VideoProjecteurController;
+use App\Models\reservation_projecteur;
 use App\Models\Reservations_cable;
+use App\Models\Reservations_rallonge;
 use App\Models\Reservations_salles_classes;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
@@ -25,7 +29,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         // Route pour afficher les ressources disponibles
         Route::resource('/', RessourceController::class)->names('ressources');
         Route::resource('resources', RessourceController::class)->names('ressources');
-
 
         Route::get('/ressources/reservation/create/{id}', [ReservationController::class, 'create'])->name('reservation.create');
         Route::post('/ressources/reservation/{id} ', [ReservationController::class, 'store'])->name('reservation.store');
@@ -64,13 +67,20 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::get('/admin/dashboard', function () {
-            return view('admin.dashboard');
+            $totalclasse= Reservations_salles_classes::count();
+            $totalcable = Reservations_cable::count();
+            $totalrallonge = Reservations_rallonge::count();
+            $totalprojecteur = reservation_projecteur::count();
+            $totalReservations = $totalclasse + $totalcable + $totalrallonge + $totalprojecteur;
+            $totalUsers = User::count();
+            return view('admin.dashboard', compact('totalUsers', 'totalReservations','totalcable','totalrallonge','totalprojecteur','totalclasse'));
         })->name('admin.dashboard');
         Route::get('/admin/dashboard/gestion/ressources', function () {
             return view('admin.ressources');
         })->name('admin.ressources');
         // Route::resource('resources', RessourceController::class)->names('ressources');
 
+           // gestion des ressources par l'admin c'est a dire ajout, modification et suppression
         Route::resource('/admin/ressources/salleClasse', SalleClasseController::class)->names('salleClasse');
         Route::resource('/admin/ressources/rallonge', RallongeController::class)->names('rallonge');
         Route::resource('/admin/ressources/cable', CableController::class)->names('cable');
@@ -78,23 +88,22 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
         Route::get('admin/ressources/reservation', function () {
             return view('admin.reservation.ressource');
-            })->name('admin.reservationRessource');
+        })->name('admin.reservationRessource');
+
+            // affichage des reservation de differente ressource par l'admin
 
         Route::get('admin/reservation/salle', [ReservationController::class, 'indexSalle'])->name('admin.reservationsSalle');
         Route::get('admin/reservation/cable', [ReservationController::class, 'indexCable'])->name('admin.reservationsCable');
         Route::get('admin/reservation/rallonge', [ReservationController::class, 'indexRallonge'])->name('admin.reservationsRallonge');
         Route::get('admin/reservation/projecteur', [ReservationController::class, 'indexProjecteur'])->name('admin.reservationsProjecteur');
 
-        Route::resource('admin/reservationCable',ReservationCableController::class,)->names('admin.reservationCable');
-        Route::resource('admin/reservationSalle',ReservationSalleClasseController::class,)->names('admin.reservationSalle');
-        Route::resource('admin/reservationRallonge',ReservationRallongeController::class,)->names('admin.reservationRallonge');
-        Route::resource('admin/reservationProjecteur',ReservationProjecteurController::class,)->names('admin.reservationProjecteur');
-
-
-
-
-
-
+        // gestion des resseration de differente ressource par l'admin
+        Route::resource('admin/reservationCable', ReservationCableController::class)->names('admin.reservationCable');
+        Route::resource('admin/reservationSalle', ReservationSalleClasseController::class)->names('admin.reservationSalle');
+        Route::resource('admin/reservationRallonge', ReservationRallongeController::class)->names('admin.reservationRallonge');
+        Route::resource('admin/reservationProjecteur', ReservationProjecteurController::class)->names('admin.reservationProjecteur');
+         //  gestion des utilisateurs par l'admin c'est a dire ajout, modification et suppression et faire un utilisateur admin
+        Route::resource('admin/user', UserController::class)->names('admin.users');
 
 
     });
