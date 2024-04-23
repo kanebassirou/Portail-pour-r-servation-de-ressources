@@ -24,8 +24,11 @@
 
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-            <a href="index.html" class="navbar-brand">Notre <span class="text-primary">Portail Reservation
-                    Ressource</span></a>
+            <a href="index.html" class="navbar-brand">
+                <img src="{{ asset('../assets/img/logoSET.jpeg') }}" alt="Logo" style="width: 55px; height: auto;">
+
+                Notre <span class="text-primary">Portail Reservation
+                    Ressource .</span></a>
 
             <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent"
                 aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,22 +46,21 @@
                     <li class="nav-item active">
                         <a href="#" class="nav-link">Catologue</a>
                     </li>
-                    @if (auth()->user()->hasRole('user'))
-
+                    @if (auth()->check() && auth()->user()->hasRole('user'))
                         <li class="nav-item">
                             <a href="{{ route('dashboard') }}" class="nav-link">Compte</a>
                         </li>
-                         @endif
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">Contact</a>
-                        </li>
+                    @endif
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Contact</a>
+                    </li>
 
-                        @if (auth()->user()->hasRole('admin'))
-                            <li class="nav-item">
-                                <a href="{{ route('admin.dashboard') }}" class="nav-link">Espace Admin</a>
-                            </li>
-                        @endif
+                    @if (auth()->check() && auth()->user()->hasRole('admin'))
+                        <li class="nav-item">
+                            <a href="{{ route('admin.dashboard') }}" class="nav-link">Espace Admin</a>
+                        </li>
+                    @endif
 
                 </ul>
             </div>

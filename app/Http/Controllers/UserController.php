@@ -2,12 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\reservation_projecteur;
+use App\Models\Reservations_cable;
+use App\Models\Reservations_rallonge;
+use App\Models\Reservations_salles_classes;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
+
+
 class UserController extends Controller
 {
+
+    public function genererRapport(Request $request)
+{
+    $startDate = $request->startDate;
+    $endDate = $request->endDate;
+
+    $reservationsSallesClasses = Reservations_salles_classes::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
+    $reservationRallonges = Reservations_rallonge::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
+    $reservationCables = Reservations_cable::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
+    $reservationProjecteurs = Reservation_projecteur::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
+    $pdf = Pdf::loadView('admin.user.rapport.index', compact('reservationsSallesClasses', 'reservationRallonges', 'reservationCables',
+    'reservationProjecteurs', 'startDate', 'endDate'));
+
+
+       // Télécharger le PDF avec un nom de fichier formaté
+       $nomFichier = "rapport_reservations_" . date('Ymd') . ".pdf"; // Générer un nom unique avec la date formatée (YYYYMMDD)
+       return $pdf->download($nomFichier);
+}
+
+
+
     /**
      * Display a listing of the resource.
      */
@@ -15,7 +43,7 @@ class UserController extends Controller
     {
         //
         // $users = User::all()->paginate(10);
-        $users = User::with('roles')->paginate(10);  // Assurez-vous de modifier la requête en conséquence
+        $users = User::with('roles')->paginate(5);  // Assurez-vous de modifier la requête en conséquence
 
         return view('admin.user.index', compact('users'));
     }

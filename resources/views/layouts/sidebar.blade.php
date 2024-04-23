@@ -1,6 +1,6 @@
 <div x-data="{ isOpen: true }" class="relative min-h-screen md:flex">
     <!-- "Burger" icon button -->
-    <button @click="isOpen = !isOpen" class="text-white absolute p-4 z-30">
+    <button @click="isOpen = !isOpen" class="text-white absolute p-4a z-30">
         <i :class="isOpen ? 'fas fa-times' : 'fas fa-bars'"></i>
     </button>
     <!-- Sidebar -->

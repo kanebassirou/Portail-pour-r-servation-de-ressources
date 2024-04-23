@@ -27,12 +27,18 @@
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Status User
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Email
                             </th>
+
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Rôle
                             </th>
+
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Actions
@@ -45,8 +51,12 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     {{ $user->id }}
                                 </td>
+
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     {{ $user->name }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {{ $user->statusUser }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     {{ $user->email }}
@@ -73,7 +83,8 @@
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="confirmDeleteModalLabel{{ $user->id }}">
+                                                    <h5 class="modal-title"
+                                                        id="confirmDeleteModalLabel{{ $user->id }}">
                                                         Confirmation de suppression</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">

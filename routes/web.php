@@ -104,6 +104,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::resource('admin/reservationProjecteur', ReservationProjecteurController::class)->names('admin.reservationProjecteur');
          //  gestion des utilisateurs par l'admin c'est a dire ajout, modification et suppression et faire un utilisateur admin
         Route::resource('admin/user', UserController::class)->names('admin.users');
+        // Route::get('admin.rapport/pdf', [UserController::class,'genererRapport'])->name('admin.rapport.pdf');
+        Route::post('admin/rapport/generer', [UserController::class,'genererRapport'])->name('admin.rapport.generer');
+
 
 
     });

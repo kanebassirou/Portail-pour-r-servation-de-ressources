@@ -12,6 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
+            $table->string('status')->default('actif');  // Ajout du champ status avec une valeur par défaut "actif"
+
             $table->id();
             $table->string('name');
             $table->string('prenom')->nullable();
