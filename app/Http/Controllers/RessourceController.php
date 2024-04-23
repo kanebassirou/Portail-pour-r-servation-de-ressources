@@ -106,11 +106,19 @@ class RessourceController extends Controller
      */
     public function index()
     {
-        $salleClasses = SalleClasse::all();
-        $cables = Cable::all();
-        $rallonges = Rallonge::all();
-        $videoProjecteurs = VideoProjecteur::all();
+        $salleClasses = SalleClasse::limit(3)->get();
+        $cables = Cable::limit(3)->get();
+        $rallonges = Rallonge::limit(3)->get();
+        $videoProjecteurs = VideoProjecteur::limit(3)->get();
         return view('ressources.index', compact('salleClasses', 'rallonges', 'videoProjecteurs','cables'));
+    }
+    public function indexCatalogue()
+    {
+        $salleClasses = SalleClasse::limit(3)->get();
+        $cables = Cable::limit(3)->get();
+        $rallonges = Rallonge::limit(3)->get();
+        $videoProjecteurs = VideoProjecteur::limit(3)->get();
+        return view('ressources.catalogue', compact('salleClasses', 'rallonges', 'videoProjecteurs','cables'));
     }
 
     /**

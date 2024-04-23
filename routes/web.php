@@ -29,6 +29,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         // Route pour afficher les ressources disponibles
         Route::resource('/', RessourceController::class)->names('ressources');
         Route::resource('resources', RessourceController::class)->names('ressources');
+          // catalogue des ressources pour l'utilisateur
+        Route::get('catalogue/ressources', [RessourceController::class, 'indexCatalogue'])->name('catalogue.ressources');
+
 
         Route::get('/ressources/reservation/create/{id}', [ReservationController::class, 'create'])->name('reservation.create');
         Route::post('/ressources/reservation/{id} ', [ReservationController::class, 'store'])->name('reservation.store');
@@ -89,6 +92,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::get('admin/ressources/reservation', function () {
             return view('admin.reservation.ressource');
         })->name('admin.reservationRessource');
+
+
 
             // affichage des reservation de differente ressource par l'admin
 

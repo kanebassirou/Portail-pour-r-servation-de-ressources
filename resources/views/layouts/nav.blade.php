@@ -44,7 +44,7 @@
                         <a href="{{ route('reservations.all') }}" class="nav-link">Mes Resservation</a>
                     </li>
                     <li class="nav-item active">
-                        <a href="#" class="nav-link">Catologue</a>
+                        <a href="{{ route('catalogue.ressources') }}" class="nav-link">Catologue</a>
                     </li>
                     @if (auth()->check() && auth()->user()->hasRole('user'))
                         <li class="nav-item">

@@ -6,7 +6,7 @@
             <li class="breadcrumb-item active" aria-current="page" style="color: #6c757d;">reservation d'un cable </li>
         </ol>
     </nav>
-        <h1 class="fg-white text-center">creattion de votre réservation</h1>
+        <h1 class="fg-white text-center">creation de votre réservation</h1>
 
 @endsection
 

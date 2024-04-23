@@ -48,7 +48,7 @@
                 <div class="col-lg-3 py-3">
                     <h5>Explore</h5>
                     <ul class="footer-menu">
-                        <li><a href="#">À Propos/a></li>
+                        <li><a href="#">À Propos</a></li>
                         <li><a href="#">Services</a></li>
                         <li><a href="#">FAQ</a></li>
                     </ul>
