@@ -18,10 +18,31 @@ class ReservationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function indexSalle()
     {
-        //
+        $reservationSalles = Reservations_salles_classes::with(['salleClasse', 'utilisateur'])->orderBy('date_de_reservation', 'desc')->get();
+
+        return view('admin.reservation.indexSalle', compact('reservationSalles'));
     }
+    public function indexCable()
+    {
+        $reservationCables = Reservations_cable::with(['cables', 'utilisateur'])->orderBy('date_de_reservation', 'desc')->get();
+
+        return view('admin.reservation.indexCable', compact('reservationCables'));
+    }
+    public function indexRallonge()
+    {
+        $reservationRallonges = Reservations_rallonge::with(['rallonges', 'utilisateur'])->orderBy('date_de_reservation', 'desc')->get();
+
+        return view('admin.reservation.indexRallonge', compact('reservationRallonges'));
+    }
+    public function indexProjecteur()
+    {
+             $reservationProjecteurs = reservation_projecteur::with(['projecteurs', 'utilisateur'])->orderBy('date_de_reservation', 'desc')->get();
+
+        return view('admin.reservation.indexProjecteur', compact('reservationProjecteurs'));
+    }
+
 
     // App\Http\Controllers\ReservationController.php
 

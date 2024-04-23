@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'en'),
+    'locale' => env('APP_LOCALE', 'fr'),
 
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
@@ -121,6 +121,21 @@ return [
     'maintenance' => [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
+        'providers' => [
+            // ...
+            Spatie\Permission\PermissionServiceProvider::class,
+            Barryvdh\DomPDF\ServiceProvider::class,
+        ],
+        'aliases' => [
+            // Other aliases...
+            'PDF' => Barryvdh\DomPDF\PDF::class,
+        ],
+
+
+
+
     ],
+
+
 
 ];

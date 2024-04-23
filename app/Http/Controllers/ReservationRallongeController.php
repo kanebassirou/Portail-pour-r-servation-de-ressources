@@ -39,6 +39,7 @@ class ReservationRallongeController extends Controller
             'Rallonge_ID' => 'required|exists:rallonges,id',
             'Utilisateur_ID' => 'required|exists:users,id' // Assurez-vous que 'users' est le nom correct de votre table des utilisateurs
         ]);
+        // dd($validated);
 
         // Vérifier si la ressource est déjà réservée pour la plage horaire demandée
         $conflict = Reservations_rallonge::where('Rallonge_ID', $validated['Rallonge_ID'])
@@ -72,24 +73,58 @@ class ReservationRallongeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Reservations_rallonge $Reservations_rallonge)
-    {
-        //
-    }
+    public function edit($id) {
+        $Reservations_rallonge = Reservations_rallonge::find($id);
 
+        if (!$Reservations_rallonge) {
+            // dd('Réservation non trouvée.');
+            // Gérer l'erreur, par exemple, rediriger vers une page d'erreur ou afficher un message.
+            return redirect()->back()->withErrors('Réservation non trouvée.');
+        }
+
+        return view('admin.reservation.editRallonge', compact('Reservations_rallonge'));
+    }
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Reservations_rallonge $Reservations_rallonge)
     {
         //
+        $validated = $request->validate([
+            'date_de_reservation' => 'required',
+            'heure_de_debut' => 'required',
+            'heure_de_fin' => 'required',
+            'Rallonge_ID' => 'required',
+            'Utilisateur_ID' => 'required' // Assurez-vous que 'users' est le nom correct de votre table des utilisateurs
+        ]);
+
+        // Vérifier si la ressource est déjà réservée pour la plage horaire demandée
+        $conflict = Reservations_rallonge::where('Rallonge_ID', $validated['Rallonge_ID'])
+            ->where('date_de_reservation', $validated['date_de_reservation'])
+            ->where(function ($query) use ($validated) {
+                $query->whereBetween('heure_de_debut', [$validated['heure_de_debut'], $validated['heure_de_fin']])
+                      ->orWhereBetween('heure_de_fin', [$validated['heure_de_debut'], $validated['heure_de_fin']]);
+            })->exists();
+
+        if ($conflict) {
+            // Gérer le conflit de réservation
+
+            return redirect()->back()->with('error', 'La rallonge est déjà réservée pour cet horaire.');
+        }
+        $Reservations_rallonge->update($validated);
+
+        return redirect()->route('admin.reservationsRallonge')->with('success', 'Réservation du rallonge est modifiée avec succès.');
+
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Reservations_rallonge $reservation)
+    public function destroy($id)
     {
-        //
+        $Reservations_rallonge = Reservations_rallonge::findOrFail($id);
+        $Reservations_rallonge->delete();
+        return redirect()->route('admin.reservationsRallonge')->with('success', 'Réservation du rallonge est  supprimée avec succès.');
     }
 }

@@ -13,6 +13,11 @@ class CableController extends Controller
     public function index()
     {
         //
+        $cables = Cable::paginate(5);
+        return view('cable.index', compact('cables'));
+
+
+
     }
 
     /**
@@ -21,6 +26,7 @@ class CableController extends Controller
     public function create()
     {
         //
+        return view('cable.create');
     }
 
     /**
@@ -29,6 +35,21 @@ class CableController extends Controller
     public function store(Request $request)
     {
         //
+        $validatedData = $request->validate([
+            'nomRessource' => 'required',
+            'Description' => 'required',
+            'longueur' => 'required',
+            'typeDeCable' => 'required',
+            'Etat' => 'required',
+        ]);
+
+        $cable = Cable::create($validatedData);
+
+        return redirect()->route('cable.index')->with('success', 'cette cable a été ajoutée avec succès.');
+
+
+
+
     }
 
     /**
@@ -37,6 +58,9 @@ class CableController extends Controller
     public function show(Cable $cable)
     {
         //
+        return view('cable.show', compact('cable'));
+
+
     }
 
     /**
@@ -45,6 +69,7 @@ class CableController extends Controller
     public function edit(Cable $cable)
     {
         //
+        return view('cable.edit', compact('cable'));
     }
 
     /**
@@ -53,6 +78,15 @@ class CableController extends Controller
     public function update(Request $request, Cable $cable)
     {
         //
+        $validatedData = $request->validate([
+            'nomRessource' => 'required',
+            'Description' => 'required',
+            'longueur' => 'required',
+            'typeDeCable' => 'required',
+            'Etat' => 'required',
+        ]);
+        $cable->update($validatedData);
+        return redirect()->route('cable.index')->with('success', 'Ce câble a été modifié avec succès.');
     }
 
     /**
@@ -61,5 +95,7 @@ class CableController extends Controller
     public function destroy(Cable $cable)
     {
         //
+        $cable->delete();
+        return redirect()->route('cable.index')->with('success', 'Ce câble a été supprimé avec succès.');
     }
 }

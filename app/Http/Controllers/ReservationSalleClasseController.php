@@ -75,10 +75,21 @@ class ReservationSalleClasseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Reservations_salles_classes $Reservations_salles_classes)
-    {
-        //
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id) {
+        $Reservations_salles_classes = Reservations_salles_classes::find($id);
+
+        if (!$Reservations_salles_classes) {
+            // Gérer l'erreur, par exemple, rediriger vers une page d'erreur ou afficher un message.
+            return redirect()->back()->withErrors('Réservation non trouvée.');
+        }
+
+        return view('admin.reservation.editSalle', compact('Reservations_salles_classes'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -86,13 +97,41 @@ class ReservationSalleClasseController extends Controller
     public function update(Request $request, Reservations_salles_classes $Reservations_salles_classes)
     {
         //
+           //
+           $validated = $request->validate([
+            'date_de_reservation' => 'required',
+            'heure_de_debut' => 'required',
+            'heure_de_fin' => 'required',
+            'SalleClasse_ID' => 'required',
+            'Utilisateur_ID' => 'required'
+        ]);
+        $conflict = Reservations_salles_classes::where('SalleClasse_ID', $validated['SalleClasse_ID'])
+            ->where('date_de_reservation', $validated['date_de_reservation'])
+            ->where(function ($query) use ($validated) {
+                $query->whereBetween('heure_de_debut', [$validated['heure_de_debut'], $validated['heure_de_fin']])
+                      ->orWhereBetween('heure_de_fin', [$validated['heure_de_debut'], $validated['heure_de_fin']]);
+            })->exists();
+
+        if ($conflict) {
+            // Gérer le conflit de réservation
+
+            return redirect()->back()->with('error', 'cette salle de classe  est déjà réservée pour cet horaire.');
+        }
+        // dd($validated);
+        $Reservations_salles_classes->update($validated);
+
+        return redirect()->route('admin.reservationsSalle')->with('success', 'Réservation du salle est modifiée avec succès.');
     }
+
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Reservations_salles_classes $reservation)
+    public function destroy($id)
     {
-        //
+        $Reservations_salle = Reservations_salles_classes::findOrFail($id);
+        $Reservations_salle->delete();
+        return redirect()->route('admin.reservationsSalle')->with('success', 'Réservation du salle est  supprimée avec succès.');
     }
 }

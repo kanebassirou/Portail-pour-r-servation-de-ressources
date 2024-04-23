@@ -24,7 +24,7 @@ return new class extends Migration
 
                 // Définition des contraintes de clé étrangère après avoir déclaré les colonnes
                 $table->foreign('Ressource_ID_Ressource')->references('id')->on('ressources')->onDelete('cascade');
-                $table->foreign('Utilisateur_ID_Utilisateur')->references('id')->on('utilisateurs')->onDelete('cascade');
+                $table->foreign('Utilisateur_ID_Utilisateur')->references('id')->on('users')->onDelete('cascade');
 
                 $table->timestamps();
             });

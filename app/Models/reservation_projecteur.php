@@ -16,4 +16,8 @@ class reservation_projecteur extends Reservation
     {
         return $this->belongsTo(VideoProjecteur::class, 'Projecteur_ID');
     }
+    public function utilisateur()
+    {
+        return $this->belongsTo(User::class, 'Utilisateur_ID');
+    }
 }
