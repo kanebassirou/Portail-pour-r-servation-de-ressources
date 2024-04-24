@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Cable;
 use App\Models\Rallonge;
 use App\Models\Reservation;
+use App\Models\Reservation_laboratoire;
 use App\Models\reservation_projecteur;
 use App\Models\Reservations_cable;
 use App\Models\Reservations_rallonge;
 use App\Models\Reservations_salles_classes;
+use App\Models\Reservations_salles_reunions;
 use App\Models\SalleClasse;
 use App\Models\VideoProjecteur;
 use Illuminate\Http\Request;
@@ -17,12 +19,20 @@ class ReservationController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
      */
+
     public function indexSalle()
     {
         $reservationSalles = Reservations_salles_classes::with(['salleClasse', 'utilisateur'])->orderBy('date_de_reservation', 'desc')->get();
 
         return view('admin.reservation.indexSalle', compact('reservationSalles'));
+    }
+    public function indexReunion()
+    {
+        $reservationReunions = Reservations_salles_reunions::with(['salleReunion', 'utilisateur'])->orderBy('date_de_reservation', 'desc')->get();
+
+        return view('admin.reservation.indexReunion', compact('reservationReunions'));
     }
     public function indexCable()
     {
@@ -42,6 +52,12 @@ class ReservationController extends Controller
 
         return view('admin.reservation.indexProjecteur', compact('reservationProjecteurs'));
     }
+    public function indexLaboratoire()
+    {
+             $reservationLaboratoires = Reservation_laboratoire::with(['laboratoires', 'utilisateur'])->orderBy('date_de_reservation', 'desc')->get();
+
+        return view('admin.reservation.indexLaboratoire', compact('reservationLaboratoires'));
+    }
 
 
     // App\Http\Controllers\ReservationController.php
@@ -53,8 +69,10 @@ class ReservationController extends Controller
         $rallonges = Reservations_rallonge::with('rallonges')->where('Utilisateur_ID', $user->id)->latest()->take(3)->get();
         $projecteurs = reservation_projecteur::with('projecteurs')->where('Utilisateur_ID', $user->id)->latest()->take(3)->get();
         $cables = Reservations_cable::with('cables')->where('Utilisateur_ID', $user->id)->latest()->take(3)->get();
+        $laboratoires = Reservation_laboratoire::with('laboratoires')->where('Utilisateur_ID', $user->id)->latest()->take(3)->get();
+        $sallesReunions = Reservations_salles_reunions::with('salleReunion')->where('Utilisateur_ID', $user->id)->latest()->take(3)->get();
 
-        return view('reservation.index', compact('sallesClasses', 'rallonges', 'projecteurs', 'cables'));
+        return view('reservation.index', compact('sallesClasses', 'rallonges', 'projecteurs', 'cables', 'laboratoires','sallesReunions'));
     }
 
 

@@ -28,7 +28,6 @@
                             </div>
                         </div>
 
-                        <!-- Clients -->
                         <div class="bg-white overflow-hidden shadow rounded-lg">
                             <div class="px-4 py-5 sm:p-6">
                                 <h3 class="text-lg leading-6 font-medium text-gray-900">Gestion des vidéoprojecteurs</h3>
@@ -52,10 +51,10 @@
 
                         <div class="bg-white overflow-hidden shadow rounded-lg">
                             <div class="px-4 py-5 sm:p-6">
-                                <h3 class="text-lg leading-6 font-medium text-gray-900">Gestion des câbles</h3>
-                                <p>Vous pouvez ajouter, modifier et supprimer des informations sur les câbles.</p>
+                                <h3 class="text-lg leading-6 font-medium text-gray-900">Gestion des laboratoires</h3>
+                                <p>Vous pouvez ajouter, modifier et supprimer des informations sur les laboratoires.</p>
                                 <div class="mt-5">
-                                    <a href="{{ route('cable.index') }}" class="btn btn-success">Accéder aux câbles</a>
+                                    <a href="{{ route('laboratoire.index') }}" class="btn btn-success">Accéder aux laboratoire</a>
                                 </div>
                             </div>
                         </div>
@@ -65,7 +64,7 @@
                                 <h3 class="text-lg leading-6 font-medium text-gray-900">Gestion de salle de reunion</h3>
                                 <p>Vous pouvez ajouter, modifier et supprimer des informations sur les salles de reunion.</p>
                                 <div class="mt-5">
-                                    <a href="#{{ route('cable.index') }}" class="btn btn-success">Accéder aux câbles</a>
+                                    <a href="{{ route('salleReunion.index') }}" class="btn btn-success">Accéder aux salles de reunion </a>
                                 </div>
                             </div>
                         </div>

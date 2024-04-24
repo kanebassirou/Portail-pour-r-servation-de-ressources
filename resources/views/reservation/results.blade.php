@@ -11,13 +11,22 @@
 @section('content')
     <div class="container mt-5">
         <div class="card">
-            <div class="card-header">
-                <h2> Voici les {{ $results[0]->nomRessource }} disponibles pour :</h2>
-            </div>
+  <div class="card-header">
+    @if(count($results) > 0)
+        <h2> Voici les {{ $results[0]->nomRessource }} disponibles pour :</h2>
+    @else
+        <h2> Aucune ressource disponible pour les critères sélectionnés.</h2>
+    @endif
+</div>
+
             <div class="card-body">
-                <p>Date: {{ $searchParams['date'] }}</p>
-                <p>Ressource: {{ $results[0]->nomRessource }}</p>
-                <p>Période: de {{ $searchParams['heure_debut'] }} à {{ $searchParams['heure_fin'] }}</p>
+                @if (count($results) > 0)
+                    <p>Date: {{ $searchParams['date'] }}</p>
+                    <p>Ressource: {{ $results[0]->nomRessource }}</p>
+                    <p>Période: de {{ $searchParams['heure_debut'] }} à {{ $searchParams['heure_fin'] }}</p>
+                @else
+                    <p>Aucune ressource trouvée.</p>
+                @endif
             </div>
         </div>
         @if ($results->isEmpty())
@@ -94,6 +103,41 @@
                             <form action="{{ route('reservationProjecteur.store', ['id' => $result->id]) }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="Projecteur_ID" value="{{ $result->id }}">
+                                <input type="hidden" name="Utilisateur_ID" value="{{ auth()->id() }}">
+                                <input type="hidden" name="date_de_reservation" value="{{ $searchParams['date'] }}">
+                                <input type="hidden" name="heure_de_debut" value="{{ $searchParams['heure_debut'] }}">
+                                <input type="hidden" name="heure_de_fin" value="{{ $searchParams['heure_fin'] }}">
+                                <button type="submit" class="btn btn-primary mt-5">Réserver</button>
+                            </form>
+                             </a>
+                            @break
+                        @case('Laboratoire')
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <strong>Nom du la labo:</strong> {{ $result->nomLaboratoire }}<br>
+                                <strong>Description:</strong> {{ $result->description }}<br>
+                                <strong>capacite:</strong> {{ $result->capacite }}<br>
+                                <strong>Résolution:</strong> {{ $result->resolution }}<br>
+
+                            <form action="{{ route('reservationLaboratoire.store', ['id' => $result->id]) }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="Laboratoire_ID" value="{{ $result->id }}">
+                                <input type="hidden" name="Utilisateur_ID" value="{{ auth()->id() }}">
+                                <input type="hidden" name="date_de_reservation" value="{{ $searchParams['date'] }}">
+                                <input type="hidden" name="heure_de_debut" value="{{ $searchParams['heure_debut'] }}">
+                                <input type="hidden" name="heure_de_fin" value="{{ $searchParams['heure_fin'] }}">
+                                <button type="submit" class="btn btn-primary mt-5">Réserver</button>
+                            </form>
+                             </a>
+                            @break
+                        @case('salle de reunion')
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <strong>Nom :</strong> {{ $result->nomRessource }}<br>
+                                <strong>Description:</strong> {{ $result->description }}<br>
+                                <strong>capacite:</strong> {{ $result->capacite }}<br>
+
+                            <form action="{{ route('reservationSalleReunion.store', ['id' => $result->id]) }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="SalleReunion_ID" value="{{ $result->id }}">
                                 <input type="hidden" name="Utilisateur_ID" value="{{ auth()->id() }}">
                                 <input type="hidden" name="date_de_reservation" value="{{ $searchParams['date'] }}">
                                 <input type="hidden" name="heure_de_debut" value="{{ $searchParams['heure_debut'] }}">

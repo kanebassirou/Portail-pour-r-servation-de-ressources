@@ -52,13 +52,23 @@
                             </div>
                         </div>
 
-                        <!-- Salle de réunion -->
+                        <!-- labo -->
                         <div class="bg-white overflow-hidden shadow rounded-lg">
                             <div class="px-4 py-5 sm:p-6">
-                                <h3 class="text-lg leading-6 font-medium text-gray-900">Gestion des réservations pour les salles de réunion</h3>
-                                <p>Consultez les différentes réservations pour les salles de réunion.</p>
+                                <h3 class="text-lg leading-6 font-medium text-gray-900">Gestion des réservations pour des labo</h3>
+                                <p>Consultez les différentes réservations pour les laboratoires.</p>
                                 <div class="mt-5">
-                                    <a href="" class="btn btn-success">Voir les réservations</a>
+                                    <a href="{{ route('admin.reservationsLaboratoire') }}" class="btn btn-success">Voir les réservations</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- salle de reunion -->
+                        <div class="bg-white overflow-hidden shadow rounded-lg">
+                            <div class="px-4 py-5 sm:p-6">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900">Gestion des réservations pour la salle de reunions</h3>
+                                <p>Consultez les différentes réservations pour la salle de reunion.</p>
+                                <div class="mt-5">
+                                    <a href="{{ route('admin.reservationsReunion') }}" class="btn btn-success">Voir les réservations</a>
                                 </div>
                             </div>
                         </div>

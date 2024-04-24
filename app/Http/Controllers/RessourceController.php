@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cable;
+use App\Models\Laboratoire;
 use App\Models\Rallonge;
 use App\Models\Ressource;
 use App\Models\SalleClasse;
+use App\Models\SalleReunion;
 use App\Models\VideoProjecteur;
 use Illuminate\Http\Request;
 
@@ -88,6 +90,37 @@ class RessourceController extends Controller
                           });
                 })->get();
                 break;
+            case '5': // laboratoire
+                $results = Laboratoire::whereDoesntHave('reservations_laboratoires', function ($query) use ($date, $heure_debut, $heure_fin) {
+                    $query->where('date_de_reservation', $date)
+                          ->where(function ($query) use ($heure_debut, $heure_fin) {
+                              // Réservations qui commencent ou finissent dans la plage horaire
+                              $query->whereBetween('heure_de_debut', [$heure_debut, $heure_fin])
+                                    ->orWhereBetween('heure_de_fin', [$heure_debut, $heure_fin])
+                                    // Réservations qui commencent avant et finissent après la plage horaire
+                                    ->orWhere(function ($q) use ($heure_debut, $heure_fin) {
+                                        $q->where('heure_de_debut', '<', $heure_debut)
+                                          ->where('heure_de_fin', '>', $heure_fin);
+                                    });
+                          });
+                })->get();
+                break;
+            case '6': // salle de reunion
+                $results = SalleReunion::whereDoesntHave('reservations_salles_reunions', function ($query) use ($date, $heure_debut, $heure_fin) {
+                    $query->where('date_de_reservation', $date)
+                          ->where(function ($query) use ($heure_debut, $heure_fin) {
+                              // Réservations qui commencent ou finissent dans la plage horaire
+                              $query->whereBetween('heure_de_debut', [$heure_debut, $heure_fin])
+                                    ->orWhereBetween('heure_de_fin', [$heure_debut, $heure_fin])
+                                    // Réservations qui commencent avant et finissent après la plage horaire
+                                    ->orWhere(function ($q) use ($heure_debut, $heure_fin) {
+                                        $q->where('heure_de_debut', '<', $heure_debut)
+                                          ->where('heure_de_fin', '>', $heure_fin);
+                                    });
+                          });
+                })->get();
+
+                break;
             default:
                 $results = collect();
                 break;
@@ -110,15 +143,20 @@ class RessourceController extends Controller
         $cables = Cable::limit(3)->get();
         $rallonges = Rallonge::limit(3)->get();
         $videoProjecteurs = VideoProjecteur::limit(3)->get();
-        return view('ressources.index', compact('salleClasses', 'rallonges', 'videoProjecteurs','cables'));
+        $laboratoires = Laboratoire::limit(3)->get();
+        $salleReunions = SalleReunion::limit(3)->get();
+        return view('ressources.index', compact('salleClasses', 'rallonges', 'videoProjecteurs','cables','laboratoires','salleReunions'));
     }
     public function indexCatalogue()
     {
         $salleClasses = SalleClasse::limit(3)->get();
+        $salleReunions = SalleReunion::limit(3)->get();
         $cables = Cable::limit(3)->get();
         $rallonges = Rallonge::limit(3)->get();
         $videoProjecteurs = VideoProjecteur::limit(3)->get();
-        return view('ressources.catalogue', compact('salleClasses', 'rallonges', 'videoProjecteurs','cables'));
+        $laboratoires = Laboratoire::limit(3)->get();
+
+        return view('ressources.catalogue', compact('salleClasses', 'rallonges', 'videoProjecteurs','cables','laboratoires','salleReunions'));
     }
 
     /**

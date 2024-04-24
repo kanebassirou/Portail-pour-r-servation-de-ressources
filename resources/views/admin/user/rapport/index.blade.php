@@ -119,6 +119,54 @@
             @endforelse
         </tbody>
     </table>
+     <br>
+     <h2>Réservations pour les laboratoires</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Heure</th>
+                <th>Nom du ressource</th>
+                <th>Utilisateur</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($reservationLaboratoires as $reservation)
+                <tr>
+                    <td>{{ $reservation->date_de_reservation }}</td>
+                    <td>{{ $reservation->heure_de_debut}}</td>
+                    <td>{{ $reservation->laboratoires->nomRessource }}</td>
+                    <td>{{  $reservation->utilisateur->name }}</td>
+                </tr>
+            @empty
+                <tr><td colspan="4">Aucune réservation de laboratoire trouvée.</td></tr>
+            @endforelse
+        </tbody>
+    </table>
+         <h2>Réservations pour les salles de reunion </h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Heure</th>
+                <th>Nom du ressource</th>
+                <th>Utilisateur</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($reservationSallesReunions as $reservation)
+                <tr>
+                    <td>{{ $reservation->date_de_reservation }}</td>
+                    <td>{{ $reservation->heure_de_debut}}</td>
+                    <td>{{ $reservation->salleReunion->nomRessource }}</td>
+                    <td>{{  $reservation->utilisateur->name }}</td>
+                </tr>
+            @empty
+                <tr><td colspan="4">Aucune réservation de laboratoire trouvée.</td></tr>
+            @endforelse
+        </tbody>
+    </table>
+
 
 </body>
 </html>

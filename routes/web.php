@@ -1,14 +1,18 @@
 <?php
 
 use App\Http\Controllers\CableController;
+use App\Http\Controllers\LaboratoireController;
 use App\Http\Controllers\RallongeController;
 use App\Http\Controllers\ReservationCableController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ReservationLaboratoireControlleur;
 use App\Http\Controllers\ReservationProjecteurController;
 use App\Http\Controllers\ReservationSalleClasseController;
 use App\Http\Controllers\ReservationRallongeController;
+use App\Http\Controllers\ReservationSalleReunionController;
 use App\Http\Controllers\RessourceController;
 use App\Http\Controllers\SalleClasseController;
+use App\Http\Controllers\SalleReunionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VideoProjecteurController;
 use App\Models\reservation_projecteur;
@@ -62,6 +66,18 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::resource('ressources/reservationProjecteur', ReservationProjecteurController::class)
             ->except(['create', 'store'])
             ->names('reservationProjecteur');
+            // les reservation pour un laboratoire
+        Route::get('/ressources/reservationLaboratoire/create/{id}', [ReservationLaboratoireControlleur::class, 'create'])->name('reservationLaboratoire.create');
+        Route::post('/ressources/reservationLaboratoire/{id} ', [ReservationLaboratoireControlleur::class, 'store'])->name('reservationLaboratoire.store');
+        Route::resource('ressources/reservationLaboratoire', ReservationLaboratoireControlleur::class)
+            ->except(['create', 'store'])
+            ->names('reservationLaboratoire');
+            // creation de resservation de salleReunions
+        Route::get('/ressources/reservationSalleReunion/create/{id}', [ReservationSalleReunionController::class, 'create'])->name('reservationSalleReunion.create');
+        Route::post('/ressources/reservationSalleReunion/{id} ', [ReservationSalleReunionController::class, 'store'])->name('reservationSalleReunion.store');
+        Route::resource('ressources/reservationSalleReunion', ReservationSalleReunionController::class)
+            ->except(['create', 'store'])
+            ->names('reservationSalleReunion');
 
         Route::get('reservation/recherche', [RessourceController::class, 'search'])->name('search');
 
@@ -85,9 +101,12 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
            // gestion des ressources par l'admin c'est a dire ajout, modification et suppression
         Route::resource('/admin/ressources/salleClasse', SalleClasseController::class)->names('salleClasse');
+        Route::resource('/admin/ressources/salleReunion', SalleReunionController::class)->names('salleReunion');
         Route::resource('/admin/ressources/rallonge', RallongeController::class)->names('rallonge');
         Route::resource('/admin/ressources/cable', CableController::class)->names('cable');
         Route::resource('/admin/ressources/projecteur', VideoProjecteurController::class)->names('projecteur');
+        Route::resource('/admin/ressources/projecteur', VideoProjecteurController::class)->names('projecteur');
+        Route::resource('/admin/ressources/laboratoire', LaboratoireController::class)->names('laboratoire');
 
         Route::get('admin/ressources/reservation', function () {
             return view('admin.reservation.ressource');
@@ -95,18 +114,22 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
 
 
-            // affichage des reservation de differente ressource par l'admin
+            // affichage des reservation de differente ressource par l'admin et gestion des reservation
 
         Route::get('admin/reservation/salle', [ReservationController::class, 'indexSalle'])->name('admin.reservationsSalle');
+        Route::get('admin/reservation/reunion', [ReservationController::class, 'indexReunion'])->name('admin.reservationsReunion');
         Route::get('admin/reservation/cable', [ReservationController::class, 'indexCable'])->name('admin.reservationsCable');
         Route::get('admin/reservation/rallonge', [ReservationController::class, 'indexRallonge'])->name('admin.reservationsRallonge');
         Route::get('admin/reservation/projecteur', [ReservationController::class, 'indexProjecteur'])->name('admin.reservationsProjecteur');
+        Route::get('admin/reservation/laboratoire', [ReservationController::class, 'indexLaboratoire'])->name('admin.reservationsLaboratoire');
 
-        // gestion des resseration de differente ressource par l'admin
+        // gestion des resseration de differente ressource par l'admin modifiaction d'un resservation et suppression
         Route::resource('admin/reservationCable', ReservationCableController::class)->names('admin.reservationCable');
         Route::resource('admin/reservationSalle', ReservationSalleClasseController::class)->names('admin.reservationSalle');
+        Route::resource('admin/reservationReunion', ReservationSalleReunionController::class)->names('admin.reservationReunion');
         Route::resource('admin/reservationRallonge', ReservationRallongeController::class)->names('admin.reservationRallonge');
         Route::resource('admin/reservationProjecteur', ReservationProjecteurController::class)->names('admin.reservationProjecteur');
+        Route::resource('admin/reservationLaboratoire', ReservationLaboratoireControlleur::class)->names('admin.reservationLaboratoire');
          //  gestion des utilisateurs par l'admin c'est a dire ajout, modification et suppression et faire un utilisateur admin
         Route::resource('admin/user', UserController::class)->names('admin.users');
         // Route::get('admin.rapport/pdf', [UserController::class,'genererRapport'])->name('admin.rapport.pdf');
