@@ -80,7 +80,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                                 style="color: black;">Annuler</button>
-                                            <form action="{{ route('admin.reservationSalle.destroy', $reservation->id) }}" method="POST"
+                                            <form action="{{ route('admin.reservationLaboratoire.destroy', $reservation->id) }}" method="POST"
                                                 style="display: inline-block;">
                                                 @csrf
                                                 @method('DELETE')

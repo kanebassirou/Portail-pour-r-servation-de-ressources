@@ -6,6 +6,8 @@ use App\Models\Cable;
 use App\Models\Rallonge;
 use App\Models\Reservations_cable;
 use App\Models\Reservations_rallonge;
+use App\Models\User;
+use App\Notifications\UserNotification;
 use Illuminate\Http\Request;
 
 class ReservationCableController extends Controller
@@ -56,8 +58,27 @@ class ReservationCableController extends Controller
             return redirect()->back()->with('error', 'cette cable est déjà réservée pour cet horaire.');
         }
 
+        $user = User::find($validated['Utilisateur_ID']);
+        if (!$user) {
+            return redirect()->back()->with('error', 'Utilisateur non trouvé.');
+        }
+        $cable = Cable::find($validated['Cable_ID']);
+        $user->notify(
+            new UserNotification(
+                $cable->nomRessource, // Supposons que les rallonges ont un attribut 'nom'
+                'Câble',
+                $validated['date_de_reservation'], // Date de réservation
+
+                $validated['heure_de_debut'],
+                $validated['heure_de_fin'],
+                'arriver 10 et recuperer la ressource reservé', // Minutes avant pour arrivée
+            ),
+        );
+
         $validated['id'] = $id;
         Reservations_cable::create($validated);
+
+
 
         return redirect()->route('ressources.index')->with('success', 'Réservation du cable est  créée avec succès.');
     }

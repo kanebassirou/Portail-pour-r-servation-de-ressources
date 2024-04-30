@@ -40,8 +40,11 @@
                 </div>
                 <input type="text" name="name" placeholder="Nom complet" required>
                 <input type="email" name="email" placeholder="Email" required>
+                @error('email')
+                    <div class="text text-danger">{{ $message }}</div>
+                @enderror
                 <input type="password" name="password" placeholder="Mot de passe" required>
-                 @error('password')
+                @error('password')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
                 <input type="password" name="password_confirmation" placeholder="Confirmer mot de passe" required>

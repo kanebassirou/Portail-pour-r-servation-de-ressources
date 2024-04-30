@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Rallonge;
 use App\Models\Reservations_rallonge;
+use App\Models\User;
+use App\Notifications\RallongeReservationNotification;
+use App\Notifications\UserNotification;
 use Illuminate\Http\Request;
 
 class ReservationRallongeController extends Controller
@@ -22,22 +25,21 @@ class ReservationRallongeController extends Controller
     public function create($id)
     {
         $rallonge = Rallonge::where('id', $id)->first();
-        return view('reservation.createRallonge', compact('id', 'rallonge' ));
+        return view('reservation.createRallonge', compact('id', 'rallonge'));
     }
-
-
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request, $id)
     {
+        // dd($request->all());
         $validated = $request->validate([
-            'date_de_reservation' => 'required|date',
-            'heure_de_debut' => 'required|date_format:H:i',
-            'heure_de_fin' => 'required|date_format:H:i|after:heure_de_debut',
-            'Rallonge_ID' => 'required|exists:rallonges,id',
-            'Utilisateur_ID' => 'required|exists:users,id' // Assurez-vous que 'users' est le nom correct de votre table des utilisateurs
+            'date_de_reservation' => 'required',
+            'heure_de_debut' => 'required',
+            'heure_de_fin' => 'required',
+            'Rallonge_ID' => 'required',
+            'Utilisateur_ID' => 'required', // Assurez-vous que 'users' est le nom correct de votre table des utilisateurs
         ]);
         // dd($validated);
 
@@ -45,22 +47,43 @@ class ReservationRallongeController extends Controller
         $conflict = Reservations_rallonge::where('Rallonge_ID', $validated['Rallonge_ID'])
             ->where('date_de_reservation', $validated['date_de_reservation'])
             ->where(function ($query) use ($validated) {
-                $query->whereBetween('heure_de_debut', [$validated['heure_de_debut'], $validated['heure_de_fin']])
-                      ->orWhereBetween('heure_de_fin', [$validated['heure_de_debut'], $validated['heure_de_fin']]);
-            })->exists();
+                $query->whereBetween('heure_de_debut', [$validated['heure_de_debut'], $validated['heure_de_fin']])->orWhereBetween('heure_de_fin', [$validated['heure_de_debut'], $validated['heure_de_fin']]);
+            })
+            ->exists();
 
         if ($conflict) {
             // Gérer le conflit de réservation
-
             return redirect()->back()->with('error', 'La rallonge est déjà réservée pour cet horaire.');
         }
 
-        $validated['id'] = $id;
-        Reservations_rallonge::create($validated);
+        // Création de la réservation de rallonge
 
-        return redirect()->route('ressources.index')->with('success', 'Réservation de cette rallonge est créée avec succès.');
+        // Récupérer les informations de l'utilisateur
+        $user = User::find($validated['Utilisateur_ID']);
+        if (!$user) {
+            return redirect()->back()->with('error', 'Utilisateur non trouvé.');
+        }
+
+        // Supposons que vous ayez une classe Notification dédiée aux réservations de rallonge
+        // Exemple d'envoi de notification
+        $rallonge = Rallonge::find($validated['Rallonge_ID']); // Assurez-vous que cette classe existe et a les propriétés nécessaires
+        $user->notify(
+            new UserNotification(
+                $rallonge->nomRessource, // Supposons que les rallonges ont un attribut 'nom'
+                'rallonge',
+                $validated['date_de_reservation'], // Date de réservation
+
+                $validated['heure_de_debut'],
+                $validated['heure_de_fin'],
+                'arriver 10 et recuperer la ressource reservé', // Minutes avant pour arrivée
+            ),
+        );
+        $reservation = Reservations_rallonge::create($validated);
+
+
+
+        return redirect()->route('ressources.index')->with('success', 'Réservation de la rallonge créée avec succès.');
     }
-
 
     /**
      * Display the specified resource.
@@ -73,7 +96,8 @@ class ReservationRallongeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         $Reservations_rallonge = Reservations_rallonge::find($id);
 
         if (!$Reservations_rallonge) {
@@ -95,16 +119,16 @@ class ReservationRallongeController extends Controller
             'heure_de_debut' => 'required',
             'heure_de_fin' => 'required',
             'Rallonge_ID' => 'required',
-            'Utilisateur_ID' => 'required' // Assurez-vous que 'users' est le nom correct de votre table des utilisateurs
+            'Utilisateur_ID' => 'required', // Assurez-vous que 'users' est le nom correct de votre table des utilisateurs
         ]);
 
         // Vérifier si la ressource est déjà réservée pour la plage horaire demandée
         $conflict = Reservations_rallonge::where('Rallonge_ID', $validated['Rallonge_ID'])
             ->where('date_de_reservation', $validated['date_de_reservation'])
             ->where(function ($query) use ($validated) {
-                $query->whereBetween('heure_de_debut', [$validated['heure_de_debut'], $validated['heure_de_fin']])
-                      ->orWhereBetween('heure_de_fin', [$validated['heure_de_debut'], $validated['heure_de_fin']]);
-            })->exists();
+                $query->whereBetween('heure_de_debut', [$validated['heure_de_debut'], $validated['heure_de_fin']])->orWhereBetween('heure_de_fin', [$validated['heure_de_debut'], $validated['heure_de_fin']]);
+            })
+            ->exists();
 
         if ($conflict) {
             // Gérer le conflit de réservation
@@ -114,8 +138,6 @@ class ReservationRallongeController extends Controller
         $Reservations_rallonge->update($validated);
 
         return redirect()->route('admin.reservationsRallonge')->with('success', 'Réservation du rallonge est modifiée avec succès.');
-
-
     }
 
     /**

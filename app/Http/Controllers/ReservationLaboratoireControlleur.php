@@ -6,7 +6,9 @@ use App\Models\Cable;
 use App\Models\Laboratoire;
 use App\Models\Rallonge;
 use App\Models\Reservation_laboratoire;
+use App\Models\User;
 use App\Models\VideoProjecteur;
+use App\Notifications\UserNotification;
 use Illuminate\Http\Request;
 
 class ReservationLaboratoireControlleur extends Controller
@@ -58,6 +60,23 @@ class ReservationLaboratoireControlleur extends Controller
             return redirect()->back()->with('error', 'cette laboratoire  est déjà réservée pour cet horaire.');
         }
         // dd($validated);
+
+        $user = User::find($validated['Utilisateur_ID']);
+        if (!$user) {
+            return redirect()->back()->with('error', 'Utilisateur non trouvé.');
+        }
+        $laboratoire = Laboratoire::find($validated['Laboratoire_ID']);
+        $user->notify(new UserNotification(
+            $laboratoire->nomRessource, // Supposons que les rallonges ont un attribut 'nom'
+            'laboraeur',
+            $validated['date_de_reservation'], // Date de réservation
+
+            $validated['heure_de_debut'],
+            $validated['heure_de_fin'],
+            'arriver 10 et recuperer la ressource reservé', // Minutes avant pour arrivée
+        ),
+        );
+
 
         $validated['id'] = $id;
         Reservation_laboratoire::create($validated);
@@ -122,6 +141,7 @@ class ReservationLaboratoireControlleur extends Controller
             return redirect()->back()->with('error', 'cette laboratoire  est déjà réservée pour cet horaire.');
         }
         // dd($validated);
+
         $Reservation_laboratoire->update($validated);
 
         return redirect()->route('admin.reservationsLaboratoire')->with('success', 'Réservation du loborateur est modifiée avec succès.');
@@ -136,6 +156,6 @@ class ReservationLaboratoireControlleur extends Controller
     {
         $Reservations_salle = Reservation_laboratoire::findOrFail($id);
         $Reservations_salle->delete();
-        return redirect()->route('admin.reservationsSalle')->with('success', 'Réservation du salle est  supprimée avec succès.');
+        return redirect()->route('admin.reservationsLaboratoire')->with('success', 'Réservation du laobratoire est  supprimée avec succès.');
     }
 }

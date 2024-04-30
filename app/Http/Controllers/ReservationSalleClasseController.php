@@ -6,7 +6,9 @@ use App\Models\Cable;
 use App\Models\Rallonge;
 use App\Models\Reservations_salles_classes;
 use App\Models\SalleClasse;
+use App\Models\User;
 use App\Models\VideoProjecteur;
+use App\Notifications\UserNotification;
 use Illuminate\Http\Request;
 
 class ReservationSalleClasseController extends Controller
@@ -33,16 +35,16 @@ class ReservationSalleClasseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request , $id)
+    public function store(Request $request, $id)
     {
-        //
         $validated = $request->validate([
             'date_de_reservation' => 'required',
             'heure_de_debut' => 'required',
             'heure_de_fin' => 'required',
             'SalleClasse_ID' => 'required',
-            'Utilisateur_ID' => 'required'
+            'Utilisateur_ID' => 'required',
         ]);
+
         $conflict = Reservations_salles_classes::where('SalleClasse_ID', $validated['SalleClasse_ID'])
             ->where('date_de_reservation', $validated['date_de_reservation'])
             ->where(function ($query) use ($validated) {
@@ -51,22 +53,33 @@ class ReservationSalleClasseController extends Controller
             })->exists();
 
         if ($conflict) {
-            // Gérer le conflit de réservation
-
-            return redirect()->back()->with('error', 'cette salle de classe  est déjà réservée pour cet horaire.');
+            return redirect()->back()->with('error', 'Cette salle de classe est déjà réservée pour cet horaire.');
         }
-        // dd($validated);
 
-        $validated['id'] = $id;
-        Reservations_salles_classes::create($validated);
+        $user = User::find($validated['Utilisateur_ID']);
 
-        return redirect()->route('ressources.index')->with('success', 'Réservation de cette salle de classe est  créée avec succès .');
+        if (!$user) {
+            return redirect()->back()->with('error', 'Utilisateur non trouvé.');
+        }
+
+        // Ici, nous devons récupérer des informations sur la salle pour compléter la notification
+        $salle = SalleClasse::find($validated['SalleClasse_ID']);
+
+        // Notification avec détails complets
+        $user->notify(new UserNotification(
+            $salle->nomRessource, // Nom de la ressource
+            'salle de classe', // Type de ressource
+            $validated['date_de_reservation'], // Date de réservation
+            $validated['heure_de_debut'], // Heure de début
+            $validated['heure_de_fin'], // Heure de fin
+            10 // Nombre de minutes pour arriver en avance, ajustez selon besoin
+        ));
+        $reservation = Reservations_salles_classes::create($validated);
+
+
+        return redirect()->route('ressources.index')->with('success', 'Réservation créée avec succès.');
     }
 
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Reservations_salles_classes $Reservations_salles_classes)
     {
         //

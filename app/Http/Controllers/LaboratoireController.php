@@ -91,7 +91,7 @@ class LaboratoireController extends Controller
         {
             //
             $laboratoire->delete();
-            return redirect()->route('laboratoire.index')->with('success', 'Salle de classe supprimée avec succès');
+            return redirect()->route('laboratoire.index')->with('success', 'laboratoire supprimée avec succès');
         }
     }
 

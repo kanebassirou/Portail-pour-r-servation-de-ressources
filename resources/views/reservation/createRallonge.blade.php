@@ -46,14 +46,7 @@
                         </div>
                         <input type="hidden" name="Rallonge_ID" value="{{ $rallonge->id }}">
 
-                        <div class="form-group">
-                            <label for="cart">Choix dans le cart:</label>
-                            <select name="cart" id="cart" class="form-control">
-                                <option value="option1">Option 1</option>
-                                <option value="option2">Option 2</option>
-                                <option value="option3">Option 3</option>
-                            </select>
-                        </div>
+
 
                         <button type="submit" class="btn btn-primary mt-5">Valider votre Réservation</button>
                     </form>

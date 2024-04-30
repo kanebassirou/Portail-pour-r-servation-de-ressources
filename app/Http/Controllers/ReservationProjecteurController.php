@@ -7,7 +7,9 @@ use App\Models\Rallonge;
 use App\Models\reservation_projecteur;
 use App\Models\Reservations_cable;
 use App\Models\Reservations_rallonge;
+use App\Models\User;
 use App\Models\VideoProjecteur;
+use App\Notifications\UserNotification;
 use Illuminate\Http\Request;
 
 class ReservationProjecteurController extends Controller
@@ -58,8 +60,26 @@ class ReservationProjecteurController extends Controller
             return redirect()->back()->with('error', 'cette video-projecteur  est déjà réservée pour cet horaire.');
         }
 
+        $user = User::find($validated['Utilisateur_ID']);
+        if (!$user) {
+            return redirect()->back()->with('error', 'Utilisateur non trouvé.');
+        }
+        $projecteur = VideoProjecteur::find($validated['Projecteur_ID']);
+
         $validated['id'] = $id;
+        $user->notify(
+            new UserNotification(
+                $projecteur->nomRessource, // Supposons que les rallonges ont un attribut 'nom'
+                'video-projecteur',
+                $validated['date_de_reservation'], // Date de réservation
+
+                $validated['heure_de_debut'],
+                $validated['heure_de_fin'],
+                'arriver 10 et recuperer la ressource reservé', // Minutes avant pour arrivée
+            ),
+        );
         reservation_projecteur::create($validated);
+
 
         return redirect()->route('ressources.index')->with('success', 'Réservation du video-projecteur est  créée avec succès.');
     }
@@ -127,6 +147,6 @@ class ReservationProjecteurController extends Controller
     {
         $Reservations_projecteur = reservation_projecteur::findOrFail($id);
         $Reservations_projecteur ->delete();
-        return redirect()->route('admin.reservationsSalle')->with('success', 'Réservation du salle est  supprimée avec succès.');
+        return redirect()->route('admin.reservationsProjecteur')->with('success', 'la Réservation de cette Video-projecteur est  supprimée avec succès.');
     }
 }
