@@ -13,7 +13,7 @@
         <div class="card">
   <div class="card-header">
     @if(count($results) > 0)
-        <h2> Voici les {{ $results[0]->nomRessource }} disponibles pour :</h2>
+        <h2> Voici les {{ $results[0]->nomRessource }}s disponibles pour :</h2>
     @else
         <h2> Aucune ressource disponible pour les critères sélectionnés.</h2>
     @endif

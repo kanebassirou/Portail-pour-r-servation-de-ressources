@@ -4,7 +4,7 @@
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb justify-content-center py-2">
-            <li class="breadcrumb-item"><a href="index.html" style="color: #007bff;">Réservation</a></li>
+            <li class="breadcrumb-item"><a href="#Mes reservation" style="color: #007bff;">Réservation</a></li>
             <li class="breadcrumb-item active" aria-current="page" style="color: #6c757d;">Voir mes réservation </li>
         </ol>
     </nav>
@@ -140,7 +140,7 @@
                         <div class="card-body">
                             <h2 class="card-title h5">Salle de reunion</h2>
                             <ul class="list-unstyled">
-                                @forelse ($sallesClasses as $reservation)
+                                @forelse ($sallesReunions as $reservation)
                                     <li>
                                         !!!! {{ $reservation->salleReunion->nomRessource ?? 'laboratoires non trouvée' }} -
                                         est reserver pour le

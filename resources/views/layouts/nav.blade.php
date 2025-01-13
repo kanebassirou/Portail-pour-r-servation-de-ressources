@@ -24,7 +24,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-            <a href="index.html" class="navbar-brand">
+            <a href="#index.html" class="navbar-brand">
                 <img src="{{ asset('../assets/img/logoSET.jpeg') }}" alt="Logo" style="width: 55px; height: auto;">
 
                 Notre <span class="text-primary">Portail Reservation

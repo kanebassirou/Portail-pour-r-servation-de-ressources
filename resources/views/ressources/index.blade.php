@@ -2,11 +2,11 @@
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb justify-content-center py-2">
-            <li class="breadcrumb-item"><a href="index.html" style="color: #007bff;">Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('ressources.index') }}" style="color: #007bff;">Accueil</a></li>
             <li class="breadcrumb-item active" aria-current="page" style="color: #6c757d;">Explorer nos ressources</li>
         </ol>
     </nav>
-    <h1 class="fg-white text-center">Bienvenue sur notre plateforme de réservation</h1>
+    <h1 class="fg-white text-center">Bienvenue sur notre plateforme de réservation de ressources</h1>
 @endsection
 
 
@@ -25,10 +25,10 @@
     @endif
 
     <div class="container mt-5">
-        <div class="alert alert-success" role="alert">
-            <h4 class="alert-heading text-center">Bienvenue!</h4>
-            <p class="text-center">Commencez dès maintenant à planifier vos réservations. Utilisez le formulaire ci-dessous
-                pour trouver les ressources disponibles selon vos besoins.</p>
+        <div class="alert alert-btn btn-primary" role="alert">
+            <h1 class="alert-heading text-center">Bienvenue!</h1>
+            <h3 class="text-center"> Commencez dès maintenant à planifier vos réservations. Utilisez le formulaire ci-dessous
+                pour trouver les ressources disponibles selon vos besoins .</h3>
         </div>
 
         <div class="row justify-content-center">

@@ -12,8 +12,8 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="bg-white overflow-hidden shadow rounded-lg">
                             <div class="px-4 py-5 sm:p-6">
-                                <h3 class="text-lg leading-6 font-medium text-gray-900">Génerer une Rapport</h3>
-                                <div class="mt-2 max-w-xl text-sm text-white-500 btn btn-info px-20">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900">Génerer un Rapport</h3>
+                                <div class="mt-2 max-w-xl text-sm text-white-500 btn btn-primary px-20">
                                     <form action="{{ route('admin.rapport.generer') }}" method="POST">
                                         @csrf
                                         <div class="form-group">
@@ -28,7 +28,7 @@
                                             <input type="date" id="endDate" class="form-control" name="endDate" required>
                                         </div>
 
-                                            <button type="submit" class="btn btn-primary mt-2">Générer le rapport</button>
+                                            <button type="submit" class="btn btn-success mt-2">Générer le rapport</button>
                                     </form>
 
                                 </div>
@@ -43,7 +43,7 @@
                         <div class="bg-white overflow-hidden shadow rounded-lg">
                             <div class="px-6 py-5 sm:p-6">
                                 <h3 class="text-lg leading-6 font-medium text-gray-900">Reservation</h3>
-                                <div class="mt-2 max-w-xl text-sm text-white-500 btn btn-info">
+                                <div class="mt-2 max-w-xl text-sm text-white-500 btn btn-primary">
                                     <p>Nombre total de réservations pour les différentes ressources :</p>
                                     <ul>
                                         <li>VIDEO-PROJECTEUR: {{ $totalprojecteur }}</li>
@@ -64,7 +64,7 @@
                         <div class="bg-white overflow-hidden shadow rounded-lg">
                             <div class="px-4 py-5 sm:p-6">
                                 <h3 class="text-lg leading-6 font-medium text-gray-900">Les utilisateurs </h3>
-                                <div class="mt-2 max-w-xl text-sm text-white-500 btn btn-info">
+                                <div class="mt-2 max-w-xl text-sm text-white-500 btn btn-primary">
                                     <p>Nombre total d'utilisateurs : {{ $totalUsers }}</p>
                                 </div>
                                 <div class="mt-5">
@@ -79,7 +79,7 @@
                         <div class="bg-white overflow-hidden shadow rounded-lg">
                             <div class="px-4 py-5 sm:p-6">
                                 <h3 class="text-lg leading-6 font-medium text-gray-900">Les ressources</h3>
-                                <div class="mt-2 max-w-xl text-sm text-white-500 btn btn-info">
+                                <div class="mt-2 max-w-xl text-sm text-white-500 btn btn-primary">
                                     <p>Nombre total de ressource à gerer est : 6</p>
                                 </div>
                                 <div class="mt-5">

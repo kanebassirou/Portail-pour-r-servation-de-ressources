@@ -29,7 +29,9 @@
                 <th>Date</th>
                 <th>Heure</th>
                 <th>Nom du ressource</th>
-                <th>Utilisateur</th>
+                <th>Nom utilisateur</th>
+                 <th>Email utilisateur</th>
+
             </tr>
         </thead>
         <tbody>
@@ -39,6 +41,8 @@
                     <td>{{ $reservation->heure_de_debut}}</td>
                     <td>{{ $reservation->salleClasse->nomRessource }}</td>
                     <td>{{  $reservation->utilisateur->name }}</td>
+                    <td>{{  $reservation->utilisateur->email }}</td>
+
                 </tr>
             @empty
                 <tr><td colspan="4">Aucune réservation de salle de classe trouvée.</td></tr>
@@ -54,7 +58,9 @@
                 <th>Date</th>
                 <th>Heure</th>
                 <th>Nom du ressource</th>
-                <th>Utilisateur</th>
+                <th>nom d'utilisateur</th>
+                <th>Email d'utilisateur</th>
+
             </tr>
         </thead>
         <tbody>
@@ -64,6 +70,8 @@
                     <td>{{ $reservation->heure_de_debut}}</td>
                     <td>{{ $reservation->rallonges->nomRessource }}</td>
                     <td>{{  $reservation->utilisateur->name }}</td>
+                    <td>{{  $reservation->utilisateur->email }}</td>
+
                 </tr>
             @empty
                 <tr><td colspan="4">Aucune réservation de rallonge trouvée.</td></tr>
@@ -79,7 +87,9 @@
                 <th>Date</th>
                 <th>Heure</th>
                 <th>Nom du ressource</th>
-                <th>Utilisateur</th>
+                <th>Nom utilisateur</th>
+                <th>Email utilisateur</th>
+
             </tr>
         </thead>
         <tbody>
@@ -89,6 +99,8 @@
                     <td>{{ $reservation->heure_de_debut}}</td>
                     <td>{{ $reservation->cables->nomRessource }}</td>
                     <td>{{  $reservation->utilisateur->name }}</td>
+                    <td>{{  $reservation->utilisateur->email }}</td>
+
                 </tr>
             @empty
                 <tr><td colspan="4">Aucune réservation de cable trouvée.</td></tr>
@@ -103,7 +115,8 @@
                 <th>Date</th>
                 <th>Heure</th>
                 <th>Nom du ressource</th>
-                <th>Utilisateur</th>
+                <th>Nom d'utilisateur</th>
+                <th>Email d'utilisateur</th>
             </tr>
         </thead>
         <tbody>
@@ -113,6 +126,7 @@
                     <td>{{ $reservation->heure_de_debut}}</td>
                     <td>{{ $reservation->projecteurs->nomRessource }}</td>
                     <td>{{  $reservation->utilisateur->name }}</td>
+                    <td>{{  $reservation->utilisateur->email }}</td>
                 </tr>
             @empty
                 <tr><td colspan="4">Aucune réservation de video_projecteur trouvée.</td></tr>
@@ -127,7 +141,8 @@
                 <th>Date</th>
                 <th>Heure</th>
                 <th>Nom du ressource</th>
-                <th>Utilisateur</th>
+                <th>Nom utilisateur</th>
+                <th>Email d'utilisateur</th>
             </tr>
         </thead>
         <tbody>
@@ -137,6 +152,8 @@
                     <td>{{ $reservation->heure_de_debut}}</td>
                     <td>{{ $reservation->laboratoires->nomRessource }}</td>
                     <td>{{  $reservation->utilisateur->name }}</td>
+                    <td>{{  $reservation->utilisateur->email }}</td>
+
                 </tr>
             @empty
                 <tr><td colspan="4">Aucune réservation de laboratoire trouvée.</td></tr>
@@ -150,7 +167,8 @@
                 <th>Date</th>
                 <th>Heure</th>
                 <th>Nom du ressource</th>
-                <th>Utilisateur</th>
+                <th>Nom d'utilisateur</th>
+                <th>email d'utilisateur</th>
             </tr>
         </thead>
         <tbody>
@@ -160,6 +178,8 @@
                     <td>{{ $reservation->heure_de_debut}}</td>
                     <td>{{ $reservation->salleReunion->nomRessource }}</td>
                     <td>{{  $reservation->utilisateur->name }}</td>
+                    <td>{{  $reservation->utilisateur->email }}</td>
+
                 </tr>
             @empty
                 <tr><td colspan="4">Aucune réservation de laboratoire trouvée.</td></tr>
