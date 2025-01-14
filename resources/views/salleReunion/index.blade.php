@@ -11,7 +11,7 @@
     <div class="py-2">
         <div class="row">
             <div class="col-md-10">
-                <a href="{{ route('salleReunion.create') }}" class="btn btn-primary mb-2">Ajouter nouvelle salle de classe</a>
+                <a href="{{ route('salleReunion.create') }}" class="btn btn-primary mb-2">Ajouter nouvelle salle de Reunion</a>
             </div>
                <div class="col-md-2">
             <a href="{{ route('admin.ressources') }}" class="btn btn-primary">Retour</a>

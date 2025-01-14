@@ -15,6 +15,8 @@
         <div class="overflow-hidden shadow rounded-lg">
             <div class="px-4 py-5 sm:p-6">
                 <h3 class="text-lg leading-6 font-medium text-gray-900"> Salle de reunion</h3>
+                            <a href="{{ route('admin.reservationRessource') }}" class="btn btn-primary">Retour</a>
+
                 <div class="mt-2 max-w-xl text-sm text-gray-500">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead>
