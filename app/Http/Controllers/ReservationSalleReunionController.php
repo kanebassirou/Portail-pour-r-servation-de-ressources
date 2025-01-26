@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cable;
 use App\Models\Rallonge;
 use App\Models\Reservations_salles_reunions;
-use App\Models\salleReunion;
+use App\Models\SalleReunion;
 use App\Models\User;
 use App\Models\VideoProjecteur;
 use App\Notifications\UserNotification;
@@ -26,7 +26,7 @@ class ReservationSalleReunionController extends Controller
      */
     public function create($id)
     {
-        $salleReunion = salleReunion::where('id', $id)->first();
+        $salleReunion = SalleReunion::where('id', $id)->first();
         return view('reservation.createsalleReunion', compact('id', 'salleReunion'));
     }
 
