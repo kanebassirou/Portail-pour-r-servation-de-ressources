@@ -51,7 +51,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
         // Route pour afficher les ressources disponibles
         Route::resource('/', RessourceController::class)->names('ressources');
-        Route::resource('resources', RessourceController::class)->names('ressources');
+        // Route::resource('resources', RessourceController::class)->names('ressources');
           // catalogue des ressources pour l'utilisateur
         Route::get('catalogue/ressources', [RessourceController::class, 'indexCatalogue'])->name('catalogue.ressources');
 
