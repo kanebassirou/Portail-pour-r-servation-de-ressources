@@ -68,8 +68,8 @@ class ReservationSalleReunionController extends Controller
             $validated['heure_de_fin'], // Heure de fin
             10 // Nombre de minutes pour arriver en avance, ajustez selon besoin
         ));
-        return redirect()->route('ressources.index')->with('success', 'Réservation de cette salle de reunionest  créée avec succès .');
         Reservations_salles_reunions::create($validated);
+        return redirect()->route('ressources.index')->with('success', 'Réservation de cette salle de reunionest  créée avec succès .');
 
     }
 

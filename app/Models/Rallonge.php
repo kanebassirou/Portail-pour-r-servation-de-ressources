@@ -15,7 +15,7 @@ class Rallonge extends Ressource
     // protected $fillable = ['nomRessource', 'etatRessource', 'description','longueur', 'typeDePrise', 'nombreDePrise'];
     public function reservations_rallonges():HasMany
     {
-        return $this->hasMany(reservations_rallonge::class, 'Rallonge_ID');
+        return $this->hasMany(Reservations_rallonge::class, 'Rallonge_ID');
     }
 
 }

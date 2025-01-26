@@ -15,7 +15,7 @@
 @section('content')
     <div class="container mt-5">
         <h1 class="mb-4 text-center" style="color: #007bff;">Mes Réservations</h1>
-        @if ($sallesClasses->isEmpty() && $rallonges->isEmpty() && $cables->isEmpty() && $projecteurs->isEmpty())
+        @if ($sallesClasses->isEmpty() && $rallonges->isEmpty() && $cables->isEmpty() && $projecteurs->isEmpty() && $laboratoires->isEmpty() && $sallesReunions->isEmpty() )
             <div class="alert alert-info" role="alert">
                 Vous n'avez aucune réservation pour le moment. <a href="#" class="alert-link">Faire une nouvelle
                     réservation.</a>
@@ -38,7 +38,7 @@
 
                                     </li>
                                 @empty
-                                    <li>Pas de réservations</li>
+                                    {{-- <li>Pas de réservations</li> --}}
                                 @endforelse
                             </ul>
                         </div>
@@ -142,7 +142,7 @@
                             <ul class="list-unstyled">
                                 @forelse ($sallesReunions as $reservation)
                                     <li>
-                                        !!!! {{ $reservation->salleReunion->nomRessource ?? 'laboratoires non trouvée' }} -
+                                        !!!! {{ $reservation->salleReunion->nomRessource ?? 'salle de reunion non trouvée' }} -
                                         est reserver pour le
                                         -{{ \Carbon\Carbon::parse($reservation->date_de_reservation)->format('d/m/Y') }}
                                         à {{ \Carbon\Carbon::parse($reservation->heure_de_debut)->format('H:i') }} jusqu'à

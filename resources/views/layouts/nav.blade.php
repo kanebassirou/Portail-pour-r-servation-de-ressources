@@ -38,10 +38,10 @@
             <div class="navbar-collapse collapse" id="navbarContent">
                 <ul class="navbar-nav ml-auto pt-3 pt-lg-0">
                     <li class="nav-item">
-                        <a href="{{ route('ressources.index') }}" class="nav-link">Acceuil</a>
+                        <a href="{{ route('ressources.index') }}" class="nav-link active">Acceuil</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('reservations.all') }}" class="nav-link">Mes Resservation</a>
+                        <a href="{{ route('reservations.all') }}" class="nav-link active">Mes Resservation</a>
                     </li>
                     <li class="nav-item active">
                         <a href="{{ route('catalogue.ressources') }}" class="nav-link">Catologue</a>
@@ -52,15 +52,24 @@
                         </li>
                     @endif
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Contact</a>
-                    </li>
-
-                    @if (auth()->check() && auth()->user()->hasRole('admin'))
-                        <li class="nav-item">
+                       @if (auth()->check() && auth()->user()->hasRole('admin'))
+                        <li class="nav-item active">
                             <a href="{{ route('admin.dashboard') }}" class="nav-link">Espace Admin</a>
                         </li>
                     @endif
+                    @if (auth()->check())
+                        <li class="nav-item">
+                            <a href="{{ route('logout') }}" class="nav-link active"
+                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Déconnexion
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
+                    @endif
+
+
 
                 </ul>
             </div>

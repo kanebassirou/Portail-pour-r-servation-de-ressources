@@ -1,4 +1,7 @@
 <?php
+// routes/web.php
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 use App\Http\Controllers\CableController;
 use App\Http\Controllers\LaboratoireController;
@@ -21,6 +24,22 @@ use App\Models\Reservations_rallonge;
 use App\Models\Reservations_salles_classes;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+
+// Routes de vérification des e-mails
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/resources');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', 'Lien de vérification envoyé!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     // Routes pour les rôles "user" et "admin"
