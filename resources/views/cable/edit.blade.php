@@ -33,8 +33,8 @@
                     <div class="mb-4">
                         <label for="Etat" class="block text-gray-700 text-sm font-bold mb-2">État:</label>
                         <select name="Etat" id="Etat" class="form-select rounded-md shadow-sm w-full" required>
-                            <option value="Disponible" {{ $cable->Etat == 'Disponible' ? 'selected' : '' }}>Disponible</option>
-                            <option value="Indisponible" {{ $cable->Etat == 'Indisponible' ? 'selected' : '' }}>Indisponible</option>
+                            <option value="Disponible" {{ $cable->Etat == 'panne' ? 'selected' : '' }}>panne</option>
+                            <option value="Indisponible" {{ $cable->Etat == 'fonctionnelle' ? 'selected' : '' }}>fonctionnelle</option>
                         </select>
                     </div>
 

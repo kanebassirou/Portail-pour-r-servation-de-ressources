@@ -2,96 +2,88 @@
 
 @section('title', 'Dashboard')
 
-
 @section('content')
-    <div class="py-2">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+<div class="py-6">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
 
-            <div class="py-2">
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div class="bg-white overflow-hidden shadow rounded-lg">
-                            <div class="px-4 py-5 sm:p-6">
-                                <h3 class="text-lg leading-6 font-medium text-gray-900">Génerer un Rapport</h3>
-                                <div class="mt-2 max-w-xl text-sm text-white-500 btn btn-primary px-20">
-                                    <form action="{{ route('admin.rapport.generer') }}" method="POST">
-                                        @csrf
-                                        <div class="form-group">
-                                            <label for="startDate">Date de début:</label>
-                                            <input type="date" id="startDate" class="form-control" name="startDate"
-                                                required>
-                                        </div>
-                                        <div class="form-group">
-
-                                            <label  for="endDate">Date de
-                                                fin:</label>
-                                            <input type="date" id="endDate" class="form-control" name="endDate" required>
-                                        </div>
-
-                                            <button type="submit" class="btn btn-success mt-2">Générer le rapport</button>
-                                    </form>
-
-                                </div>
-                                <div class="mt-5">
-                                    {{-- <a href="{{ route('admin.rapport.pdf') }}"
-                                        class="text-white-500 btn btn-success">Telecharger le rapport
-                                    </a> --}}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="bg-white overflow-hidden shadow rounded-lg">
-                            <div class="px-6 py-5 sm:p-6">
-                                <h3 class="text-lg leading-6 font-medium text-gray-900">Reservation</h3>
-                                <div class="mt-2 max-w-xl text-sm text-white-500 btn btn-primary">
-                                    <p>Nombre total de réservations pour les différentes ressources :</p>
-                                    <ul>
-                                        <li>VIDEO-PROJECTEUR: {{ $totalprojecteur }}</li>
-                                        <li>SALLE DE CLASSE: {{ $totalclasse }}</li>
-                                        <li>RALLONGE: {{ $totalrallonge }}</li>
-                                        <li>CABLES: {{ $totalcable }}</li>
-                                    </ul>
-                                </div>
-                                <div class="mt-5">
-                                    <a href="{{ route('admin.reservationRessource') }}"
-                                        class="text-white-500 btn btn-success">Voir les
-                                        reservations</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Clients -->
-                        <div class="bg-white overflow-hidden shadow rounded-lg">
-                            <div class="px-4 py-5 sm:p-6">
-                                <h3 class="text-lg leading-6 font-medium text-gray-900">Les utilisateurs </h3>
-                                <div class="mt-2 max-w-xl text-sm text-white-500 btn btn-primary">
-                                    <p>Nombre total d'utilisateurs : {{ $totalUsers }}</p>
-                                </div>
-                                <div class="mt-5">
-                                    <a href="{{ route('admin.users.index') }}"
-                                        class="text-white-500 btn btn-success">Gestion des
-                                        utilisaeurs</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Produits -->
-                        <div class="bg-white overflow-hidden shadow rounded-lg">
-                            <div class="px-4 py-5 sm:p-6">
-                                <h3 class="text-lg leading-6 font-medium text-gray-900">Les ressources</h3>
-                                <div class="mt-2 max-w-xl text-sm text-white-500 btn btn-primary">
-                                    <p>Nombre total de ressource à gerer est : 6</p>
-                                </div>
-                                <div class="mt-5">
-                                    <a href="{{ route('admin.ressources') }}" class="text-white-500 btn btn-success">GESTION
-                                        RESSOURCES</a>
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        {{-- Affichage des alertes --}}
+        @if (session('warning'))
+            <div class="alert alert-warning" role="alert">
+                {{ session('warning') }}
             </div>
-        </div>
-    @endsection
+        @endif
+
+        {{-- Grid pour organiser les cartes --}}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+
+            {{-- Génération de rapport --}}
+            <div class="bg-white shadow-lg rounded-lg p-6">
+                <h3 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                    📊 Générer un Rapport
+                </h3>
+                <form action="{{ route('admin.rapport.generer') }}" method="POST" class="mt-4 space-y-3">
+                    @csrf
+                    <div>
+                        <label for="startDate" class="block text-sm font-medium text-gray-700">Date de début:</label>
+                        <input type="date" id="startDate" name="startDate" required
+                               class="mt-1 p-2 w-full border rounded-lg">
+                    </div>
+                    <div>
+                        <label for="endDate" class="block text-sm font-medium text-gray-700">Date de fin:</label>
+                        <input type="date" id="endDate" name="endDate" required
+                               class="mt-1 p-2 w-full border rounded-lg">
+                    </div>
+                    <button type="submit" class="btn btn-success text-gray-900 w-100 py-2 rounded-lg">
+            Générer le rapport
+        </button>
+                </form>
+            </div>
+
+            {{-- Réservations --}}
+            <div class="bg-white shadow-lg rounded-lg p-6">
+                <h3 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                    📅 Réservations
+                </h3>
+                <p class="mt-2 text-gray-600">Nombre total de réservations :</p>
+                <ul class="mt-3 space-y-1">
+                    <li>🎥 VIDEO-PROJECTEUR: <strong>{{ $totalprojecteur }}</strong></li>
+                    <li>🏫 SALLE DE CLASSE: <strong>{{ $totalclasse }}</strong></li>
+                    <li>🏢 SALLE DE RÉUNION: <strong>{{ $totalSalleReunion }}</strong></li>
+                    <li>🔌 RALLONGE: <strong>{{ $totalrallonge }}</strong></li>
+                    <li>📡 CÂBLES: <strong>{{ $totalcable }}</strong></li>
+                </ul>
+                <a href="{{ route('admin.reservationRessource') }}"
+                   class="mt-4 block text-center bg-green-600 text-white py-2 rounded-lg hover:bg-green-700">
+                    Voir les réservations
+                </a>
+            </div>
+
+            {{-- Utilisateurs --}}
+            <div class="bg-white shadow-lg rounded-lg p-6">
+                <h3 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                    👤 Utilisateurs
+                </h3>
+                <p class="mt-2 text-gray-600">Nombre total d'utilisateurs : <strong>{{ $totalUsers }}</strong></p>
+                <a href="{{ route('admin.users.index') }}"
+                   class="mt-4 block text-center bg-green-600 text-white py-2 rounded-lg hover:bg-green-700">
+                    Gestion des utilisateurs
+                </a>
+            </div>
+
+            {{-- Ressources --}}
+            <div class="bg-white shadow-lg rounded-lg p-6">
+                <h3 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                    🛠️ Ressources
+                </h3>
+                <p class="mt-2 text-gray-600">Nombre total de ressources à gérer : <strong>6</strong></p>
+                <a href="{{ route('admin.ressources') }}"
+                   class="mt-4 block text-center bg-green-600 text-white py-2 rounded-lg hover:bg-green-700">
+                    Gestion des ressources
+                </a>
+            </div>
+
+        </div> {{-- Fin du Grid --}}
+
+    </div>
+</div>
+@endsection

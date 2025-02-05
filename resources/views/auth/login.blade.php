@@ -35,14 +35,8 @@
                     <select name="statusUser" id="statusUser" required>
             <option value="">Sélectionnez votre rôle</option>
             <option value="PATS">Personnel Administratif, Technique et de Service (PATS)</option>
-            <option value="Directeur adjoint">Directeur adjoint</option>
-            <option value="Chef de service">Chef de service</option>
-            <option value="Comptable">Comptable</option>
-            <option value="Matière">Matière</option>
-            <option value="Assistance de la scolarité">Assistance de la scolarité</option>
-            <option value="Assistance direction">Assistance direction</option>
-            <option value="Assistance pédagogique">Assistance pédagogique</option>
-            <option value="Directeur">Directeur</option>
+
+
             <option value="PER">Personnel Enseignant et de Recherche (PER)</option>
             <option value="Etudiant">Étudiant</option>
         </select>

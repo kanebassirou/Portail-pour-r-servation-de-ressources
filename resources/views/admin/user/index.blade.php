@@ -13,6 +13,13 @@
     <div class="overflow-hidden shadow rounded-lg">
         <div class="px-4 py-5 sm:p-6">
             <h3 class="text-lg leading-6 font-medium text-gray-900"> Gestion des utilisateurs</h3>
+            <div class="mt-4 flex justify-between">
+    <form action="{{ route('admin.users.index') }}" method="GET" class="flex">
+        <input type="text" name="search" placeholder="Rechercher..." class="px-4 py-2 border rounded-lg">
+        <button type="submit" class="ml-2 px-4 py-2 bg-blue-500 text-blue rounded-lg">Rechercher</button>
+    </form>
+    <a href="{{ route('admin.users.liste') }}" class="px-4 py-2 bg-blue-500 text-white rounded-lg">la liste des utilisateur autorisée</a>
+</div>
             <div class="mt-2 max-w-xl text-sm text-gray-500">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead>
@@ -120,3 +127,4 @@
     </div>
 
 @endsection
+

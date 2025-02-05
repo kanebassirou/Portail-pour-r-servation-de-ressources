@@ -8,7 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <meta name="copyright" content="MACode ID, https://macodeid.com/">
-
+    <meta name="description" content="Portail de réservation de ressources pour l'Université Iba Der Thiam UFR SET, Thiès, Senegal.">
+    <meta name="keywords" content="réservation, ressources, université, Thiès, Sénégal, UFR SET">
+    <meta name="author" content="Bassirou Kane">
     <title>Portail de resservation de ressource</title>
 
     <link rel="stylesheet" href="{{ asset('../assets/css/bootstrap.css') }}">

@@ -49,7 +49,7 @@ class CreateNewUser implements CreatesNewUsers
         ]);
 
         // Assigner un rôle par défaut
-        $user->assignRole('admin'); // Assign "user" role
+        $user->assignRole('user'); // Assign "user" role
         event(new Registered($user));
 
         return $user;
