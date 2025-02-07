@@ -23,19 +23,16 @@ jobs:
       - name: Installer les dépendances Laravel
         run: composer install --no-dev --prefer-dist --optimize-autoloader
 
+      - name: Créer le fichier .env
+        run: |
+          echo "${{ secrets.ENV_FILE }}" | tr -d '\r' > .env
+
       - name: Vérifier si .env existe
         run: |
           if [ ! -f .env ]; then
             echo "Le fichier .env est manquant !"
             exit 1
           fi
-
-      - name: Générer la clé Laravel
-        run: php artisan key:generate
-
-      - name: Vérifier connexion à la base de données
-        run: |
-          php artisan migrate:status || (echo "La base de données n'est pas accessible" && exit 1)
 
       - name: Nettoyer Laravel avant le déploiement
         run: |
@@ -61,3 +58,4 @@ jobs:
             storage/logs/*
             storage/framework/sessions/*
             storage/framework/views/*
+
