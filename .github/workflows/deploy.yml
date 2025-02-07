@@ -16,7 +16,7 @@ jobs:
       - name: Installer PHP et Composer
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'  # Change selon ta version PHP
+          php-version: '8.2'  # Change selon ta version PHP
           extensions: mbstring, xml, ctype, json, tokenizer
           tools: composer:v2
 
@@ -33,17 +33,16 @@ jobs:
       - name: Déployer via SFTP
         uses: SamKirkland/FTP-Deploy-Action@v4
         with:
-          server: ${{ secrets.SFTP_SERVER }}
-          username: ${{ secrets.SFTP_USERNAME }}
-          password: ${{ secrets.SFTP_PASSWORD }}
-          protocol: sftp
-          server-dir: "/chemin/vers/app/"  # Change ce chemin selon ton serveur
-          local-dir: "./"
-          exclude: |
-            **/.git*
-            **/node_modules/*
-            **/vendor/*
-            .env
-            storage/logs/*
-            storage/framework/sessions/*
-            storage/framework/views/*
+            server: rrset.uidt.sn
+            username: rrset
+            password: 33@adm*2024!
+            protocol: sftp
+            local-dir: "./"
+            exclude: |
+             **/.git*
+             **/node_modules/*
+             **/vendor/*
+             .env
+              storage/logs/*
+              storage/framework/sessions/*
+              storage/framework/views/*
