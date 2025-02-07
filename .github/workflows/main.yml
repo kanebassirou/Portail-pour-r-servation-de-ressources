@@ -16,12 +16,26 @@ jobs:
       - name: Installer PHP et Composer
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'  # Change selon ta version PHP
+          php-version: '8.2'
           extensions: mbstring, xml, ctype, json, tokenizer
           tools: composer:v2
 
       - name: Installer les dépendances Laravel
         run: composer install --no-dev --prefer-dist --optimize-autoloader
+
+      - name: Vérifier si .env existe
+        run: |
+          if [ ! -f .env ]; then
+            echo "Le fichier .env est manquant !"
+            exit 1
+          fi
+
+      - name: Générer la clé Laravel
+        run: php artisan key:generate
+
+      - name: Vérifier connexion à la base de données
+        run: |
+          php artisan migrate:status || (echo "La base de données n'est pas accessible" && exit 1)
 
       - name: Nettoyer Laravel avant le déploiement
         run: |
@@ -31,14 +45,14 @@ jobs:
           php artisan view:clear
 
       - name: Déployer via SFTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4  # Bonne version
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.SFTP_SERVER }}
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
           protocol: sftp
           local-dir: "./"
-          server-dir: "/chemin/vers/app/"  # À adapter
+          server-dir: "/www/rrset/"
           exclude: |
             **/.git*
             **/node_modules/*
