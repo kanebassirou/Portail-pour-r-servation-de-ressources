@@ -3,7 +3,7 @@ name: Deploy Laravel App via SFTP
 on:
   push:
     branches:
-      - main  # Change si ta branche principale est différente
+      - main  # Change si nécessaire
 
 jobs:
   deploy:
@@ -35,19 +35,21 @@ jobs:
           fi
 
       - name: Déployer via SFTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        uses: appleboy/scp-action@v0.1.4
         with:
-          server: ${{ secrets.SFTP_SERVER }}
+          host: ${{ secrets.SFTP_SERVER }}
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
-          protocol: sftp
-          local-dir: "./"
-          server-dir: "/www/rrset/"
+          source: "./"
+          target: "/www/rrset/"
+          strip_components: 1
+          overwrite: true
+          rm: true
           exclude: |
-            **/.git*
-            **/node_modules/*
-            **/vendor/*
+            .git
+            node_modules
+            vendor
             .env
-            storage/logs/*
-            storage/framework/sessions/*
-            storage/framework/views/*
+            storage/logs
+            storage/framework/sessions
+            storage/framework/views
