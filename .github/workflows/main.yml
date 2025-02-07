@@ -34,13 +34,6 @@ jobs:
             exit 1
           fi
 
-      - name: Nettoyer Laravel avant le déploiement
-        run: |
-          php artisan cache:clear
-          php artisan config:clear
-          php artisan route:clear
-          php artisan view:clear
-
       - name: Déployer via SFTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
@@ -58,4 +51,3 @@ jobs:
             storage/logs/*
             storage/framework/sessions/*
             storage/framework/views/*
-
