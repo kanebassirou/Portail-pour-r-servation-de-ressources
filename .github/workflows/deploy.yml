@@ -1,0 +1,49 @@
+name: Deploy Laravel App via SFTP
+
+on:
+  push:
+    branches:
+      - main  # Change si tu utilises une autre branche principale
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Cloner le dépôt
+        uses: actions/checkout@v3
+
+      - name: Installer PHP et Composer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'  # Change selon ta version PHP
+          extensions: mbstring, xml, ctype, json, tokenizer
+          tools: composer:v2
+
+      - name: Installer les dépendances Laravel
+        run: composer install --no-dev --prefer-dist --optimize-autoloader
+
+      - name: Nettoyer Laravel avant le déploiement
+        run: |
+          php artisan cache:clear
+          php artisan config:clear
+          php artisan route:clear
+          php artisan view:clear
+
+      - name: Déployer via SFTP
+        uses: SamKirkland/FTP-Deploy-Action@v4
+        with:
+          server: ${{ secrets.SFTP_SERVER }}
+          username: ${{ secrets.SFTP_USERNAME }}
+          password: ${{ secrets.SFTP_PASSWORD }}
+          protocol: sftp
+          server-dir: "/chemin/vers/app/"  # Change ce chemin selon ton serveur
+          local-dir: "./"
+          exclude: |
+            **/.git*
+            **/node_modules/*
+            **/vendor/*
+            .env
+            storage/logs/*
+            storage/framework/sessions/*
+            storage/framework/views/*
