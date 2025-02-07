@@ -34,22 +34,28 @@ jobs:
             exit 1
           fi
 
+      - name: Archiver le projet (exclure node_modules et vendor)
+        run: tar --exclude='./node_modules' --exclude='./vendor' -czf project.tar.gz .
+
       - name: Déployer via SFTP
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.SFTP_SERVER }}
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
-          source: "./"
+          source: "project.tar.gz"
           target: "/www/rrset/"
           strip_components: 1
           overwrite: true
           rm: true
-          exclude: |
-            .git
-            node_modules
-            vendor
-            .env
-            storage/logs
-            storage/framework/sessions
-            storage/framework/views
+
+      - name: Décompression du projet sur le serveur
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SFTP_SERVER }}
+          username: ${{ secrets.SFTP_USERNAME }}
+          password: ${{ secrets.SFTP_PASSWORD }}
+          script: |
+            cd /www/rrset/
+            tar -xzf project.tar.gz
+            rm project.tar.gz
