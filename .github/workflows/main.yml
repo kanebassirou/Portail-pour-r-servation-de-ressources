@@ -18,7 +18,7 @@ jobs:
       - name: Configurer PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'  # Modifier selon ton projet
+          php-version: '8.2'  # Modifier selon ton projet
           extensions: mbstring, bcmath, pdo_mysql
           tools: composer:v2
 
@@ -26,22 +26,34 @@ jobs:
       - name: Installer les dépendances PHP
         run: composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
 
-      # 4️⃣ Installer les dépendances Node.js
+      # 4️⃣ Installer les dépendances Node.js et compiler les assets
       - name: Installer les dépendances Node.js
         run: npm install && npm run build
 
-      # 5️⃣ Créer le fichier .env à partir du secret GitHub
+      # 5️⃣ Générer le fichier .env à partir du secret GitHub
       - name: Créer le fichier .env
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
-      # 6️⃣ Archiver les fichiers pour éviter les erreurs
-      - name: Archiver le projet
-        run: |
-          mkdir deploy_temp
-          rsync -av --progress --exclude=node_modules --exclude=vendor ./ deploy_temp/
-          tar --warning=no-file-changed -czf project.tar.gz -C deploy_temp .
+      # 6️⃣ Générer la clé d'application Laravel
+      - name: Générer APP_KEY
+        run: php artisan key:generate
 
-      # 7️⃣ Déployer via SFTP
+      # 7️⃣ Nettoyer et optimiser Laravel
+      - name: Nettoyer et mettre en cache Laravel
+        run: |
+          php artisan cache:clear
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+
+      # 8️⃣ Supprimer les fichiers inutiles avant transfert
+      - name: Nettoyer les fichiers inutiles
+        run: |
+          rm -rf node_modules vendor .git storage .github
+          mkdir -p storage/app storage/framework storage/logs bootstrap/cache
+          chmod -R 775 storage bootstrap/cache
+
+      # 9️⃣ Déployer via SFTP (sans archive)
       - name: Déployer via SFTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
@@ -51,3 +63,10 @@ jobs:
           protocol: sftp
           local-dir: ./
           server-dir: /www/ton_projet/  # Modifier selon ton hébergeur
+
+      # 🔟 Vider le cache Laravel après le déploiement
+      - name: Vider le cache Laravel sur le serveur
+        run: |
+          curl --silent --show-error --fail --request POST \
+          --url https://www.ton-domaine.com/artisan \
+          --data "command=cache:clear"
