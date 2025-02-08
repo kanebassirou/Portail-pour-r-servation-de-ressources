@@ -1,9 +1,9 @@
-name: Déploiement Laravel via SFTP
+name: Déploiement Laravel via SFTP (mise à jour rapide)
 
 on:
   push:
     branches:
-      - main  # Modifier si nécessaire
+      - main  # Déclenche le workflow seulement sur `main`
 
 jobs:
   deploy:
@@ -18,51 +18,48 @@ jobs:
       - name: Configurer PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'  # Modifier selon ton projet
+          php-version: '8.2'
           extensions: mbstring, bcmath, pdo_mysql
           tools: composer:v2
 
-      # 3️⃣ Installer les dépendances PHP
+      # 3️⃣ Installer les dépendances PHP sans `node_modules`
       - name: Installer les dépendances PHP
         run: composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
 
-      # 4️⃣ Installer les dépendances Node.js
-      - name: Installer les dépendances Node.js
-        run: npm install && npm run build
-
-      # 5️⃣ Créer le fichier .env à partir du secret GitHub
+      # 4️⃣ Créer le fichier .env à partir du secret GitHub
       - name: Créer le fichier .env
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
-      # 6️⃣ Archiver les fichiers pour éviter les erreurs
-      - name: Préparer les fichiers pour le déploiement
-        run: |
-          mkdir deploy_temp
-          rsync -av --progress --exclude=node_modules --exclude=vendor ./ deploy_temp/
-
-      # 7️⃣ Déployer via SFTP (sans archive)
-      - name: Déployer via SFTP
+      # 5️⃣ Synchroniser uniquement les fichiers modifiés via SFTP
+      - name: Déployer via SFTP (fichiers modifiés uniquement)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.SFTP_SERVER }}
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
           protocol: sftp
-          local-dir: ./deploy_temp/
+          local-dir: ./
           server-dir: /www/ton_projet/  # Modifier selon ton hébergeur
+          exclude: |
+            node_modules/
+            storage/
+            vendor/
+            .git/
+            .github/
+            tests/
+            .env
+            .gitignore
+            README.md
 
-      # 8️⃣ Nettoyer et mettre en cache Laravel (Ignorer les erreurs si MySQL n'est pas disponible)
-      - name: Nettoyer et mettre en cache Laravel
-        run: |
-          php artisan config:clear || true
-          php artisan cache:clear || true
-          php artisan config:cache || true
-          php artisan route:cache || true
-          php artisan view:cache || true
-
-      # 9️⃣ Vider le cache Laravel après le déploiement (sur le serveur)
-      - name: Vider le cache Laravel sur le serveur
+      # 6️⃣ Nettoyer et mettre en cache Laravel sur le serveur
+      - name: Rafraîchir le cache Laravel sur le serveur
         run: |
           curl --silent --show-error --fail --request POST \
           --url https://www.ton-domaine.com/artisan \
+          --data "command=config:clear"
+          curl --silent --show-error --fail --request POST \
+          --url https://www.ton-domaine.com/artisan \
           --data "command=cache:clear"
+          curl --silent --show-error --fail --request POST \
+          --url https://www.ton-domaine.com/artisan \
+          --data "command=config:cache"
