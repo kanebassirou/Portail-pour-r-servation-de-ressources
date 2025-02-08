@@ -8,13 +8,12 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      # 1️⃣ Cloner le dépôt
+      # 1. Cloner le dépôt
       - name: Cloner le dépôt
         uses: actions/checkout@v4
 
-      # 2️⃣ Configurer PHP
+      # 2. Configurer PHP (installation de PHP 8.2 et extensions nécessaires)
       - name: Configurer PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -22,37 +21,28 @@ jobs:
           extensions: mbstring, bcmath, pdo_mysql
           tools: composer:v2
 
-      # 3️⃣ Installer les dépendances PHP
+      # 3. Installer les dépendances PHP
       - name: Installer les dépendances PHP
         run: composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
 
-      # 4️⃣ Créer le fichier .env à partir du secret GitHub
+      # 4. Créer le fichier .env à partir du secret GitHub
       - name: Créer le fichier .env
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
-      # 5️⃣ Déployer via SFTP en transférant les fichiers
-      - name: Déployer via SFTP
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SFTP_SERVER }}
-          username: ${{ secrets.SFTP_USERNAME }}
-          password: ${{ secrets.SFTP_PASSWORD }}
-          port: 22  # Vérifie si ton hébergeur utilise un port différent
-          source: "."
-          target: "/www/ton_projet/"
-          strip_components: 1
-          overwrite: true
+      # 5. Préparer les fichiers à déployer (exclure .git, node_modules et vendor)
+      - name: Préparer les fichiers à déployer
+        run: |
+          mkdir deploy_temp
+          rsync -av --progress --exclude '.git' --exclude 'node_modules' --exclude 'vendor' . deploy_temp/
 
-      # 6️⃣ Rafraîchir le cache Laravel sur le serveur
-      - name: Rafraîchir le cache Laravel
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SFTP_SERVER }}
-          username: ${{ secrets.SFTP_USERNAME }}
-          password: ${{ secrets.SFTP_PASSWORD }}
-          port: 22
-          script: |
-            cd /www/rrset
-            php artisan config:clear
-            php artisan cache:clear
-            php artisan config:cache
+      # 6. Déployer via SFTP avec sshpass
+      - name: Déployer via SFTP
+        run: |
+          sudo apt-get update && sudo apt-get install -y sshpass
+          cd deploy_temp
+          sshpass -p "${{ secrets.SFTP_PASSWORD }}" sftp -o StrictHostKeyChecking=no -P 22 ${{ secrets.SFTP_USERNAME }}@${{ secrets.SFTP_SERVER }} <<'EOF'
+lcd .
+cd /www/rrset/
+put -r *
+bye
+EOF
