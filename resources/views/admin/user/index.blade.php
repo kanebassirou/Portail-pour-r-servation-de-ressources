@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'gerer les utilisateurs')
+@section('title', 'Gérer les utilisateurs')
 
 @section('content')
     @if (session('success'))
@@ -9,15 +9,14 @@
         </div>
     @endif
 
+    <div class="bg-white shadow rounded-lg p-6">
+        <h3 class="text-lg font-semibold text-gray-900">Gestion des utilisateurs</h3>
 
-    <div class="overflow-hidden shadow rounded-lg">
-        <div class="px-4 py-5 sm:p-6">
-            <h3 class="text-lg leading-6 font-medium text-gray-900"> Gestion des utilisateurs</h3>
-            <div class="mt-4 flex justify-between">
-    <form action="{{ route('admin.users.index') }}" method="GET" class="flex">
-        <input type="text" name="search" placeholder="Rechercher..." class="px-4 py-2 border rounded-lg">
-        <button type="submit" class="ml-2 px-4 py-2 bg-blue-500 text-blue rounded-lg">Rechercher</button>
-    </form>
+        <div class="mt-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <form action="{{ route('admin.users.index') }}" method="GET" class="flex w-full md:w-auto">
+                <input type="text" name="search" placeholder="Rechercher..." class="px-4 py-2 border rounded-lg w-full md:w-64">
+                <button type="submit" class="ml-2 px-4 py-2 bg-blue-500 text-bg-blue-500  rounded-lg hover:bg-blue-600">Rechercher</button>
+            </form>
     <a href="{{ route('admin.users.liste') }}" class="px-4 py-2 bg-blue-500 text-white rounded-lg">la liste des utilisateur autorisée</a>
 </div>
             <div class="mt-2 max-w-xl text-sm text-gray-500">
