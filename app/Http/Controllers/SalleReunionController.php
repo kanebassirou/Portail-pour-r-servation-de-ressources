@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\salleReunion;
+use App\Models\SalleReunion;
 use Illuminate\Http\Request;
 
 class SalleReunionController extends Controller
@@ -14,7 +14,7 @@ class SalleReunionController extends Controller
 
     {
         //
-        $salleReunions = salleReunion::paginate(10);
+        $salleReunions = SalleReunion::paginate(10);
         return view('salleReunion.index', compact('salleReunions'));
     }
 
@@ -40,7 +40,7 @@ class SalleReunionController extends Controller
             'numero_salle' => 'required',
             'capacite' => 'required',
         ]);
-        salleReunion::create($validatedData);
+        SalleReunion::create($validatedData);
         return redirect()->route('salleReunion.index')->with('success', 'Salle de classe créée avec succès');
     }
 

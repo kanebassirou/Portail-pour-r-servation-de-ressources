@@ -20,23 +20,26 @@
 
             <form method="POST" action="{{ route('register') }}">
                 @csrf
-                <h4>Créer un compte</h4>
+
                 <div class="social-icons">
+                 <h4>Créer un compte</h4>
                     <!-- Exemple de lien pour l'authentification Google, nécessite Laravel Socialite -->
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                    {{-- <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a> --}}
+                    {{-- <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a> --}}
                 </div>
-                <span>ou utilisez votre adresse e-mail pour vous inscrire</span>
+                {{-- <span>ou utilisez votre adresse e-mail pour vous inscrire</span> --}}
                 <div>
                     <label for="statusUser">Vous êtes :</label>
                     <select name="statusUser" id="statusUser" required>
-                        <option value="">Sélectionnez votre rôle</option>
-                        <option value="etudiant">Étudiant</option>
-                        <option value="enseignant">Enseignant</option>
-                        <option value="Personnel Administratif">Personnel Administratif</option>
-                    </select>
+            <option value="">Sélectionnez votre rôle</option>
+            <option value="PATS">Personnel Administratif, Technique et de Service (PATS)</option>
+
+
+            <option value="PER">Personnel Enseignant et de Recherche (PER)</option>
+            <option value="Etudiant">Étudiant</option>
+        </select>
                 </div>
                 <input type="text" name="name" placeholder="Nom complet" required>
                 <input type="email" name="email" placeholder="Email" required>

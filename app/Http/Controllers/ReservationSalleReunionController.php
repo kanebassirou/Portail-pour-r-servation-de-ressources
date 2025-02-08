@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cable;
 use App\Models\Rallonge;
 use App\Models\Reservations_salles_reunions;
-use App\Models\salleReunion;
+use App\Models\SalleReunion;
 use App\Models\User;
 use App\Models\VideoProjecteur;
 use App\Notifications\UserNotification;
@@ -26,7 +26,7 @@ class ReservationSalleReunionController extends Controller
      */
     public function create($id)
     {
-        $salleReunion = salleReunion::where('id', $id)->first();
+        $salleReunion = SalleReunion::where('id', $id)->first();
         return view('reservation.createsalleReunion', compact('id', 'salleReunion'));
     }
 
@@ -68,8 +68,8 @@ class ReservationSalleReunionController extends Controller
             $validated['heure_de_fin'], // Heure de fin
             10 // Nombre de minutes pour arriver en avance, ajustez selon besoin
         ));
-        return redirect()->route('ressources.index')->with('success', 'Réservation de cette salle de reunionest  créée avec succès .');
         Reservations_salles_reunions::create($validated);
+        return redirect()->route('ressources.index')->with('success', 'Réservation de cette salle de reunionest  créée avec succès .');
 
     }
 

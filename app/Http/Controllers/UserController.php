@@ -17,21 +17,47 @@ class UserController extends Controller
 {
     public function genererRapport(Request $request)
     {
+        // Récupération des dates du formulaire
         $startDate = $request->startDate;
         $endDate = $request->endDate;
 
+        // Récupération des réservations pour chaque catégorie
         $reservationsSallesClasses = Reservations_salles_classes::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
         $reservationRallonges = Reservations_rallonge::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
         $reservationCables = Reservations_cable::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
         $reservationProjecteurs = Reservation_projecteur::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
         $reservationLaboratoires = Reservation_laboratoire::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
         $reservationSallesReunions = Reservations_salles_reunions::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
-        $pdf = Pdf::loadView('admin.user.rapport.index', compact('reservationsSallesClasses', 'reservationRallonges', 'reservationCables', 'reservationProjecteurs', 'reservationLaboratoires', 'reservationSallesReunions', 'startDate', 'endDate'));
 
-        // Télécharger le PDF avec un nom de fichier formaté
-        $nomFichier = 'rapport_reservations_' . date('Ymd') . '.pdf'; // Générer un nom unique avec la date formatée (YYYYMMDD)
-        return $pdf->download($nomFichier);
+        // Vérification des données et gestion des erreurs
+        if (
+            $reservationsSallesClasses->isEmpty() &&
+            $reservationRallonges->isEmpty() &&
+            $reservationCables->isEmpty() &&
+            $reservationProjecteurs->isEmpty() &&
+            $reservationLaboratoires->isEmpty() &&
+            $reservationSallesReunions->isEmpty()
+        ) {
+            return redirect()->back()->with('warning', "Aucune reservation n'est disponible pour la période sélectionnée.");
+        }
+
+        // Chargement de la vue et des données pour le PDF
+        $pdf = Pdf::loadView('admin.user.rapport.index', [
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'reservationsSallesClasses' => $reservationsSallesClasses,
+            'reservationRallonges' => $reservationRallonges,
+            'reservationCables' => $reservationCables,
+            'reservationProjecteurs' => $reservationProjecteurs,
+            'reservationLaboratoires' => $reservationLaboratoires,
+            'reservationSallesReunions' => $reservationSallesReunions,
+        ]);
+
+        // Option pour afficher dans le navigateur ou télécharger
+        return $pdf->stream('rapport_reservations_' . date('Ymd') . '.pdf');
     }
+
+
 
     /**
      * Display a listing of the resource.

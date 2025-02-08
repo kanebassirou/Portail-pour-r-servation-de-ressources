@@ -6,7 +6,7 @@
             <li class="breadcrumb-item active" aria-current="page" style="color: #6c757d;">Explorer nos ressources</li>
         </ol>
     </nav>
-    <h1 class="fg-white text-center">Bienvenue sur notre plateforme de réservation de ressources</h1>
+    <h1 class="fg-white text-center">Bienvenue sur la plateforme de réservation de ressources de l'UFR SET</h1>
 @endsection
 
 

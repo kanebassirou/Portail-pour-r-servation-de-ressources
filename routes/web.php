@@ -1,4 +1,7 @@
 <?php
+// routes/web.php
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 use App\Http\Controllers\CableController;
 use App\Http\Controllers\LaboratoireController;
@@ -15,12 +18,33 @@ use App\Http\Controllers\SalleClasseController;
 use App\Http\Controllers\SalleReunionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VideoProjecteurController;
+use App\Http\Controllers\UtilisateurAutoriseController;
+use App\Http\Controllers\RessourceEtatController;
 use App\Models\reservation_projecteur;
 use App\Models\Reservations_cable;
 use App\Models\Reservations_rallonge;
 use App\Models\Reservations_salles_classes;
+use App\Models\Reservation_laboratoire;
+use App\Models\Reservations_salles_reunions;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+
+// Routes de vérification des e-mails
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', 'Lien de vérification envoyé!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+// routes pour l'authentification
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     // Routes pour les rôles "user" et "admin"
@@ -32,7 +56,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
         // Route pour afficher les ressources disponibles
         Route::resource('/', RessourceController::class)->names('ressources');
-        Route::resource('resources', RessourceController::class)->names('ressources');
+        // Route::resource('resources', RessourceController::class)->names('ressources');
           // catalogue des ressources pour l'utilisateur
         Route::get('catalogue/ressources', [RessourceController::class, 'indexCatalogue'])->name('catalogue.ressources');
 
@@ -89,10 +113,12 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             $totalclasse= Reservations_salles_classes::count();
             $totalcable = Reservations_cable::count();
             $totalrallonge = Reservations_rallonge::count();
-            $totalprojecteur = reservation_projecteur::count();
-            $totalReservations = $totalclasse + $totalcable + $totalrallonge + $totalprojecteur;
+            $totalprojecteur = Reservation_projecteur::count();
+            $totalLaboratoire = Reservation_laboratoire::count();
+            $totalSalleReunion = Reservations_salles_reunions::count();
+            $totalReservations = $totalclasse + $totalcable + $totalrallonge + $totalprojecteur + $totalLaboratoire + $totalSalleReunion;
             $totalUsers = User::count();
-            return view('admin.dashboard', compact('totalUsers', 'totalReservations','totalcable','totalrallonge','totalprojecteur','totalclasse'));
+            return view('admin.dashboard', compact('totalUsers', 'totalReservations','totalcable','totalrallonge','totalprojecteur','totalclasse','totalLaboratoire','totalSalleReunion'));
         })->name('admin.dashboard');
         Route::get('/admin/dashboard/gestion/ressources', function () {
             return view('admin.ressources');
@@ -134,6 +160,15 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::resource('admin/user', UserController::class)->names('admin.users');
         // Route::get('admin.rapport/pdf', [UserController::class,'genererRapport'])->name('admin.rapport.pdf');
         Route::post('admin/rapport/generer', [UserController::class,'genererRapport'])->name('admin.rapport.generer');
+
+        // Route pour afficher le formulaire de création d'utilisateur autorisé
+Route::get('/admin/users/create', [UtilisateurAutoriseController::class, 'create'])->name('admin.users.create');
+
+// Route pour stocker un nouvel utilisateur autorisé
+Route::post('/admin/users', [UtilisateurAutoriseController::class, 'store'])->name('admin.users.store');
+Route::get('/admin/users', [UtilisateurAutoriseController::class, 'index'])->name('admin.users.liste');
+
+Route::get('/admin/ressources/etat', [RessourceEtatController::class, 'index'])->name('admin.ressources.etat');
 
 
 
