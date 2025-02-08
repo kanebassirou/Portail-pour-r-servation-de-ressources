@@ -41,8 +41,4 @@ jobs:
           sudo apt-get update && sudo apt-get install -y sshpass
           cd deploy_temp
           sshpass -p "${{ secrets.SFTP_PASSWORD }}" sftp -o StrictHostKeyChecking=no -P 22 ${{ secrets.SFTP_USERNAME }}@${{ secrets.SFTP_SERVER }} <<'EOF'
-lcd .
-cd /www/rrset/
-put -r *
-bye
-EOF
+
