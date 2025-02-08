@@ -1,4 +1,4 @@
-name: Déploiement Laravel via SFTP (mise à jour rapide)
+name: Déploiement Laravel via SFTP
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
           extensions: mbstring, bcmath, pdo_mysql
           tools: composer:v2
 
-      # 3️⃣ Installer les dépendances PHP sans `node_modules`
+      # 3️⃣ Installer les dépendances PHP
       - name: Installer les dépendances PHP
         run: composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
 
@@ -30,36 +30,27 @@ jobs:
       - name: Créer le fichier .env
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
-      # 5️⃣ Synchroniser uniquement les fichiers modifiés via SFTP
+      # 5️⃣ Déployer via SFTP en ne transférant que les fichiers modifiés
       - name: Déployer via SFTP (fichiers modifiés uniquement)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        uses: appleboy/scp-action@v0.1.4
         with:
-          server: ${{ secrets.SFTP_SERVER }}
+          host: ${{ secrets.SFTP_SERVER }}
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
-          protocol: sftp
-          local-dir: ./
-          server-dir: /www/ton_projet/  # Modifier selon ton hébergeur
-          exclude: |
-            node_modules/
-            storage/
-            vendor/
-            .git/
-            .github/
-            tests/
-            .env
-            .gitignore
-            README.md
+          source: "."
+          target: "/www/ton_projet/"  # Modifier selon ton hébergeur
+          strip_components: 1
+          overwrite: true
 
       # 6️⃣ Nettoyer et mettre en cache Laravel sur le serveur
       - name: Rafraîchir le cache Laravel sur le serveur
-        run: |
-          curl --silent --show-error --fail --request POST \
-          --url https://www.ton-domaine.com/artisan \
-          --data "command=config:clear"
-          curl --silent --show-error --fail --request POST \
-          --url https://www.ton-domaine.com/artisan \
-          --data "command=cache:clear"
-          curl --silent --show-error --fail --request POST \
-          --url https://www.ton-domaine.com/artisan \
-          --data "command=config:cache"
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SFTP_SERVER }}
+          username: ${{ secrets.SFTP_USERNAME }}
+          password: ${{ secrets.SFTP_PASSWORD }}
+          script: |
+            cd /www/ton_projet
+            php artisan config:clear
+            php artisan cache:clear
+            php artisan config:cache
