@@ -3,7 +3,7 @@ name: Déploiement Laravel via SFTP
 on:
   push:
     branches:
-      - prod
+      - main
 
 jobs:
   deploy:
