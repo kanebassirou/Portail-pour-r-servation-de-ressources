@@ -15,7 +15,7 @@ jobs:
 
       # 2. Configurer PHP (installation de PHP 8.2 et extensions nécessaires)
       - name: Configurer PHP
-       uses: samkirkland/ftp-deploy-action@latest
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
           extensions: mbstring, bcmath, pdo_mysql
