@@ -1,48 +1,60 @@
-name: Deploy Laravel App via SFTP
+name: Déploiement Laravel via SFTP
 
 on:
   push:
     branches:
-      - main  # Change si tu utilises une autre branche principale
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
+      # 1. Cloner le dépôt
       - name: Cloner le dépôt
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Installer PHP et Composer
+      # 2. Configurer PHP (installation de PHP 8.2 et extensions nécessaires)
+      - name: Configurer PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'  # Change selon ta version PHP
-          extensions: mbstring, xml, ctype, json, tokenizer
+          php-version: '8.2'
+          extensions: mbstring, bcmath, pdo_mysql
           tools: composer:v2
 
-      - name: Installer les dépendances Laravel
-        run: composer install --no-dev --prefer-dist --optimize-autoloader
+      # 3. Installer les dépendances PHP
+      - name: Installer les dépendances PHP
+        run: composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
 
-      - name: Nettoyer Laravel avant le déploiement
+      # 4. Créer le fichier .env à partir du secret GitHub
+      - name: Créer le fichier .env
+        run: echo "${{ secrets.ENV_FILE }}" > .env
+
+      # 5. Préparer les fichiers à déployer (exclure .git, node_modules et vendor)
+      - name: Préparer les fichiers à déployer
         run: |
-          php artisan cache:clear
-          php artisan config:clear
-          php artisan route:clear
-          php artisan view:clear
+          mkdir deploy_temp
+          rsync -av --progress --exclude '.git' --exclude 'node_modules' --exclude 'vendor' . deploy_temp/
 
+      # 6. Installer sshpass pour l'authentification SFTP
+      - name: Installer sshpass
+        run: sudo apt-get update && sudo apt-get install -y sshpass
+
+      # 7. Déployer via SFTP vers `/www/rrset/`
       - name: Déployer via SFTP
-        uses: SamKirkland/FTP-Deploy-Action@v3
-        with:
-            server: rrset.uidt.sn
-            username: rrset
-            password: 33@adm*2024!
-            protocol: sftp
-            local-dir: "./"
-            exclude: |
-             **/.git*
-             **/node_modules/*
-             **/vendor/*
-             .env
-              storage/logs/*
-              storage/framework/sessions/*
-              storage/framework/views/*
+        run: |
+          cd deploy_temp
+          sshpass -p "${{ secrets.SFTP_PASSWORD }}" sftp -o StrictHostKeyChecking=no -P 22 ${{ secrets.SFTP_USERNAME }}@${{ secrets.SFTP_SERVER }} <<EOF
+            cd /www/rrset/
+            put -r * .
+            bye
+          EOF
+
+      # 8. Nettoyer le cache Laravel directement sur le serveur
+      - name: Nettoyer le cache Laravel
+        run: |
+          echo "<?php exec('php artisan cache:clear'); exec('php artisan config:clear'); exec('php artisan route:clear'); exec('php artisan view:clear'); echo 'Cache vidé !'; ?>" > clear-cache.php
+          sshpass -p "${{ secrets.SFTP_PASSWORD }}" sftp -o StrictHostKeyChecking=no -P 22 ${{ secrets.SFTP_USERNAME }}@${{ secrets.SFTP_SERVER }} <<EOF
+            put clear-cache.php /www/rrset/
+            bye
+          EOF
+          curl -s "https://rrset.uidt.sn/clear-cache.php"
