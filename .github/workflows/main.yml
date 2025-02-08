@@ -3,7 +3,7 @@ name: Déploiement Laravel via SFTP
 on:
   push:
     branches:
-      - main  # Déclenche le workflow seulement sur `main`
+      - main
 
 jobs:
   deploy:
@@ -30,27 +30,29 @@ jobs:
       - name: Créer le fichier .env
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
-      # 5️⃣ Déployer via SFTP en ne transférant que les fichiers modifiés
-      - name: Déployer via SFTP (fichiers modifiés uniquement)
-        uses: appleboy/scp-action@v0.1.4
+      # 5️⃣ Déployer via SFTP en transférant les fichiers
+      - name: Déployer via SFTP
+        uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SFTP_SERVER }}
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
+          port: 22  # Vérifie si ton hébergeur utilise un port différent
           source: "."
-          target: "/www/ton_projet/"  # Modifier selon ton hébergeur
+          target: "/www/ton_projet/"
           strip_components: 1
           overwrite: true
 
-      # 6️⃣ Nettoyer et mettre en cache Laravel sur le serveur
-      - name: Rafraîchir le cache Laravel sur le serveur
-        uses: appleboy/ssh-action@v1.0.3
+      # 6️⃣ Rafraîchir le cache Laravel sur le serveur
+      - name: Rafraîchir le cache Laravel
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SFTP_SERVER }}
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
+          port: 22
           script: |
-            cd /www/ton_projet
+            cd /www/rrset
             php artisan config:clear
             php artisan cache:clear
             php artisan config:cache
