@@ -49,12 +49,12 @@ jobs:
             bye
           EOF
 
-      # 8. Nettoyer le cache Laravel directement sur le serveur
-      - name: Nettoyer le cache Laravel
-        run: |
-          echo "<?php exec('php artisan cache:clear'); exec('php artisan config:clear'); exec('php artisan route:clear'); exec('php artisan view:clear'); echo 'Cache vidé !'; ?>" > clear-cache.php
-          sshpass -p "${{ secrets.SFTP_PASSWORD }}" sftp -o StrictHostKeyChecking=no -P 22 ${{ secrets.SFTP_USERNAME }}@${{ secrets.SFTP_SERVER }} <<EOF
-            put clear-cache.php /www/rrset/
-            bye
-          EOF
-          curl -s "https://rrset.uidt.sn/clear-cache.php"
+   # 8. Nettoyer le cache Laravel directement sur le serveur
+   - name: Nettoyer le cache Laravel
+    run: |
+    echo "<?php exec('php artisan cache:clear'); exec('php artisan config:clear'); exec('php artisan route:clear'); exec('php artisan view:clear'); echo 'Cache vidé !'; ?>" > clear-cache.php
+    sshpass -p "${{ secrets.SFTP_PASSWORD }}" sftp -o StrictHostKeyChecking=no -P 22 ${{ secrets.SFTP_USERNAME }}@${{ secrets.SFTP_SERVER }} <<EOF
+      put clear-cache.php /www/rrset/
+      bye
+    EOF
+    curl -s "https://rrset.uidt.sn/clear-cache.php"
