@@ -345,3 +345,34 @@ label[for=nav-footer-toggle] {
   border-radius: 99px;
   background-color: #D62929;
 }
+
+
+
+/* Ajoutez ceci dans votre fichier CSS */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.animate__animated {
+    animation-duration: 1s;
+}
+/* ameriorer apparence des bouton pour les filtre */
+
+.filter-button {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.filter-button:hover {
+    background-color: #007bff;
+    color: white !important;
+}
+
+.filter-button.active {
+    background-color: #007bff;
+    color: white !important;
+}

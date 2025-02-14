@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -11,8 +11,9 @@
     <meta name="description" content="Portail de réservation de ressources pour l'Université Iba Der Thiam UFR SET, Thiès, Senegal.">
     <meta name="keywords" content="réservation, ressources, université, Thiès, Sénégal, UFR SET">
     <meta name="author" content="Bassirou Kane">
-    <title>Portail de resservation de ressource</title>
+    <title>RRSET - Portail de réservation de ressource</title>
 
+     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('../assets/css/bootstrap.css') }}">
 
     <link rel="stylesheet" href="{{ asset('../assets/css/maicons.css') }}">
@@ -22,10 +23,39 @@
     <link rel="stylesheet" href="{{ asset('../assets/vendor/owl-carousel/css/owl.carousel.css') }}">
 
     <link rel="stylesheet" href="{{ asset('../assets/vendor/fancybox/css/jquery.fancybox.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
     <link rel="stylesheet" href="{{ asset('../assets/css/theme.css') }}">
+    <link rel="icon" href="{{ asset('assets/img/logoSET.jpeg') }}" type="image/jpeg">
+
+
 
 </head>
+{{-- <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const filterButtons = document.querySelectorAll(".filter-button");
+        const resourceItems = document.querySelectorAll(".filter");
+
+        filterButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                // Supprimer la classe 'active' de tous les boutons
+                filterButtons.forEach(btn => btn.classList.remove("active"));
+                this.classList.add("active");
+
+                const filterValue = this.getAttribute("data-filter");
+
+                resourceItems.forEach(item => {
+                    if (filterValue === "all" || item.classList.contains(filterValue)) {
+                        item.style.display = "block"; // Afficher
+                    } else {
+                        item.style.display = "none"; // Masquer
+                    }
+                });
+            });
+        });
+    });
+</script> --}}
+
 
 <body>
     {{-- <div class="back-to-top"></div> --}}
@@ -85,6 +115,7 @@
     </footer>
 
 
+     <script src="{{ asset('assets/js/filter.js') }}"></script>
 
     <script src="../assets/js/jquery-3.5.1.min.js"></script>
 

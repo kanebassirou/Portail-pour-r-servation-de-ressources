@@ -39,6 +39,6 @@ class UtilisateurAutoriseController extends Controller
 
         UtilisateurAutorise::create($request->all());
 
-        return redirect()->route('admin.users.index')->with('success', 'Utilisateur autorisé ajouté avec succès.');
+        return redirect()->route('admin.users.liste')->with('success', 'Utilisateur autorisé ajouté avec succès.');
     }
 }

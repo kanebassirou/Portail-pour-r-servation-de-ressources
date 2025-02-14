@@ -17,17 +17,50 @@ class UserController extends Controller
 {
     public function genererRapport(Request $request)
     {
-        // Récupération des dates du formulaire
+        // Récupération des dates et de la ressource du formulaire
         $startDate = $request->startDate;
         $endDate = $request->endDate;
+        $resource = $request->resource;
 
-        // Récupération des réservations pour chaque catégorie
-        $reservationsSallesClasses = Reservations_salles_classes::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
-        $reservationRallonges = Reservations_rallonge::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
-        $reservationCables = Reservations_cable::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
-        $reservationProjecteurs = Reservation_projecteur::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
-        $reservationLaboratoires = Reservation_laboratoire::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
-        $reservationSallesReunions = Reservations_salles_reunions::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
+        // Initialisation des variables de réservation
+        $reservationsSallesClasses = collect();
+        $reservationRallonges = collect();
+        $reservationCables = collect();
+        $reservationProjecteurs = collect();
+        $reservationLaboratoires = collect();
+        $reservationSallesReunions = collect();
+
+        // Récupération des réservations pour la ressource sélectionnée
+        if ($resource) {
+            switch ($resource) {
+                case 'salles_classes':
+                    $reservationsSallesClasses = Reservations_salles_classes::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
+                    break;
+                case 'rallonges':
+                    $reservationRallonges = Reservations_rallonge::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
+                    break;
+                case 'cables':
+                    $reservationCables = Reservations_cable::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
+                    break;
+                case 'projecteurs':
+                    $reservationProjecteurs = Reservation_projecteur::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
+                    break;
+                case 'laboratoires':
+                    $reservationLaboratoires = Reservation_laboratoire::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
+                    break;
+                case 'salles_reunions':
+                    $reservationSallesReunions = Reservations_salles_reunions::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
+                    break;
+            }
+        } else {
+            // Récupération des réservations pour toutes les ressources
+            $reservationsSallesClasses = Reservations_salles_classes::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
+            $reservationRallonges = Reservations_rallonge::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
+            $reservationCables = Reservations_cable::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
+            $reservationProjecteurs = Reservation_projecteur::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
+            $reservationLaboratoires = Reservation_laboratoire::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
+            $reservationSallesReunions = Reservations_salles_reunions::whereBetween('date_de_reservation', [$startDate, $endDate])->get();
+        }
 
         // Vérification des données et gestion des erreurs
         if (
@@ -38,7 +71,7 @@ class UserController extends Controller
             $reservationLaboratoires->isEmpty() &&
             $reservationSallesReunions->isEmpty()
         ) {
-            return redirect()->back()->with('warning', "Aucune reservation n'est disponible pour la période sélectionnée.");
+            return redirect()->back()->with('warning', "Aucune réservation n'est disponible pour la période sélectionnée.");
         }
 
         // Chargement de la vue et des données pour le PDF

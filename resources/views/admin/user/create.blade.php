@@ -33,6 +33,11 @@
                             <label for="email">Email</label>
                             <input type="email" name="email" class="form-control" id="email" required>
                         </div>
+
+                         <div class="form-group mb-3">
+                                <label for="matricule">Matricule</label>
+                                <input type="text" name="matricule" class="form-control" id="matricule">
+                            </div>
                         <div class="form-group mb-3">
                             <label for="profil">Profil</label>
                             <select name="profil" class="form-control" id="profil" required onchange="toggleFields()">
@@ -43,10 +48,6 @@
                             </select>
                         </div>
                         <div id="etudiantFields" style="display: none;">
-                            <div class="form-group mb-3">
-                                <label for="numero_dossier">Numéro de dossier</label>
-                                <input type="text" name="numero_dossier" class="form-control" id="numero_dossier">
-                            </div>
                             <div class="form-group mb-3">
                                 <label for="classe">Niveau</label>
                                 <select name="classe" class="form-control" id="classe">
@@ -82,10 +83,7 @@
                             </div>
                         </div>
                         <div id="perFields" style="display: none;">
-                            <div class="form-group mb-3">
-                                <label for="matricule">Matricule</label>
-                                <input type="text" name="matricule" class="form-control" id="matricule">
-                            </div>
+
                             <div class="form-group mb-3">
                                 <label for="departement">Département</label>
                                 <select name="departement" class="form-control" id="departement">

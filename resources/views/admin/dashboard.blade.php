@@ -33,7 +33,21 @@
                         <input type="date" id="endDate" name="endDate" required
                                class="mt-1 p-2 w-full border rounded-lg">
                     </div>
+                     <div class="form-group">
+            <label for="resource">Ressource</label>
+            <select name="resource" class="block text-sm font-medium text-gray-700" id="resource">
+                <option value="">Toutes les ressources</option>
+                <option value="salles_classes">Salles de classe</option>
+                <option value="rallonges">Rallonges</option>
+                <option value="cables">Câbles</option>
+                <option value="projecteurs">Projecteurs</option>
+                <option value="laboratoires">Laboratoires</option>
+                <option value="salles_reunions">Salles de réunion</option>
+            </select>
+        </div>
+
                     <button type="submit" class="btn btn-success text-gray-900 w-100 py-2 rounded-lg">
+
             Générer le rapport
         </button>
                 </form>

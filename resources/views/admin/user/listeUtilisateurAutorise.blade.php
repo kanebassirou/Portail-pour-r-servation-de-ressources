@@ -23,11 +23,10 @@
                     <th class="py-2 px-4 border-b">Nom</th>
                     <th class="py-2 px-4 border-b">Email</th>
                     <th class="py-2 px-4 border-b">Profil</th>
-                    <th class="py-2 px-4 border-b">Numéro de dossier</th>
+                    <th class="py-2 px-4 border-b">Matricule ou Numero dossier</th>
                     <th class="py-2 px-4 border-b">Niveau</th>
                     <th class="py-2 px-4 border-b">Filière</th>
                     <th class="py-2 px-4 border-b">Poste</th>
-                    <th class="py-2 px-4 border-b">Matricule</th>
                     <th class="py-2 px-4 border-b">Département</th>
                     <th class="py-2 px-4 border-b">Actions</th>
                 </tr>
@@ -40,11 +39,10 @@
                         <td class="py-2 px-4 border-b">{{ $utilisateur->nom }}</td>
                         <td class="py-2 px-4 border-b">{{ $utilisateur->email }}</td>
                         <td class="py-2 px-4 border-b">{{ $utilisateur->profil }}</td>
-                        <td class="py-2 px-4 border-b">{{ $utilisateur->numero_dossier }}</td>
+                        <td class="py-2 px-4 border-b">{{ $utilisateur->matricule }}</td>
                         <td class="py-2 px-4 border-b">{{ $utilisateur->classe }}</td>
                         <td class="py-2 px-4 border-b">{{ $utilisateur->filiere }}</td>
                         <td class="py-2 px-4 border-b">{{ $utilisateur->poste }}</td>
-                        <td class="py-2 px-4 border-b">{{ $utilisateur->matricule }}</td>
                         <td class="py-2 px-4 border-b">{{ $utilisateur->departement }}</td>
                         <td class="py-2 px-4 border-b">
                             <!-- Ajouter des actions si nécessaire -->

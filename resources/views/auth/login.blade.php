@@ -4,12 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <meta name="copyright" content="MACode ID, https://macodeid.com/">
+    <meta name="description" content="Portail de réservation de ressources pour l'Université Iba Der Thiam UFR SET, Thiès, Senegal.">
+    <meta name="keywords" content="réservation, ressources, université, Thiès, Sénégal, UFR SET">
+    <meta name="author" content="Bassirou Kane">
+    <meta property="og:title" content="Portail de réservation de ressources - Université Iba Der Thiam UFR SET">
+    <meta property="og:description" content="Réservez des ressources facilement à l'Université Iba Der Thiam UFR SET, Thiès, Sénégal.">
+    <meta property="og:image" content="{{ asset('assets/img/logoSET.jpeg') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Portail de réservation de ressources - Université Iba Der Thiam UFR SET">
+    <meta name="twitter:description" content="Réservez des ressources facilement à l'Université Iba Der Thiam UFR SET, Thiès, Sénégal.">
+    <meta name="twitter:image" content="{{ asset('assets/img/logoSET.jpeg') }}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <link rel="stylesheet" href="{{ asset('assets/css/styleLogin.css') }}">
-    <title> Login Page | Portail de réservation</title>
+    <title>RRSET - Portail de réservation de ressources</title>
+    <link rel="icon" href="{{ asset('assets/img/logoSET.jpeg') }}" type="image/jpeg">
 </head>
 
 <body>

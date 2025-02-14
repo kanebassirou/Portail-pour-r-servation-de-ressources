@@ -48,7 +48,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     // Routes pour les rôles "user" et "admin"
-    Route::group(['middleware' => ['auth', 'role:user|admin']], function () {
+    Route::group(['middleware' => ['auth', 'role:user|admin|Etu|PAT|PER']], function () {
         // Place here the routes accessible only to users with the "user" or "admin" role
         Route::get('/dashboard', function () {
             return view('dashboard');
