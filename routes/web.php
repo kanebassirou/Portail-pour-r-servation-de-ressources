@@ -167,6 +167,9 @@ Route::get('/admin/users/create', [UtilisateurAutoriseController::class, 'create
 // Route pour stocker un nouvel utilisateur autorisé
 Route::post('/admin/users', [UtilisateurAutoriseController::class, 'store'])->name('admin.users.store');
 Route::get('/admin/users', [UtilisateurAutoriseController::class, 'index'])->name('admin.users.liste');
+Route::get('/admin/users/{id}/edit', [UtilisateurAutoriseController::class, 'edit'])->name('admin.users.edit');
+Route::put('/admin/users/{id}', [UtilisateurAutoriseController::class, 'update'])->name('admin.users.update');
+Route::delete('/admin/users/{id}', [UtilisateurAutoriseController::class, 'destroy'])->name('admin.users.destroy');
 
 Route::get('/admin/ressources/etat', [RessourceEtatController::class, 'index'])->name('admin.ressources.etat');
 

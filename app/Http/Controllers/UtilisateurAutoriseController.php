@@ -10,7 +10,7 @@ class UtilisateurAutoriseController extends Controller
 
     public function index()
     {
-        $utilisateurs = UtilisateurAutorise::all();
+        $utilisateurs = UtilisateurAutorise::paginate(10);
         return view('admin.user.listeUtilisateurAutorise', compact('utilisateurs'));
     }
 
@@ -41,4 +41,38 @@ class UtilisateurAutoriseController extends Controller
 
         return redirect()->route('admin.users.liste')->with('success', 'Utilisateur autorisé ajouté avec succès.');
     }
+
+
+
+    public function edit($id)
+    {
+        $utilisateur = UtilisateurAutorise::findOrFail($id);
+        return view('admin.user.userAutoriserEdit', compact('utilisateur'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'prenom' => 'required|string|max:255',
+            'nom' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'profil' => 'required|string|max:255',
+            'matricule' => 'required|string|max:255',
+            'departement' => 'required|string|max:255',
+        ]);
+
+        $utilisateur = UtilisateurAutorise::findOrFail($id);
+        $utilisateur->update($validated);
+
+        return redirect()->route('admin.users.liste')->with('success', 'Utilisateur autorisé mis à jour avec succès.');
+    }
+
+    public function destroy($id)
+    {
+        $utilisateur = UtilisateurAutorise::findOrFail($id);
+        $utilisateur->delete();
+
+        return redirect()->route('admin.users.liste')->with('success', 'Utilisateur autorisé supprimé avec succès.');
+    }
+
 }
