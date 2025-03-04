@@ -39,7 +39,7 @@ class UtilisateurAutoriseController extends Controller
 
         UtilisateurAutorise::create($request->all());
 
-        return redirect()->route('admin.users.liste')->with('success', 'Utilisateur autorisé ajouté avec succès.');
+        return redirect()->route('admin.usersAut.liste')->with('success', 'Utilisateur autorisé ajouté avec succès.');
     }
 
 
@@ -64,7 +64,7 @@ class UtilisateurAutoriseController extends Controller
         $utilisateur = UtilisateurAutorise::findOrFail($id);
         $utilisateur->update($validated);
 
-        return redirect()->route('admin.users.liste')->with('success', 'Utilisateur autorisé mis à jour avec succès.');
+        return redirect()->route('admin.usersAut.liste')->with('success', 'Utilisateur autorisé mis à jour avec succès.');
     }
 
     public function destroy($id)
@@ -72,7 +72,7 @@ class UtilisateurAutoriseController extends Controller
         $utilisateur = UtilisateurAutorise::findOrFail($id);
         $utilisateur->delete();
 
-        return redirect()->route('admin.users.liste')->with('success', 'Utilisateur autorisé supprimé avec succès.');
+        return redirect()->route('admin.usersAut.liste')->with('success', 'Utilisateur autorisé supprimé avec succès.');
     }
 
 }

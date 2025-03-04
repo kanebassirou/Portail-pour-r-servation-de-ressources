@@ -18,7 +18,7 @@
         <input type="text" name="search" placeholder="Rechercher..." class="px-4 py-2 border rounded-lg">
         <button type="submit" class="ml-2 px-4 py-2 bg-blue-500 text-blue rounded-lg">Rechercher</button>
     </form>
-    <a href="{{ route('admin.users.liste') }}" class="px-4 py-2 bg-blue-500 text-white rounded-lg">la liste des utilisateur autorisée</a>
+    <a href="{{ route('admin.usersAut.liste') }}" class="px-4 py-2 bg-blue-500 text-white rounded-lg">la liste des utilisateur autorisée</a>
 </div>
             <div class="mt-2 max-w-xl text-sm text-gray-500">
                 <table class="min-w-full divide-y divide-gray-200">

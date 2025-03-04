@@ -44,7 +44,7 @@
                         <td class="py-2 px-4 border-b">{{ $utilisateur->poste }}</td>
                         <td class="py-2 px-4 border-b">{{ $utilisateur->departement }}</td>
                         <td class="py-2 px-4 border-b">
-                            <a href="{{ route('admin.users.edit', $utilisateur->id) }}" class="text-blue-500 hover:underline">Modifier</a>
+                            <a href="{{ route('admin.usersAut.edit', $utilisateur->id) }}" class="text-blue-500 hover:underline">Modifier</a>
                             <button onclick="openModal({{ $utilisateur->id }})" class="text-red-500 hover:underline">Supprimer</button>
                         </td>
                     </tr>
@@ -78,7 +78,7 @@
     function openModal(userId) {
         const modal = document.getElementById('confirmationModal');
         const form = document.getElementById('deleteForm');
-        form.action = `/admin/users/${userId}`; // Définir l'URL de suppression
+        form.action = `/admin/usersAut/${userId}`; // Définir l'URL de suppression
         modal.classList.remove('hidden');
     }
 

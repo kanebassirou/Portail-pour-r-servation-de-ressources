@@ -162,16 +162,15 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::post('admin/rapport/generer', [UserController::class,'genererRapport'])->name('admin.rapport.generer');
 
         // Route pour afficher le formulaire de création d'utilisateur autorisé
-Route::get('/admin/users/create', [UtilisateurAutoriseController::class, 'create'])->name('admin.users.create');
+        Route::get('/admin/users/create', [UtilisateurAutoriseController::class, 'create'])->name('admin.users.create');
 
 // Route pour stocker un nouvel utilisateur autorisé
-Route::post('/admin/users', [UtilisateurAutoriseController::class, 'store'])->name('admin.users.store');
-Route::get('/admin/users', [UtilisateurAutoriseController::class, 'index'])->name('admin.users.liste');
-Route::get('/admin/users/{id}/edit', [UtilisateurAutoriseController::class, 'edit'])->name('admin.users.edit');
-Route::put('/admin/users/{id}', [UtilisateurAutoriseController::class, 'update'])->name('admin.users.update');
-Route::delete('/admin/users/{id}', [UtilisateurAutoriseController::class, 'destroy'])->name('admin.users.destroy');
-
-Route::get('/admin/ressources/etat', [RessourceEtatController::class, 'index'])->name('admin.ressources.etat');
+        Route::post('/admin/usersAut', [UtilisateurAutoriseController::class, 'store'])->name('admin.usersAut.store');
+        Route::get('/admin/usersAut', [UtilisateurAutoriseController::class, 'index'])->name('admin.usersAut.liste');
+        Route::get('/admin/usersAut/{id}/edit', [UtilisateurAutoriseController::class, 'edit'])->name('admin.usersAut.edit');
+        Route::put('/admin/usersAut/{id}', [UtilisateurAutoriseController::class, 'update'])->name('admin.usersAut.update');
+        Route::delete('/admin/usersAut/{id}', [UtilisateurAutoriseController::class, 'destroy'])->name('admin.usersAut.destroy');
+         Route::get('/admin/ressources/etat', [RessourceEtatController::class, 'index'])->name('admin.ressources.etat');
 
 
 
