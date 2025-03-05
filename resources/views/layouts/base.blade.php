@@ -98,7 +98,7 @@
 
             <div class="row mt-4">
                 <div class="col-md-6">
-                    <p>Copyright 2023. Bassirou §§ Ablaye <a href="#">PFC</a></p>
+                    <p>Copyright © Université Iba Der THIAM de Thiès - UFR SET</p>
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="sosmed-button">
