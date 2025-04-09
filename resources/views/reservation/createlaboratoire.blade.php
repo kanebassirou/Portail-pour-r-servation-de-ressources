@@ -2,7 +2,7 @@
 @section('breadcrumb')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb justify-content-center py-2">
-            <li class="breadcrumb-item"><a href="index.html" style="color: #007bff;">Réservation un laboratoire </a></li>
+            <li class="breadcrumb-item"><a href="#index.html" style="color: #007bff;">Réservation un laboratoire </a></li>
             <li class="breadcrumb-item active" aria-current="page" style="color: #6c757d;">reserver </li>
         </ol>
     </nav>
