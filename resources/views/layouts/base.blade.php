@@ -65,53 +65,48 @@
         @yield('content')
     </main>
 
-    <footer class="page-footer">
+    <footer class="page-footer bg-dark text-white py-5">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 py-3">
-                    <h3>Portail<span class="fg-primary">Reservation.</span></h3>
+                <div class="col-lg-4 mb-4">
+                    <h4 class="text-uppercase">Portail<span class="text-primary">Reservation</span></h4>
+                    <p class="mt-3">Facilitez la gestion et la réservation des ressources au sein de l'UFR SET.</p>
                 </div>
-                <div class="col-lg-3 py-3">
-                    <h5>Contact Information</h5>
-                    <p> 123 Rue de l'Université Iba Der Thiam UFR SET, Thiès, Senegal</p>
-                    <p>Email: contact@ufrset.edu </p>
-                    <p>Téléphone: +33 900 12 33</p>
-                </div>
-                <div class="col-lg-3 py-3">
-                    <h5>Explore</h5>
-                    <ul class="footer-menu">
-                        <li><a href="#">À Propos</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">FAQ</a></li>
+                <div class="col-lg-4 mb-4">
+                    <h5 class="text-uppercase">Contact Informations</h5>
+                    <ul class="list-unstyled mt-3">
+                        <li>Université Iba Der Thiam de Thiès – UFR SET</li>
+                        <li>VCN - Boite Postale : 967 Thiès</li>
+                        <li>E-mail : <a href="mailto:directeur-set@univ-thies.sn" class="text-primary">directeur-set@univ-thies.sn</a></li>
+                        <li>Site Web : <a href="https://ufrset.univ-thies.sn/" target="_blank" class="text-primary">ufrset.univ-thies.sn</a></li>
+                        <li><a href="https://www.uidt.sn/" target="_blank" class="text-primary">www.uidt.sn</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-3 py-3">
-                    <h5>Donner votre Avis</h5>
-                    <form action="#">
-                        <input type="textera" class="form-control" placeholder="Donner votre Avis">
-                        <button type="submit" class="btn btn-primary btn-sm mt-2">Envoyer</button>
+                <div class="col-lg-4 mb-4">
+                    <h5 class="text-uppercase">Donner votre Avis</h5>
+                    <form action="#" class="mt-3">
+                        <textarea class="form-control mb-2" rows="3" placeholder="Donner votre Avis"></textarea>
+                        <button type="submit" class="btn btn-primary btn-sm">Envoyer</button>
                     </form>
                 </div>
             </div>
 
-            <hr>
+            <hr class="border-secondary">
 
-            <div class="row mt-4">
+            <div class="row mt-4 align-items-center">
                 <div class="col-md-6">
-                    <p>Copyright © Université Iba Der THIAM de Thiès - UFR SET</p>
+                    <p class="mb-0">Copyright © Université Iba Der Thiam de Thiès - UFR SET</p>
                 </div>
-                <div class="col-md-6 text-right">
-                    <div class="sosmed-button">
-                        <a href="#"><span class="mai-logo-facebook-f"></span></a>
-                        <a href="#"><span class="mai-logo-twitter"></span></a>
-                        <a href="#"><span class="mai-logo-youtube"></span></a>
-                        <a href="#"><span class="mai-logo-linkedin"></span></a>
+                <div class="col-md-6 text-md-right">
+                    <div class="social-buttons">
+                        <a href="#" class="text-white mx-2"><span class="mai-logo-facebook-f"></span></a>
+                        <a href="#" class="text-white mx-2"><span class="mai-logo-twitter"></span></a>
+                        <a href="#" class="text-white mx-2"><span class="mai-logo-youtube"></span></a>
+                        <a href="#" class="text-white mx-2"><span class="mai-logo-linkedin"></span></a>
                     </div>
                 </div>
             </div>
         </div>
-    </footer>
-
     </footer>
 
 
